@@ -32,5 +32,11 @@
 		"tslib": "^2.3.1",
 		"typescript": "~4.6.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@binsarjr/apiamikomone": "github:binsarjr/apiamikomone#v1.2.5",
+		"@zerodevx/svelte-toast": "^0.7.1",
+		"qr-scanner": "^1.4.1",
+		"svelte-internet-connection": "^0.1.2"
+	}
 }

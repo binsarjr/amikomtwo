@@ -1,47 +1,110 @@
 <script lang="ts">
-	import PenaList from '../components/pena/PenaList.svelte';
-	import type { IPenaList } from '../components/pena/Types';
-	import slugify from '../supports/str/slugify';
-	const name = 'Binsar Dwi Jasuma';
-	const summary = 'Suka menulis hal apapun yang terlintas dalam pikiran.';
-	const pena: IPenaList[] = [
-		{
-			title: 'kendalikan semuanya',
-			updated_at: '20 mei 2022',
-			link: '/dunia-ini-ada-batasnya'
-		},
-		{
-			title: 'Menemukan jalan diambang kematian',
-			updated_at: '20 mei 2022',
-			link: '/dunia-ini-ada-batasnya1'
-		},
-		{
-			title: 'Untukmu yang berjasa kepadaku',
-			updated_at: '20 mei 2022',
-			link: '/dunia-ini-ada-batasnya2'
-		},
-		{
-			title: 'Untuk diirku dimasa mendatang',
-			updated_at: '20 mei 2022',
-			link: '/dunia-ini-ada-batasnya3'
-		},
-		{
-			title: 'Untuk diriku dimasa lalu',
-			updated_at: '20 mei 2022',
-			link: '/dunia-ini-ada-batasnya4'
+	import QRScanner from 'qr-scanner';
+
+	import Line from '../components/Line.svelte';
+	import { onMount } from 'svelte';
+
+	import { failure, success } from '../supports/toast-theme';
+	import { sleep } from '../supports/promise';
+	import { randomNumber } from '../supports/number';
+	let nims = [''];
+
+	$: qrcodeResult = '';
+	const doPrecense = async () => {
+		for (const nim of nims.filter(Boolean)) {
+			const resp = await fetch(`/api/qrcode-precense.json?npm=${nim}&data=${qrcodeResult}`, {
+				method: 'post'
+			});
+			const response: { status: boolean; message: string } = await resp.json();
+
+			if (response.status) success(`<b>${nim} :</b> ${response.message}`);
+			else failure(`<b>${nim} :</b> ${response.message}`);
+
+			await sleep(randomNumber(200, 700));
 		}
-	].map((p) => {
-		p.link = '/' + slugify(p.title);
-		return p;
+	};
+
+	onMount(async () => {
+		nims = JSON.parse(localStorage.getItem('qrcode-nims') || '[""]') as string[];
+
+		const videoElem = document.querySelector('video')!;
+
+		const qrcode = new QRScanner(videoElem, (result) => {
+			qrcodeResult = result;
+			doPrecense();
+		});
+
+		const fileUpload = document.getElementById('qrcode-upload');
+		fileUpload?.addEventListener('change', (event) => {
+			// @ts-ignore
+			const file = fileUpload?.files[0];
+			if (!file) {
+				return;
+			}
+			QRScanner.scanImage(file, { returnDetailedScanResult: true })
+				.then((result) => {
+					qrcodeResult = result.data;
+					doPrecense();
+				})
+				.catch((e) => {
+					qrcodeResult = '';
+					alert('QRCode tidak ditemukan.');
+				});
+		});
+
+		await qrcode.start();
 	});
+
+	const saveNimToLocalStorage = () =>
+		localStorage.setItem('qrcode-nims', JSON.stringify(nims.filter(Boolean)));
+	const addNim = () => {
+		nims[nims.length] = '';
+		saveNimToLocalStorage();
+	};
+	const deleteNim = (index: number) => {
+		nims = nims.filter((_, i) => i != index);
+		saveNimToLocalStorage();
+	};
 </script>
 
-<section class="mt-12 text-xl md:text-2xl">
-	<h1 class="inline-flex font-semibold">Hai! Saya {name}</h1>
-	<p>{summary}</p>
-</section>
-<span style="background:#E07A5F;" class="w-32  my-5 p-[1px] rounded" />
+<section class="flex flex-col justify-content-center mx-auto gap-2 w-full xl:w-1/2">
+	<h1>Scan QrCode</h1>
+	<video class="rounded-lg w-full">
+		<track kind="captions" />
+	</video>
+	<Line text="Or" />
+	<h1>By Document</h1>
+	<input type="file" id="qrcode-upload" accept="image/*" />
+	<p class="text-sm text-gray-600">
+		Masih bingung? cek tutorialnya <a href="/" class="text-blue-500 hover:underline">disini</a>
+	</p>
 
-<section class="my-12">
-	<PenaList {pena} />
+	<section class="my-10">
+		<Line />
+	</section>
+	<button class="flex-auto py-2 px-4 rounded text-white font-bold bg-green-500" on:click={addNim}
+		>Tambah NIM +</button
+	>
+	{#each nims as nim, i}
+		<section class="flex flex-row gap-2">
+			<input
+				type="text"
+				bind:value={nim}
+				on:change={saveNimToLocalStorage}
+				placeholder="NIM"
+				class="bg-gray-100 py-2 px-4 rounded-lg flex-auto"
+			/>
+			<span
+				class="py-2 px-4 rounded text-white font-bold bg-red-500 hover:cursor-pointer"
+				on:click|preventDefault={() => deleteNim(i)}>-</span
+			>
+		</section>
+	{/each}
 </section>
+
+<style>
+	video {
+		max-height: 300px;
+		object-fit: cover;
+	}
+</style>
