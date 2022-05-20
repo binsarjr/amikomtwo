@@ -12,7 +12,7 @@
 	$: qrcodeResult = '';
 	const doPrecense = async () => {
 		for (const nim of nims.filter(Boolean)) {
-			const resp = await fetch(`/api/qrcode-precense.json?npm=${nim}&data=${qrcodeResult}`, {
+			const resp = await fetch(`/api/qrcode-precense.json?npm=${nim}&data=${btoa(qrcodeResult)}`, {
 				method: 'post'
 			});
 			const response: { status: boolean; message: string } = await resp.json();
