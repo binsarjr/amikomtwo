@@ -5,7 +5,9 @@
 </script>
 
 <!-- See This: https://svelte-french-toast.vercel.app/ -->
-<Toaster />
-<App theme="ios">
-	<slot />
-</App>
+<main class="md:w-[465px] mx-auto">
+	<Toaster />
+	<App theme="ios">
+		<slot />
+	</App>
+</main>

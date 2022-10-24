@@ -3,19 +3,13 @@
 </script>
 
 <Page>
-	<Navbar title="My App" />
+	<Navbar title="AmikomTWO" />
 
-	<Block strong>
-		<p>Here is your SvelteKit & Konsta UI app. Let's see what we have here.</p>
+	<Block strongIos insetIos>
+		<p>Terima Kasih sudah mempercayakan AmikomTWO</p>
 	</Block>
-	<BlockTitle>Navigation</BlockTitle>
-	<List>
-		<ListItem href="/about/" title="About" />
-		<ListItem href="/form/" title="Form" />
-	</List>
 
-	<Block strong class="flex space-x-4">
-		<button>Button 1</button>
-		<button>Button 2</button>
+	<Block insetIos>
+		<Button largeIos component="a" href="/auth">Masuk</Button>
 	</Block>
 </Page>
