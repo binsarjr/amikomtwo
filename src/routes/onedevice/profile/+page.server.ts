@@ -21,7 +21,6 @@ export const load: PageServerLoad = async ({ parent, cookies }) => {
             expires
         })
     }
-    console.log(mahasiswa)
 
     return {
         mahasiswa: mahasiswa as IBio
