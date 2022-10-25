@@ -12,8 +12,8 @@ export const actions: Actions = {
             const expires = new Date()
             expires.setSeconds(expires.getSeconds() + parseInt(response.expires_in.toString()))
 
-            cookies.set('nim', nim, { path: '/', expires })
-            cookies.set('password', MikomSupports.Encryption.encrypt(password), { path: '/', expires })
+            cookies.set('nim', nim, { path: '/' })
+            cookies.set('password', MikomSupports.Encryption.encrypt(password), { path: '/' })
             cookies.set('access_token', response.access_token, { path: '/', expires })
             cookies.set('api_key', response.api_key, { path: '/', expires })
             return {
