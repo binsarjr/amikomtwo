@@ -29,13 +29,13 @@
 			href={pages.home}
 			component="a"
 			active={$page.url.pathname === pages.home}
-			label={'Tab 1'}
+			label={'Home'}
 		/>
 		<TabbarLink
 			href={pages.presensi}
 			component="a"
 			active={$page.url.pathname === pages.presensi}
-			label={'Tab 2'}
+			label={'Presensi'}
 		/>
 		<TabbarLink
 			href={pages.profile}
