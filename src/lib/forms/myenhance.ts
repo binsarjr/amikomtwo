@@ -2,8 +2,8 @@
 import { applyAction } from '$app/forms';
 import { goto } from '$app/navigation';
 import toast from 'svelte-french-toast';
-export const myenhance = ({ form, data, action, cancel }: any) => {
-    const id = toast.loading('Sedang Memvalidasi');
+export const myenhance = (done?: Function) => ({ form, data, action, cancel }: any) => {
+    const id = toast.loading('Sedang Diproses. Mohon menunggu');
     return async ({ result, update }: any) => {
         if (result.type === 'invalid') toast.error(result.data?.error, { id });
         else if (result.type === 'success') {
@@ -15,6 +15,10 @@ export const myenhance = ({ form, data, action, cancel }: any) => {
             }
         }
 
+        if (done) update(() => {
+            done()
+        })
         await applyAction(result);
+
     };
 }
