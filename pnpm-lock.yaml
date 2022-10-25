@@ -18,6 +18,7 @@ specifiers:
   postcss: ^8.4.18
   prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
+  qr-scanner: ^1.4.1
   svelte: ^3.46.0
   svelte-check: ^2.7.1
   svelte-french-toast: ^1.0.3
@@ -46,6 +47,7 @@ devDependencies:
   postcss: 8.4.18
   prettier: 2.7.1
   prettier-plugin-svelte: 2.8.0_lrllcp5xtrkmmdzifit4hd52ze
+  qr-scanner: 1.4.1
   svelte: 3.52.0
   svelte-check: 2.9.2_vidagnlh55bt6yxji7dk5y5wla
   svelte-french-toast: 1.0.3_svelte@3.52.0
@@ -745,6 +747,10 @@ packages:
 
   /@types/node/18.11.4:
     resolution: {integrity: sha512-BxcJpBu8D3kv/GZkx/gSMz6VnTJREBj/4lbzYOQueUOELkt8WrO6zAcSPmp9uRPEW/d+lUO8QK0W2xnS1hEU0A==}
+    dev: true
+
+  /@types/offscreencanvas/2019.7.0:
+    resolution: {integrity: sha512-PGcyveRIpL1XIqK8eBsmRBt76eFgtzuPiSTyKHZxnGemp2yzGzWpjYKAfK3wIMiU7eH+851yEpiuP8JZerTmWg==}
     dev: true
 
   /@types/pug/2.0.6:
@@ -2752,6 +2758,12 @@ packages:
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
+    dev: true
+
+  /qr-scanner/1.4.1:
+    resolution: {integrity: sha512-xiR90NONHTfTwaFgW/ihlqjGMIZg6ExHDOvGQRba1TvV+WVw7GoDArIOt21e+RO+9WiO4AJJq+mwc5f4BnGH3w==}
+    dependencies:
+      '@types/offscreencanvas': 2019.7.0
     dev: true
 
   /qrcode-reader/1.0.4:

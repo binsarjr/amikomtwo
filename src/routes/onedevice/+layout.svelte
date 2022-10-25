@@ -45,5 +45,7 @@
 		/>
 	</Tabbar>
 
-	<slot />
+	<main class="mb-20">
+		<slot />
+	</main>
 </Page>

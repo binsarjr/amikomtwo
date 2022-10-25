@@ -10,7 +10,11 @@ export const myenhance = ({ done, loadingMsg = "Sedang Diproses. Mohon menunggu"
             toast.success(result.data?.success, { id });
             // if succes and have location key,that mean server want redirect
             if (result.data?.location) {
+                if (done) update(() => {
+                    done()
+                })
                 await applyAction(result);
+
                 return goto(result.data.location);
             }
         }
