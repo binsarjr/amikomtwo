@@ -1,13 +1,14 @@
-import { getMahasiswaServerLoad } from "$lib/serverLoad/mahasiswa"
+import { getJadwalMahasiswaServerLoad, getMahasiswaServerLoad } from "$lib/serverLoad/mahasiswa"
+import { MikomOneDevice } from "@binsarjr/apiamikomone"
 import type { IBio } from "@binsarjr/apiamikomone/lib/typings/Response"
 import type { PageServerLoad } from "./$types"
 
 
 export const load: PageServerLoad = async ({ parent, cookies }) => {
     await parent()
-    let mahasiswa = await getMahasiswaServerLoad(cookies)
-
+    let mahasiswa = await getMahasiswaServerLoad(cookies) as IBio
+    let jadwal = await getJadwalMahasiswaServerLoad(cookies, mahasiswa)
     return {
-        mahasiswa: mahasiswa as IBio // yakin karena user sudah dicek valid atau tidak di parent page load(/onedevice/+layout.server.ts)
+        mahasiswa, jadwal
     }
 }

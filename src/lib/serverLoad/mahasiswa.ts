@@ -33,3 +33,12 @@ export const getMahasiswaServerLoad = async (cookies: Cookies) => {
 
     return mahasiswa
 }
+
+export const getJadwalMahasiswaServerLoad = async (cookies: Cookies, mahasiswa: IBio) => {
+    const accessToken = cookies.get('access_token') as string
+    const apiKey = cookies.get('api_key') as string
+    const idHari = new Date().getDay()
+    const jadwal = await Promise.any([MikomOneDevice.Mahasiswa.JadwalKuliah(accessToken, apiKey,idHari),
+    MikomLegacy.Mahasiswa.JadwalKuliah(accessToken, mahasiswa.PeriodeAkademik.Semester, mahasiswa.PeriodeAkademik.TahunAkademik,idHari)])
+    return jadwal
+}
