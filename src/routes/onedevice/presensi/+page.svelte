@@ -67,7 +67,7 @@
 
 <BlockTitle>Scan QrCode</BlockTitle>
 <Block>
-	<video id="qr" class="max-h-[300px] w-full" />
+	<video id="qr" class="h-[400px] w-[400px] md:w-full mx-auto" />
 </Block>
 <Block>
 	<p>
@@ -115,7 +115,7 @@
 	<List strongIos insetIos>
 		<ListInput
 			outline
-            name="code"
+			name="code"
 			label="Code"
 			placeholder="Masukkan Kode Presensi"
 			value={code}

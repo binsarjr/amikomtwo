@@ -14,7 +14,7 @@ export const actions: Actions = {
         const accessToken = cookies.get('access_token') as string
         const qrresult = (await request.formData()).get('qrcode') as string
         const [_, response] = await Promise.all([
-            new Promise((resolve) => setTimeout(resolve, 3000)), // minimal proses harus 1 detik,
+            new Promise((resolve) => setTimeout(resolve, 2000)), // minimal proses harus 1 detik,
             MikomOneDevice.Presence.Qrcode(accessToken, qrresult)
         ])
         if (response.status === PresenceStatus.Success) {
