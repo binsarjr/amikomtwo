@@ -1,8 +1,16 @@
 <script lang="ts">
-	import { Block, Link, List, ListItem, Navbar, Page } from 'konsta/svelte';
+	import { goto } from '$app/navigation';
+	import { Block, Button, Link, List, ListItem, Navbar, Page } from 'konsta/svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-
+	let keluar = 'KELUAR';
+	const onLogoutClick = () => {
+		if(keluar==='KELUAR') {
+			keluar = "KETUK SEKALI LAGI UNTUK KELUAR"
+		} else {
+			goto('/onedevice/logout')
+		}
+	};
 </script>
 
 <Block>
@@ -16,4 +24,6 @@
 		<ListItem header="Tahun Akademik" title={data.mahasiswa.PeriodeAkademik.TahunAkademik} />
 		<ListItem header="Semester" title={data.mahasiswa.PeriodeAkademik.SemesterFormat} />
 	</List>
+	<Button largeIos class="mb-2">EXPORT</Button>
+	<Button largeIos outlineIos onClick={onLogoutClick}>{keluar}</Button>
 </Block>
