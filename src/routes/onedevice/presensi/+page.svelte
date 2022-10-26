@@ -89,7 +89,7 @@
 		return ({ result, update }) => {
 			if (result.type == 'invalid') toast.error(result.data?.error, { id, position: 'top-right' });
 			else if (result.type == 'success')
-				toast.error(result.data?.success, { id, position: 'top-right' });
+				toast.success(result.data?.success, { id, position: 'top-right' });
 
 			qrresult = null;
 		};
@@ -106,7 +106,7 @@
 		return ({ result, update }) => {
 			if (result.type == 'invalid') toast.error(result.data?.error, { id, position: 'top-right' });
 			else if (result.type == 'success')
-				toast.error(result.data?.success, { id, position: 'top-right' });
+				toast.success(result.data?.success, { id, position: 'top-right' });
 
 			code = '';
 		};
