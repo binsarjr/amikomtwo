@@ -10,7 +10,7 @@
 	/>
 </List>
 
-<BlockTitle>Jadwal Kuliah</BlockTitle>
+<BlockTitle>Jadwal Kuliah Hari Ini</BlockTitle>
 <List strongIos insetIos outlineIos>
 	{#each $page.data.jadwal as jadwal}
 		<ListItem
