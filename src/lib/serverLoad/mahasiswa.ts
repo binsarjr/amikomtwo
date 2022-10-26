@@ -1,5 +1,5 @@
 import { MikomLegacy, MikomOneDevice } from "@binsarjr/apiamikomone";
-import type { IBio } from "@binsarjr/apiamikomone/lib/typings/Response";
+import type { IBio, IJadwalKuliah } from "@binsarjr/apiamikomone/lib/typings/Response";
 import type { Cookies } from "@sveltejs/kit";
 
 export const getMahasiswaServerLoad = async (cookies: Cookies) => {
@@ -38,7 +38,21 @@ export const getJadwalMahasiswaServerLoad = async (cookies: Cookies, mahasiswa: 
     const accessToken = cookies.get('access_token') as string
     const apiKey = cookies.get('api_key') as string
     const idHari = new Date().getDay()
-    const jadwal = await Promise.any([MikomOneDevice.Mahasiswa.JadwalKuliah(accessToken, apiKey,idHari),
-    MikomLegacy.Mahasiswa.JadwalKuliah(accessToken, mahasiswa.PeriodeAkademik.Semester, mahasiswa.PeriodeAkademik.TahunAkademik,idHari)])
+    let jadwal: IJadwalKuliah[] | null = null
+    if (cookies.get('jadwal')) {
+        jadwal = JSON.parse(cookies.get('jadwal') as string)
+        // Antisipasi ketika user logout dan login kembali dengan user yang berbeda
+        if (cookies.get('nim') !== mahasiswa.Mhs.Npm) jadwal = null
+    }
+    if (jadwal == null) {
+        jadwal = await Promise.any([MikomOneDevice.Mahasiswa.JadwalKuliah(accessToken, apiKey, idHari),
+        MikomLegacy.Mahasiswa.JadwalKuliah(accessToken, mahasiswa.PeriodeAkademik.Semester, mahasiswa.PeriodeAkademik.TahunAkademik, idHari)])
+        let expires = new Date()
+        expires.setHours(expires.getHours() + 1)
+        cookies.set('jadwal', JSON.stringify(jadwal), {
+            path: '/',
+            expires
+        })
+    }
     return jadwal
 }
