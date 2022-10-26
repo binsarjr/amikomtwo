@@ -27,6 +27,7 @@
 </List>
 <BlockTitle>Menu</BlockTitle>
 <List strongIos insetIos outlineIos>
+	<ListItem link title="Histori Presensi" href="/onedevice/histori-presensi" />
 	<ListItem link title="Hasil Studi" />
 	<ListItem link title="Jadwal Kuliah" />
 	<ListItem link title="Transkrip" />
