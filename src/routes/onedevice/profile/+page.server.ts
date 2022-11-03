@@ -1,5 +1,5 @@
 import { getMahasiswaServerLoad } from "$lib/serverLoad/mahasiswa"
-import { MikomLegacy, MikomOneDevice } from "@binsarjr/apiamikomone"
+import { MikomOneDevice } from "@binsarjr/apiamikomone"
 import type { IBio } from "@binsarjr/apiamikomone/lib/typings/Response"
 import type { PageServerLoad } from "./$types"
 
