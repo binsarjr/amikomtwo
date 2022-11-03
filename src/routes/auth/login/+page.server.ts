@@ -12,9 +12,12 @@ export const actions: Actions = {
             const expires = new Date()
             expires.setSeconds(expires.getSeconds() + parseInt(response.expires_in.toString()))
 
-            cookies.set('logged', '1', { path: '/' })
-            cookies.set('nim', nim, { path: '/' })
-            cookies.set('password', MikomSupports.Encryption.encrypt(password), { path: '/' })
+            const expiresSixMonth = new Date()
+            expiresSixMonth.setMonth(expiresSixMonth.getMonth() + 6)
+
+            cookies.set('logged', '1', { path: '/', expires: expiresSixMonth })
+            cookies.set('nim', nim, { path: '/', expires: expiresSixMonth })
+            cookies.set('password', MikomSupports.Encryption.encrypt(password), { path: '/', expires: expiresSixMonth })
             cookies.set('access_token', response.access_token, { path: '/', expires })
             cookies.set('api_key', response.api_key, { path: '/', expires })
             return {
