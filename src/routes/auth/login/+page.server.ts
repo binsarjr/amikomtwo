@@ -1,5 +1,5 @@
 import { MikomOneDevice, MikomSupports } from "@binsarjr/apiamikomone";
-import { error } from "@sveltejs/kit";
+import { error, fail } from "@sveltejs/kit";
 import { privateKey } from "../../../lib/config";
 import { authAttempt, encPassword } from "../../../lib/supports/auth";
 import type { Actions } from "./$types";
@@ -19,7 +19,7 @@ export const actions: Actions = {
                 password: encPassword(password)
             }
         } catch (e) {
-            throw error(422, { message: "NIM dan Password Tidak Valid!" })
+            return fail(422, { message: "NIM dan Password Tidak Valid!" })
         }
     }
 }

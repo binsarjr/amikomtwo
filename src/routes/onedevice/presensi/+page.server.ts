@@ -1,6 +1,6 @@
 import { MikomOneDevice } from "@binsarjr/apiamikomone"
 import { PresenceStatus } from "@binsarjr/apiamikomone/lib/typings/Enum/Presence"
-import { error } from "@sveltejs/kit"
+import { error, fail } from "@sveltejs/kit"
 import type { Actions } from "./$types"
 
 export const actions: Actions = {
@@ -17,7 +17,7 @@ export const actions: Actions = {
                 success: response.message
             }
         } else {
-            throw error(409, { message: response.message })
+            return fail(409, { message: response.message })
         }
     },
     manual: async ({ request, cookies }) => {
@@ -30,7 +30,7 @@ export const actions: Actions = {
                 success: response.message
             }
         } else {
-            throw error(409, { message: response.message })
+            return fail(409, { message: response.message })
         }
     },
 }

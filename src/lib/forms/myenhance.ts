@@ -5,7 +5,7 @@ import toast from 'svelte-french-toast';
 export const myenhance = <Data = any>({ done, success, loadingMsg = "Sedang Diproses. Mohon menunggu" }: Partial<{ done: Function, success: (data: Data) => void, loadingMsg: string }> = {}) => ({ form, data, action, cancel }: any) => {
     const id = toast.loading(loadingMsg);
     return async ({ result, update }: any) => {
-        if (result.type === 'error') toast.error(result.error?.message, { id });
+        if (result.type === 'failure') toast.error(result.data?.message, { id });
         else if (result.type === 'success') {
             toast.success(result.data?.success, { id });
             if (success) success(result.data)
