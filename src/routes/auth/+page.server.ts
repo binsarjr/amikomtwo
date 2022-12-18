@@ -1,4 +1,4 @@
-import { invalid, redirect, type Actions } from "@sveltejs/kit";
+import { error, redirect, type Actions } from "@sveltejs/kit";
 import { MikomOneDevice } from '@binsarjr/apiamikomone'
 
 export const actions: Actions = {
@@ -12,8 +12,8 @@ export const actions: Actions = {
                 location: '/auth/otp',
                 success: "Data telah tervalidasi. Selanjutnya Meminta OTP"
             }
-        } catch (error) {
-            return invalid(422, { error: "Cek NIM & Tanggal Lahir mu kembali" })
+        } catch (_) {
+            return error(422, { message: "Cek NIM & Tanggal Lahir mu kembali" })
         }
 
     }

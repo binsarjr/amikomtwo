@@ -9,6 +9,7 @@
 	import { myenhance } from '$lib/forms/myenhance';
 	import { navigating } from '$app/stores';
 	import toast from 'svelte-french-toast';
+	import { authUser } from '../../../lib/stores/preferences';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -63,11 +64,9 @@
 	};
 </script>
 
-<div id="reader" class="hidden" />
-
 <BlockTitle>Scan QrCode</BlockTitle>
 <Block>
-	<video id="qr" class="h-[400px] w-[400px] md:w-full mx-auto" />
+	<video id="qr" class="max-h-[400px] w-full mx-auto" />
 </Block>
 <Block>
 	<p>
@@ -80,38 +79,13 @@
 </Block>
 
 <BlockTitle>Presensi Manual</BlockTitle>
-<form
-	action="?/qrcode"
-	method="post"
-	id="formqrcode"
-	use:enhance={() => {
-		const id = toast.loading('Sedang Memproses...', { position: 'top-right' });
-		return ({ result, update }) => {
-			if (result.type == 'invalid') toast.error(result.data?.error, { id, position: 'top-right' });
-			else if (result.type == 'success')
-				toast.success(result.data?.success, { id, position: 'top-right' });
-
-			qrresult = null;
-		};
-	}}
->
+<form action="?/qrcode" method="post" id="formqrcode" use:enhance={myenhance()}>
+	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<input type="hidden" name="qrcode" bind:value={qrresult} />
 	<button class="hidden" />
 </form>
-<form
-	action="?/manual"
-	method="post"
-	use:enhance={() => {
-		const id = toast.loading('Sedang Memproses...', { position: 'top-right' });
-		return ({ result, update }) => {
-			if (result.type == 'invalid') toast.error(result.data?.error, { id, position: 'top-right' });
-			else if (result.type == 'success')
-				toast.success(result.data?.success, { id, position: 'top-right' });
-
-			code = '';
-		};
-	}}
->
+<form action="?/manual" method="post" use:enhance={myenhance()}>
+	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<List strongIos insetIos>
 		<ListInput
 			outline

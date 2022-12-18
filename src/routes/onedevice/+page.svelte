@@ -1,18 +1,22 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
+	import { jadwal } from '$lib/stores/jadwal';
+	import { mahasiswa } from '$lib/stores/mahasiswa';
+	import { authUser } from '$lib/stores/preferences';
 	import { Block, BlockTitle, List, ListItem } from 'konsta/svelte';
+	import { onMount } from 'svelte';
 </script>
 
 <List strongIos insetIos>
 	<ListItem
-		header={$page.data.mahasiswa.Mhs.Npm}
-		title={'Halo, ' + $page.data.mahasiswa.Mhs.Nama}
+		header={$mahasiswa?.Mhs.Npm || '{npm}'}
+		title={'Halo, ' + ($mahasiswa?.Mhs.Nama || '{nama}')}
 	/>
 </List>
 
 <BlockTitle>Jadwal Kuliah Hari Ini</BlockTitle>
 <List strongIos insetIos outlineIos>
-	{#each $page.data.jadwal as jadwal}
+	{#each $jadwal as jadwal}
 		<ListItem
 			title={jadwal.MataKuliah}
 			header={jadwal.JenisKuliah}

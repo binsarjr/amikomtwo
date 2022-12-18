@@ -1,5 +1,7 @@
 import { MikomOneDevice, MikomSupports } from "@binsarjr/apiamikomone";
-import { invalid } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
+import { privateKey } from "../../../lib/config";
+import { authAttempt } from "../../../lib/supports/auth";
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
@@ -8,24 +10,16 @@ export const actions: Actions = {
         const nim = formData.get('nim') as string
         const password = formData.get('password') as string
         try {
-            const response = await MikomOneDevice.Auth(nim, password, nim)
-            const expires = new Date()
-            expires.setSeconds(expires.getSeconds() + parseInt(response.expires_in.toString()))
+            const response = await authAttempt(nim,password)
 
-            const expiresSixMonth = new Date()
-            expiresSixMonth.setMonth(expiresSixMonth.getMonth() + 6)
-
-            cookies.set('logged', '1', { path: '/', expires: expiresSixMonth })
-            cookies.set('nim', nim, { path: '/', expires: expiresSixMonth })
-            cookies.set('password', MikomSupports.Encryption.encrypt(password), { path: '/', expires: expiresSixMonth })
-            cookies.set('access_token', response.access_token, { path: '/', expires })
-            cookies.set('api_key', response.api_key, { path: '/', expires })
             return {
                 location: '/onedevice',
-                success: "Login Berhasil!"
+                success: "Login Berhasil!",
+                response,
+                password: MikomSupports.Encryption.encrypt(password, privateKey)
             }
-        } catch (error) {
-            return invalid(422, { error: "NIM dan Password Tidak Valid!" })
+        } catch (e) {
+            throw error(422, { message: "NIM dan Password Tidak Valid!" })
         }
     }
 }

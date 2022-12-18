@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-
 	import type { IBio } from '@binsarjr/apiamikomone/lib/typings/Response';
 
 	import { BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
-	export let data: {
-		histori: import('@binsarjr/apiamikomone/lib/typings/Response').IPresence[];
-		mahasiswa: IBio;
-	};
+	import { onMount } from 'svelte';
+	import { serviceClient } from '../../../lib/serviceClient';
+	import { mahasiswa } from '../../../lib/stores/mahasiswa';
+	import { historiPresensi } from '../../../lib/stores/presensi';
+	onMount(async () => {
+		$historiPresensi = await serviceClient.historiPresensi(
+			$mahasiswa!.PeriodeAkademik.Semester,
+			$mahasiswa!.PeriodeAkademik.TahunAkademik
+		);
+	});
 </script>
 
 <Page class="pb-20">
@@ -17,16 +20,18 @@
 	</Navbar>
 
 	<BlockTitle
-		>{data.mahasiswa.PeriodeAkademik.SemesterFormat}
-		{data.mahasiswa.PeriodeAkademik.TahunAkademik}</BlockTitle
+		>{$mahasiswa?.PeriodeAkademik.SemesterFormat || '{semester}'}
+		{$mahasiswa?.PeriodeAkademik.TahunAkademik || '{tahun_akademik}'}</BlockTitle
 	>
 	<List strongIos insetIos>
-		{#each data.histori as histori}
+		{#each $historiPresensi as histori}
 			<ListItem
 				header={histori.Kode + ' | ' + histori.JmlSks + ' SKS'}
 				title={histori.NamaMk}
 				after={histori.JmlPresensiKuliah}
 			/>
+		{:else}
+			<p>Tidak memiliki histori</p>
 		{/each}
 	</List>
 </Page>

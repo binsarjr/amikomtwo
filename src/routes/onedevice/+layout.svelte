@@ -14,6 +14,21 @@
 		ListItem,
 		Toggle
 	} from 'konsta/svelte';
+	import { onMount } from 'svelte';
+	import { serviceClient } from '../../lib/serviceClient';
+	import { jadwal } from '../../lib/stores/jadwal';
+	import { mahasiswa } from '../../lib/stores/mahasiswa';
+	import { authUser, preferences } from '../../lib/stores/preferences';
+	onMount(async () => {
+		if (!$authUser) goto('/auth');
+		else {
+			await serviceClient.refresh();
+		}
+
+		// get bio
+		serviceClient.bio();
+		serviceClient.jadwal(new Date().getDay());
+	});
 	const pages = {
 		home: '/onedevice',
 		presensi: '/onedevice/presensi',

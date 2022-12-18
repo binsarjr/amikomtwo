@@ -1,20 +1,15 @@
 import { MikomOneDevice } from "@binsarjr/apiamikomone"
 import { PresenceStatus } from "@binsarjr/apiamikomone/lib/typings/Enum/Presence"
-import { invalid } from "@sveltejs/kit"
-import type { Actions, PageServerLoad } from "./$types"
-
-
-export const load: PageServerLoad = async ({ parent }) => {
-    await parent()
-}
-
+import { error } from "@sveltejs/kit"
+import type { Actions } from "./$types"
 
 export const actions: Actions = {
     qrcode: async ({ request, cookies }) => {
-        const accessToken = cookies.get('access_token') as string
-        const qrresult = (await request.formData()).get('qrcode') as string
+        const formdata = await request.formData()
+        const accessToken = formdata.get('access_token')?.toString() || ''
+        const qrresult = formdata.get('qrcode') as string
         const [_, response] = await Promise.all([
-            new Promise((resolve) => setTimeout(resolve, 2000)), // minimal proses harus 1 detik,
+            new Promise((resolve) => setTimeout(resolve, 1000)), // minimal proses harus 1 detik,
             MikomOneDevice.Presence.Qrcode(accessToken, qrresult)
         ])
         if (response.status === PresenceStatus.Success) {
@@ -22,19 +17,20 @@ export const actions: Actions = {
                 success: response.message
             }
         } else {
-            return invalid(409, { error: response.message })
+            throw error(409, { message: response.message })
         }
     },
     manual: async ({ request, cookies }) => {
-        const accessToken = cookies.get('access_token') as string
-        const code = (await request.formData()).get('code') as string
+        const formdata = await request.formData()
+        const accessToken = formdata.get('access_token')?.toString() || ''
+        const code = formdata.get('code') as string
         const response = await MikomOneDevice.Presence.Code(accessToken, code)
         if (response.status === PresenceStatus.Success) {
             return {
                 success: response.message
             }
         } else {
-            return invalid(409, { error: response.message })
+            throw error(409, { message: response.message })
         }
     },
 }

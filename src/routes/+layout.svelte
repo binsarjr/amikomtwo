@@ -4,7 +4,7 @@
 	import { Toaster } from 'svelte-french-toast';
 	// @ts-ignore
 	import NProgress from 'nprogress';
-	import { navigating } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 
 	// NProgress css
 	import 'nprogress/nprogress.css';
