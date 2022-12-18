@@ -6,5 +6,6 @@ export interface UserGuest {
     fitur: {
         presensi: boolean
     }
+    password?: string
 }
 export let usersGuest = writable<(UserGuest)[]>('usersguest', [])

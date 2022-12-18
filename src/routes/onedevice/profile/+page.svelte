@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { Block, Button, Link, List, ListItem, Navbar, Page } from 'konsta/svelte';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
-	import type { PageData } from './$types';
+	import { preferences } from '../../../lib/stores/preferences';
 	let keluar = 'KELUAR';
 	const onLogoutClick = () => {
 		if (keluar === 'KELUAR') {
@@ -11,6 +13,15 @@
 			goto('/onedevice/logout');
 		}
 	};
+
+	let exportLink: string | URL = '';
+
+	$: if (browser) {
+		exportLink = new URL($page.url.toString());
+		exportLink.pathname = '/onedevice/export';
+		exportLink.searchParams.set('mahasiswa', encodeURIComponent(JSON.stringify($mahasiswa)));
+		exportLink.searchParams.set('password', $preferences.password);
+	}
 </script>
 
 <Block>
@@ -25,8 +36,8 @@
 		<ListItem header="Semester" title={$mahasiswa?.PeriodeAkademik.SemesterFormat} />
 	</List>
 	<Button largeIos clearIos class="mb-2" href="/onedevice/import" component="a">IMPORT</Button>
-	<span >
-		<Button largeIos class="mb-2" href="/onedevice/export" component="a" target="_blank"
+	<span>
+		<Button largeIos class="mb-2" href={exportLink.toString()} component="a" target="_blank"
 			>EXPORT</Button
 		>
 	</span>

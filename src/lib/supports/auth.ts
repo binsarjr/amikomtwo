@@ -12,6 +12,8 @@ export const getRawPassword = (password: string) => {
     return password
 }
 
+export const encPassword = (password: string) => MikomSupports.Encryption.encrypt(password, privateKey)
+
 export const authAttempt = async (nim: string, password: string) => {
 
     password = getRawPassword(password)

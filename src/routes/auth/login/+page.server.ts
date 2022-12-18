@@ -1,7 +1,7 @@
 import { MikomOneDevice, MikomSupports } from "@binsarjr/apiamikomone";
 import { error } from "@sveltejs/kit";
 import { privateKey } from "../../../lib/config";
-import { authAttempt } from "../../../lib/supports/auth";
+import { authAttempt, encPassword } from "../../../lib/supports/auth";
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
@@ -16,7 +16,7 @@ export const actions: Actions = {
                 location: '/onedevice',
                 success: "Login Berhasil!",
                 response,
-                password: MikomSupports.Encryption.encrypt(password, privateKey)
+                password: encPassword(password)
             }
         } catch (e) {
             throw error(422, { message: "NIM dan Password Tidak Valid!" })

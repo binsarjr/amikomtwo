@@ -38,7 +38,6 @@
 			// @ts-ignore
 			document.getElementById('qr'),
 			(res: any) => {
-				console.log(res);
 				// skip process when qrresult is not yet empty
 				if (qrresult != null) return;
 				qrresult = res.data;
