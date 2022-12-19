@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ setHeaders, url }) => {
 	) as IBio;
 	let filename = `amikomtwo-signature-${mahasiswa.Mhs.Npm}`;
 	setHeaders({
-		'Content-Disposition': 'attachment; filename=' + filename + '.sign'
+		'Content-Disposition': 'attachment; filename=' + filename + '.signature.txt'
 	});
 
 	let encrypted = encryptGuestData(mahasiswa, password);
