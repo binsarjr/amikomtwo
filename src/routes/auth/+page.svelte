@@ -1,6 +1,5 @@
 <script>
 	import { enhance, applyAction } from '$app/forms';
-	import { goto } from '$app/navigation';
 	import { Block, List, ListButton, ListInput, Navbar, Page } from 'konsta/svelte';
 	import { myenhance } from '$lib/forms/myenhance';
 	import { preferences } from '$lib/stores/preferences';

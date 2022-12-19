@@ -26,15 +26,12 @@
 			if (r.status == 200) {
 				const user: UserGuest = await r.json();
 
-				$usersGuest[$usersGuest.length] = user;
-				$usersGuest = $usersGuest.filter((guest) => {
-					if (guest.nim == $mahasiswa!.Mhs.Npm) return false;
-					return guest.nim != user.nim;
-				});
 				if (user.nim == $mahasiswa!.Mhs.Npm) {
 					toast.error('Tidak bisa mengimport diri sendiri');
 				} else {
 					toast.success('User berhasil diimport');
+					$usersGuest = $usersGuest.filter((guest) => guest.nim != user.nim);
+					$usersGuest[$usersGuest.length] = user;
 				}
 			} else {
 				toast.error('Import Gagal');

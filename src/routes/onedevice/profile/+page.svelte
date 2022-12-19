@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Block, Button, Link, List, ListItem, Navbar, Page } from 'konsta/svelte';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';

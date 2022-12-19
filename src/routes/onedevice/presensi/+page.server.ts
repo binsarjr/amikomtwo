@@ -4,7 +4,7 @@ import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-	qrcode: async ({ request, cookies }) => {
+	qrcode: async ({ request }) => {
 		const formdata = await request.formData();
 		const accessToken = formdata.get('access_token')?.toString() || '';
 		const qrresult = formdata.get('qrcode') as string;
@@ -20,7 +20,7 @@ export const actions: Actions = {
 			return fail(409, { message: response.message });
 		}
 	},
-	manual: async ({ request, cookies }) => {
+	manual: async ({ request }) => {
 		const formdata = await request.formData();
 		const accessToken = formdata.get('access_token')?.toString() || '';
 		const code = formdata.get('code') as string;
