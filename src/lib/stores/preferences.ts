@@ -1,16 +1,16 @@
-import { writable } from "svelte-local-storage-store";
+import { writable } from 'svelte-local-storage-store';
 
 export let preferences = writable('preferences', {
-    nim: '',
-    password: '',
-    tanggalLahir: '',
-    otp: ''
-})
+	nim: '',
+	password: '',
+	tanggalLahir: '',
+	otp: ''
+});
 
 export let authUser = writable<{
-    accessToken: string
-    apiKey: string
+	accessToken: string;
+	apiKey: string;
 } | null>('authuser', {
-    accessToken: '',
-    apiKey: ''
-})
+	accessToken: '',
+	apiKey: ''
+});

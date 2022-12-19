@@ -2,23 +2,10 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import {
-		Page,
-		Navbar,
-		NavbarBackLink,
-		Tabbar,
-		TabbarLink,
-		Block,
-		Icon,
-		List,
-		ListItem,
-		Toggle
-	} from 'konsta/svelte';
+	import { Page, Navbar, Tabbar, TabbarLink } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../lib/serviceClient';
-	import { jadwal } from '../../lib/stores/jadwal';
-	import { mahasiswa } from '../../lib/stores/mahasiswa';
-	import { authUser, preferences } from '../../lib/stores/preferences';
+	import { authUser } from '../../lib/stores/preferences';
 	$: {
 		if (!$authUser) goto('/auth');
 	}
