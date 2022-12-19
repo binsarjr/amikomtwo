@@ -9,7 +9,7 @@
 	import { myenhance } from '$lib/forms/myenhance';
 	import { navigating } from '$app/stores';
 	import toast from 'svelte-french-toast';
-	import { authUser } from '../../../lib/stores/preferences';
+	import { authUser, preferences } from '../../../lib/stores/preferences';
 	import { usersGuest, type UserGuest } from '../../../lib/stores/userguest';
 	import ListTamu from '../../../lib/components/TamuComponent/ListTamu.svelte';
 
@@ -17,6 +17,7 @@
 	let qrresult: string | null;
 	let code = '';
 	let activeUsersGuest: UserGuest[] = $usersGuest;
+	let except = [$usersGuest.find((guest) => $preferences.nim == guest.nim) as UserGuest];
 	$: if (qrresult) {
 		//   need time for reactive
 		setTimeout(() => {
@@ -157,4 +158,4 @@
 
 <BlockTitle>Presensi Bareng</BlockTitle>
 <Block>saat ini presensi akan berbarengan dengan guest tamu yang ada</Block>
-<ListTamu active bind:activeSources={activeUsersGuest} />
+<ListTamu active bind:activeSources={activeUsersGuest} {except} />

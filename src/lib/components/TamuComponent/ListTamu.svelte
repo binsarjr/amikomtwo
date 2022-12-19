@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { List, ListItem } from 'konsta/svelte';
 	import { usersGuest, type UserGuest } from '../../stores/userguest';
-	// export let sources: UserGuest[] = [];
 	export let active = false;
 	export let activeSources: UserGuest[] = [];
+	export let except: UserGuest[] = [];
+
+	$: activeSources = activeSources.filter((source) => !except.includes(source));
 
 	$: if ($usersGuest) {
 		activeSources = $usersGuest;
