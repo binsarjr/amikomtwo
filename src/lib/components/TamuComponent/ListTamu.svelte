@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import { List, ListItem } from 'konsta/svelte';
 	import { usersGuest, type UserGuest } from '../../stores/userguest';
 	export let active = false;
@@ -10,6 +11,9 @@
 	}
 
 	$: activeSources = activeSources.filter((source) => !except.includes(source));
+	afterNavigate(() => {
+		activeSources = activeSources.filter((source) => !except.includes(source));
+	});
 	const onClick = (indexSource: number) => {
 		if (!active) return;
 		if (activeSources.includes($usersGuest[indexSource])) {
@@ -28,6 +32,7 @@
 			class:opacity-50={!activeSources.includes(guest)}
 			on:click={() => onClick(i)}
 		>
+			<!-- <ListItem header="Tamu {i + 1}" subtitle={'12.34.567' + i} title={'NAMA ' + i} /> -->
 			<ListItem header="Tamu {i + 1}" subtitle={guest.nim} title={guest.nama} />
 		</div>
 	{/each}
