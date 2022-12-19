@@ -5,12 +5,11 @@
 	export let activeSources: UserGuest[] = [];
 	export let except: UserGuest[] = [];
 
-	$: activeSources = activeSources.filter((source) => !except.includes(source));
-
 	$: if ($usersGuest) {
 		activeSources = $usersGuest;
 	}
 
+	$: activeSources = activeSources.filter((source) => !except.includes(source));
 	const onClick = (indexSource: number) => {
 		if (!active) return;
 		if (activeSources.includes($usersGuest[indexSource])) {
