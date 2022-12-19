@@ -10,6 +10,7 @@
 	import { navigating } from '$app/stores';
 	import toast from 'svelte-french-toast';
 	import { authUser } from '../../../lib/stores/preferences';
+	import { usersGuest } from '../../../lib/stores/userguest';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -61,6 +62,45 @@
 			alert('Gagal scan qrcode.cobalah dengan qrcode yang lain');
 		}
 	};
+
+	const guestCodeSubmit = async () => {
+		if ($usersGuest.length === 0) return;
+		const formdata = new FormData();
+		formdata.set('code', code);
+		$usersGuest.map((user) => {
+			formdata.append('nim', user.nim);
+			formdata.append('password', user.password || '');
+		});
+
+		const resp = await fetch('/services/presensi/code', {
+			method: 'POST',
+			body: formdata
+		});
+		const results: { success: boolean; message: string }[] = await resp.json();
+		results.map((result) => {
+			if (result.success) toast.success(result.message);
+			else toast.error(result.message);
+		});
+	};
+	const guestQrCodeSubmit = async () => {
+		if ($usersGuest.length === 0) return;
+		const formdata = new FormData();
+		formdata.set('data', qrresult || '');
+		$usersGuest.map((user) => {
+			formdata.append('nim', user.nim);
+			formdata.append('password', user.password || '');
+		});
+
+		const resp = await fetch('/services/presensi/qrcode', {
+			method: 'POST',
+			body: formdata
+		});
+		const results: { success: boolean; message: string }[] = await resp.json();
+		results.map((result) => {
+			if (result.success) toast.success(result.message);
+			else toast.error(result.message);
+		});
+	};
 </script>
 
 <BlockTitle>Scan QrCode</BlockTitle>
@@ -78,12 +118,18 @@
 </Block>
 
 <BlockTitle>Presensi Manual</BlockTitle>
-<form action="?/qrcode" method="post" id="formqrcode" use:enhance={myenhance()}>
+<form
+	action="?/qrcode"
+	method="post"
+	id="formqrcode"
+	on:submit={guestQrCodeSubmit}
+	use:enhance={myenhance()}
+>
 	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<input type="hidden" name="qrcode" bind:value={qrresult} />
 	<button class="hidden" />
 </form>
-<form action="?/manual" method="post" use:enhance={myenhance()}>
+<form action="?/manual" method="post" on:submit={guestCodeSubmit} use:enhance={myenhance()}>
 	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<List strongIos insetIos>
 		<ListInput
@@ -102,3 +148,6 @@
 		<Button large>Kirimkan</Button>
 	</Block>
 </form>
+
+<BlockTitle>Presensi Bareng</BlockTitle>
+<Block>saat ini presensi akan berbarengan dengan guest tamu yang ada</Block>
