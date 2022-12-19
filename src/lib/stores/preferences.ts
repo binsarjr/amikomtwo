@@ -10,7 +10,4 @@ export let preferences = writable('preferences', {
 export let authUser = writable<{
 	accessToken: string;
 	apiKey: string;
-} | null>('authuser', {
-	accessToken: '',
-	apiKey: ''
-});
+} | null>('authuser', null);
