@@ -16,6 +16,7 @@ export const actions: Actions = {
 				location: '/onedevice',
 				success: 'Login Berhasil!',
 				response,
+				nim,
 				password: encPassword(password)
 			};
 		} catch (e) {

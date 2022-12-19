@@ -6,6 +6,7 @@
 	const doLogin = () =>
 		myenhance<{
 			password: string;
+			nim: string;
 			response: {
 				access_token: string;
 				api_key: string;
@@ -18,6 +19,7 @@
 					accessToken: data.response.access_token,
 					apiKey: data.response.api_key
 				};
+				$preferences.nim = data.nim;
 				$preferences.password = data.password;
 				$preferences.otp = '';
 			}

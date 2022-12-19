@@ -4,13 +4,15 @@
 	import { BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../../lib/serviceClient';
+	import { initKhs } from '../../../lib/stores/initKhs';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
 	import { historiPresensi } from '../../../lib/stores/presensi';
+
+	let semesterSelected = $mahasiswa!.PeriodeAkademik.Semester;
+	let semester = $initKhs?.Semester.find((s) => s.Kode == semesterSelected)?.Nama;
+	let tahunAkademikSelected = $mahasiswa!.PeriodeAkademik.TahunAkademik;
 	onMount(async () => {
-		$historiPresensi = await serviceClient.historiPresensi(
-			$mahasiswa!.PeriodeAkademik.Semester,
-			$mahasiswa!.PeriodeAkademik.TahunAkademik
-		);
+		$historiPresensi = await serviceClient.historiPresensi(semesterSelected, tahunAkademikSelected);
 	});
 </script>
 
@@ -20,8 +22,8 @@
 	</Navbar>
 
 	<BlockTitle
-		>{$mahasiswa?.PeriodeAkademik.SemesterFormat || '{semester}'}
-		{$mahasiswa?.PeriodeAkademik.TahunAkademik || '{tahun_akademik}'}</BlockTitle
+		>{semester || '{semester}'}
+		{tahunAkademikSelected || '{tahun_akademik}'}</BlockTitle
 	>
 	<List strongIos insetIos>
 		{#each $historiPresensi as histori}
