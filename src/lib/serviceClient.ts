@@ -1,4 +1,5 @@
 import type { IBio, IJadwalKuliah, IPresence } from "@binsarjr/apiamikomone/lib/typings/Response";
+import toast from "svelte-french-toast";
 import { get } from "svelte/store";
 import { jadwal } from "./stores/jadwal";
 import { mahasiswa } from "./stores/mahasiswa";
@@ -9,17 +10,21 @@ export const serviceClient = {
         const formdata = new FormData();
         formdata.set('nim', get(preferences).nim);
         formdata.set('password', get(preferences).password);
-        const r = await fetch('/onedevice/services/refresh', {
-            method: 'POST',
-            body: formdata
-        });
-        const response = await r.json();
-        authUser.update(() => {
-            return {
+        try {
+
+            const r = await fetch('/onedevice/services/refresh', {
+                method: 'POST',
+                body: formdata
+            });
+            const response = await r.json();
+            authUser.update(() => ({
                 accessToken: response.access_token,
                 apiKey: response.api_key
-            };
-        })
+            }))
+        } catch (error) {
+            toast.error("Gagal Login.")
+            authUser.update(() => null)
+        }
     },
     bio: async () => {
         const r = await fetch(

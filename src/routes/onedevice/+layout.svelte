@@ -19,11 +19,11 @@
 	import { jadwal } from '../../lib/stores/jadwal';
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser, preferences } from '../../lib/stores/preferences';
-	onMount(async () => {
+	$: {
 		if (!$authUser) goto('/auth');
-		else {
-			await serviceClient.refresh();
-		}
+	}
+	onMount(async () => {
+		await serviceClient.refresh();
 
 		// get bio
 		serviceClient.bio();

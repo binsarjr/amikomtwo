@@ -8,6 +8,12 @@
 
 	// NProgress css
 	import 'nprogress/nprogress.css';
+	import { authUser } from '$lib/stores/preferences';
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
+	$: if ($authUser && browser) {
+		if (!$page.url.pathname.startsWith('/onedevice')) goto('/onedevice');
+	}
 
 	NProgress.configure({
 		// Full list: https://github.com/rstacruz/nprogress#configuration

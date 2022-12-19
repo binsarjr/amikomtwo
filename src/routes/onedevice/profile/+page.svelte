@@ -4,13 +4,14 @@
 	import { page } from '$app/stores';
 	import { Block, Button, Link, List, ListItem, Navbar, Page } from 'konsta/svelte';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
-	import { preferences } from '../../../lib/stores/preferences';
+	import { authUser, preferences } from '../../../lib/stores/preferences';
 	let keluar = 'KELUAR';
 	const onLogoutClick = () => {
 		if (keluar === 'KELUAR') {
 			keluar = 'KETUK SEKALI LAGI UNTUK KELUAR';
 		} else {
-			goto('/onedevice/logout');
+			// goto('/onedevice/logout');
+			$authUser = null;
 		}
 	};
 
