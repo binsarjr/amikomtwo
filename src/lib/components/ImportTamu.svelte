@@ -1,0 +1,47 @@
+<script lang="ts">
+	import { usersGuest, type UserGuest } from '$lib/stores/userguest';
+	import {
+		Block,
+		Button,
+	} from 'konsta/svelte';
+	import toast from 'svelte-french-toast';
+	let files: FileList;
+
+	export let excepts: string[] = [];
+
+	const onChange = () => {
+		files[0].text().then(async (rawcontent) => {
+			const formdata = new FormData();
+
+			formdata.set('guest', rawcontent);
+			const r = await fetch('/import/verify', {
+				method: 'POST',
+				body: formdata
+			});
+			if (r.status == 200) {
+				const user: UserGuest = await r.json();
+
+				if (!excepts.includes(user.nim)) {
+					toast.success('User berhasil diimport');
+					$usersGuest = $usersGuest.filter((guest) => guest.nim != user.nim);
+					$usersGuest[$usersGuest.length] = user;
+				} else {
+					toast.error(`User dengan nim ${user.nim} tidak bisa di import`);
+				}
+			} else {
+				toast.error('Import Gagal');
+			}
+		});
+	};
+</script>
+
+<Block insetIos>
+	<input type="file" bind:files on:change={onChange} id="tamuimport" name="import" class="hidden" />
+
+	<Button
+		largeIos
+		onClick={function () {
+			document.getElementById('tamuimport')?.click();
+		}}>Impor Tamu Baru</Button
+	>
+</Block>

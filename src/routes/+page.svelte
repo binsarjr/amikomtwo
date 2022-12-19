@@ -12,4 +12,7 @@
 	<Block insetIos>
 		<Button largeIos component="a" href="/auth">Masuk</Button>
 	</Block>
+	<Block insetIos>
+		<Button largeIos outline component="a" href="/presensi">Presensi Sebagai Tamu</Button>
+	</Block>
 </Page>

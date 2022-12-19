@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { decryptGuestData } from '../../../../lib/supports/userguest';
+import { decryptGuestData } from '../../../lib/supports/userguest';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {

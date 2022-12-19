@@ -2,16 +2,23 @@
 	import { onDestroy, onMount } from 'svelte';
 	// @ts-ignore
 	import QrScanner from 'qr-scanner';
-	import { Block, BlockTitle, Button, List, ListInput } from 'konsta/svelte';
-	import { browser } from '$app/environment';
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { enhance } from '$app/forms';
-	import { myenhance } from '$lib/forms/myenhance';
+	import {
+		Block,
+		BlockTitle,
+		Button,
+		List,
+		ListInput,
+		ListItem,
+		Navbar,
+		NavbarBackLink,
+		Page
+	} from 'konsta/svelte';
+	import { afterNavigate } from '$app/navigation';
 	import { navigating } from '$app/stores';
 	import toast from 'svelte-french-toast';
-	import { authUser } from '../../../lib/stores/preferences';
-	import { usersGuest, type UserGuest } from '../../../lib/stores/userguest';
-	import ListTamu from '../../../lib/components/TamuComponent/ListTamu.svelte';
+	import { usersGuest, type UserGuest } from '../../lib/stores/userguest';
+	import ListTamu from '../../lib/components/TamuComponent/ListTamu.svelte';
+	import ImportTamu from '../../lib/components/ImportTamu.svelte';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -109,52 +116,50 @@
 	};
 </script>
 
-<BlockTitle>Scan QrCode</BlockTitle>
-<Block>
-	<video id="qr" class="max-h-[400px] w-full mx-auto" />
-</Block>
-<Block>
-	<p>
-		Silakan scan langsung menggunakan kamera di atas atau bisa juga dengan mengupload file qrcode
-		yang ada di bawah ini
-	</p>
-</Block>
-<Block>
-	<input id="qrimage" type="file" bind:files={qrImages} on:change={uploadImage} />
-</Block>
-
-<BlockTitle>Presensi Manual</BlockTitle>
-<form
-	action="?/qrcode"
-	method="post"
-	id="formqrcode"
-	on:submit={guestQrCodeSubmit}
-	use:enhance={myenhance()}
->
-	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
-	<input type="hidden" name="qrcode" bind:value={qrresult} />
-	<button class="hidden" />
-</form>
-<form action="?/manual" method="post" on:submit={guestCodeSubmit} use:enhance={myenhance()}>
-	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
-	<List strongIos insetIos>
-		<ListInput
-			outline
-			name="code"
-			label="Code"
-			placeholder="Masukkan Kode Presensi"
-			value={code}
-			onInput={function () {
-				code = this.value;
-				this.value = code;
-			}}
-		/>
-	</List>
+<Page>
+	<Navbar title="AmikomTWO">
+		<NavbarBackLink slot="left" text="Back" onClick={() => history.back()} />
+	</Navbar>
+	<BlockTitle>Scan QrCode</BlockTitle>
 	<Block>
-		<Button large>Kirimkan</Button>
+		<!-- svelte-ignore a11y-media-has-caption -->
+		<video id="qr" class="max-h-[400px] w-full mx-auto" />
 	</Block>
-</form>
+	<Block>
+		<p>
+			Silakan scan langsung menggunakan kamera di atas atau bisa juga dengan mengupload file qrcode
+			yang ada di bawah ini
+		</p>
+	</Block>
+	<Block>
+		<input id="qrimage" type="file" bind:files={qrImages} on:change={uploadImage} />
+	</Block>
 
-<BlockTitle>Presensi Bareng</BlockTitle>
-<Block>saat ini presensi akan berbarengan dengan guest tamu yang ada</Block>
-<ListTamu active bind:activeSources={activeUsersGuest} />
+	<BlockTitle>Presensi Manual</BlockTitle>
+	<form method="post" id="formqrcode" on:submit|preventDefault={guestQrCodeSubmit}>
+		<button class="hidden" />
+	</form>
+	<form method="post" on:submit|preventDefault={guestCodeSubmit}>
+		<List strongIos insetIos>
+			<ListInput
+				outline
+				name="code"
+				label="Code"
+				placeholder="Masukkan Kode Presensi"
+				value={code}
+				onInput={function () {
+					code = this.value;
+					this.value = code;
+				}}
+			/>
+		</List>
+		<Block>
+			<Button large>Kirimkan</Button>
+		</Block>
+	</form>
+
+	<BlockTitle>Presensi Bareng</BlockTitle>
+	<Block>Presensi akan berbarengan dengan guest tamu yang ada</Block>
+	<ImportTamu />
+	<ListTamu active bind:activeSources={activeUsersGuest} />
+</Page>
