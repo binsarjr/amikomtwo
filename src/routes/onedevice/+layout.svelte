@@ -24,6 +24,7 @@
 	}
 	onMount(async () => {
 		await serviceClient.refresh();
+		serviceClient.initkhs();
 
 		// get bio
 		serviceClient.bio();

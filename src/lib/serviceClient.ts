@@ -1,6 +1,7 @@
-import type { IBio, IJadwalKuliah, IPresence } from "@binsarjr/apiamikomone/lib/typings/Response";
+import type { IBio, IJadwalKuliah, InitKHS, IPresence } from "@binsarjr/apiamikomone/lib/typings/Response";
 import toast from "svelte-french-toast";
 import { get } from "svelte/store";
+import { initKhs } from "./stores/initKhs";
 import { jadwal } from "./stores/jadwal";
 import { mahasiswa } from "./stores/mahasiswa";
 import { authUser, preferences } from "./stores/preferences";
@@ -34,6 +35,14 @@ export const serviceClient = {
         );
         const resp: IBio = await r.json()
         mahasiswa.update(() => resp)
+    }, initkhs: async () => {
+        const r = await fetch(
+            `/onedevice/services/initkhs?access_token=${encodeURIComponent(
+                get(authUser)!.accessToken
+            )}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}`
+        );
+        const resp: InitKHS = await r.json()
+        initKhs.update(() => resp)
     },
     jadwal: async (hari: number) => {
         const r = await fetch(
