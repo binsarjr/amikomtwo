@@ -5,8 +5,19 @@
 	import { Page, Navbar, Tabbar, TabbarLink } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../lib/serviceClient';
+	import { initKhs } from '../../lib/stores/initKhs';
+	import { jadwal } from '../../lib/stores/jadwal';
+	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
-	$: if (browser && !$authUser?.accessToken) goto('/');
+	import { historiPresensi } from '../../lib/stores/presensi';
+	$: if (browser && !$authUser?.accessToken) {
+		// clean data when user logout
+		$mahasiswa = null;
+		$jadwal = [];
+		$initKhs = null;
+		$historiPresensi = [];
+		goto('/');
+	}
 	onMount(async () => {
 		await serviceClient.refresh();
 		serviceClient.initkhs();
