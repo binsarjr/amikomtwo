@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@binsarjr/apiamikomone': ^1.4.2
+  '@binsarjr/apiamikomone': ^1.4.3
   '@fontsource/fira-mono': ^4.5.0
   '@neoconfetti/svelte': ^1.0.0
   '@sveltejs/adapter-auto': next
@@ -30,7 +30,7 @@ specifiers:
   vite: ^4.0.0
 
 devDependencies:
-  '@binsarjr/apiamikomone': 1.4.2
+  '@binsarjr/apiamikomone': 1.4.3
   '@fontsource/fira-mono': 4.5.10
   '@neoconfetti/svelte': 1.0.0
   '@sveltejs/adapter-auto': 1.0.0-next.91_l5ueyfihz3gpzzvvyo2ean5u3e
@@ -75,8 +75,8 @@ packages:
       regenerator-runtime: 0.13.10
     dev: true
 
-  /@binsarjr/apiamikomone/1.4.2:
-    resolution: {integrity: sha512-+p7U6Mpfwz4pRSpKsOHWRJlWAbTRj7ojo5E2FjRdGShyrhYUqZRNPN6vX4xADPmeplF5eBXlClWmm3t0bVZarQ==}
+  /@binsarjr/apiamikomone/1.4.3:
+    resolution: {integrity: sha512-897tmx+NUganp/y69Kfg1QGZtMIJpFYxsrXej4SRn4/PBOim0c9BDasKVFDVctcH3Nyjk5TjOLcc07kBPYxWVg==}
     dependencies:
       '@andreekeberg/imagedata': 1.0.2
       cheerio: 1.0.0-rc.12
