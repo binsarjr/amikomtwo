@@ -34,7 +34,7 @@
 	<ListItem link title="Histori Presensi" href="/onedevice/histori-presensi" />
 	<ListItem link title="Hasil Studi" />
 	<ListItem link title="Jadwal Kuliah" />
-	<ListItem link title="Transkrip" />
+	<ListItem link title="Transkrip" href="/onedevice/transkrip" />
 	<ListItem link title="Perpustakaan" />
 	<ListItem link title="Pembayaran" />
 	<ListItem link title="KTM" href="/onedevice/ktm" />

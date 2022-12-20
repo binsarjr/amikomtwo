@@ -3,11 +3,13 @@ import type {
 	IJadwalKuliah,
 	InitKHS,
 	IPresence,
+	ITranskripNilai,
 	PageResponse,
 	Pengumuman
 } from '@binsarjr/apiamikomone/lib/typings/Response';
 import toast from 'svelte-french-toast';
 import { get } from 'svelte/store';
+import { transkripNilai } from './stores/akademik';
 import { initKhs } from './stores/initKhs';
 import { jadwal } from './stores/jadwal';
 import { mahasiswa } from './stores/mahasiswa';
@@ -88,5 +90,14 @@ export const serviceClient = {
 		);
 		const resp: PageResponse<Pengumuman> = await r.json();
 		return resp.results
+	},
+	transkrip: async () => {
+		const r = await fetch(
+			`/onedevice/services/transkrip?access_token=${encodeURIComponent(
+				get(authUser)!.accessToken
+			)}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}`
+		);
+		const resp: ITranskripNilai = await r.json();
+		if (r.status == 200) transkripNilai.update(() => resp);
 	},
 };
