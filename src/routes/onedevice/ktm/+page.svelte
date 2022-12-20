@@ -26,16 +26,20 @@
 		{#await getktm()}
 			Tunggu sebentar...
 		{:then _}
-			<a
-				download="ktmdigital.png"
-				href={$ktmDigital}
-				title="KTM Digital"
-				target="_blank"
-				rel="noreferrer"
-			>
-				<img src={$ktmDigital} alt="" />
-			</a>
-			<span>Klik Gambar untuk mendownload</span>
+			{#if $ktmDigital}
+				<a
+					download="ktmdigital.png"
+					href={$ktmDigital}
+					title="KTM Digital"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<img src={$ktmDigital} alt="" />
+				</a>
+				<span>Klik Gambar untuk mendownload</span>
+			{:else}
+				<span>Ktm digital tidak dapat diambil.Mohon pastikan foto profile sudah ada</span>
+			{/if}
 		{/await}
 	</Block>
 </Page>
