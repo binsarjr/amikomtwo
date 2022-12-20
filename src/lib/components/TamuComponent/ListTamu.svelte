@@ -31,6 +31,9 @@
 			class:cursor-pointer={active}
 			class:opacity-50={!activeSources.includes(guest)}
 			on:click={() => onClick(i)}
+			on:dblclick={() => {
+				$usersGuest=$usersGuest.filter(d => d != guest)
+			}}
 		>
 			<!-- <ListItem header="Tamu {i + 1}" subtitle={'12.34.567' + i} title={'NAMA ' + i} /> -->
 			<ListItem header="Tamu {i + 1}" subtitle={guest.nim} title={guest.nama} />
