@@ -34,8 +34,8 @@
 			on:dblclick={() => {
 				$usersGuest=$usersGuest.filter(d => d != guest)
 			}}
+			title="Ketuk 2 kali untuk menghapus"
 		>
-			<!-- <ListItem header="Tamu {i + 1}" subtitle={'12.34.567' + i} title={'NAMA ' + i} /> -->
 			<ListItem header="Tamu {i + 1}" subtitle={guest.nim} title={guest.nama} />
 		</div>
 	{/each}
