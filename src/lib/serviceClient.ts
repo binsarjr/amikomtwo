@@ -2,7 +2,9 @@ import type {
 	IBio,
 	IJadwalKuliah,
 	InitKHS,
-	IPresence
+	IPresence,
+	PageResponse,
+	Pengumuman
 } from '@binsarjr/apiamikomone/lib/typings/Response';
 import toast from 'svelte-french-toast';
 import { get } from 'svelte/store';
@@ -77,5 +79,14 @@ export const serviceClient = {
 		);
 		const resp: IPresence[] = await r.json();
 		return (r.status == 200) ? resp : [];
-	}
+	},
+	pengumuman: async () => {
+		const r = await fetch(
+			`/onedevice/services/pengumuman?access_token=${encodeURIComponent(
+				get(authUser)!.accessToken
+			)}`
+		);
+		const resp: PageResponse<Pengumuman> = await r.json();
+		return resp.results
+	},
 };

@@ -39,3 +39,5 @@
 	<ListItem link title="Pembayaran" />
 	<ListItem link title="KTM" href="/onedevice/ktm" />
 </List>
+
+<BlockTitle>Pengumuman</BlockTitle>
