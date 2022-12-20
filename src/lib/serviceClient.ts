@@ -10,7 +10,7 @@ import type {
 } from '@binsarjr/apiamikomone/lib/typings/Response';
 import toast from 'svelte-french-toast';
 import { get } from 'svelte/store';
-import { hasilStudiSemester, transkripNilai } from './stores/akademik';
+import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademik';
 import { initKhs } from './stores/initKhs';
 import { jadwal } from './stores/jadwal';
 import { mahasiswa } from './stores/mahasiswa';
@@ -89,8 +89,8 @@ export const serviceClient = {
 				get(authUser)!.accessToken
 			)}`
 		);
-		const resp: PageResponse<Pengumuman> = await r.json();
-		return resp.results
+		const resp: Pengumuman[] = await r.json();
+		if (r.status == 200) pengumuman.update(() => resp)
 	},
 	transkrip: async () => {
 		const r = await fetch(

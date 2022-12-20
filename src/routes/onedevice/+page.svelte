@@ -5,6 +5,17 @@
 	import { authUser } from '$lib/stores/preferences';
 	import { Block, BlockTitle, List, ListItem } from 'konsta/svelte';
 	import { onMount } from 'svelte';
+	import PengumumanDetail from '../../lib/components/PengumumanDetail.svelte';
+	import { serviceClient } from '../../lib/serviceClient';
+	import { pengumuman } from '../../lib/stores/akademik';
+
+	const getData = async () => {
+		if($pengumuman.length) {
+			serviceClient.pengumuman()
+			return
+		}
+		return serviceClient.pengumuman()
+	}
 </script>
 
 <List strongIos insetIos>
@@ -41,3 +52,13 @@
 </List>
 
 <BlockTitle>Pengumuman</BlockTitle>
+
+<Block>
+	{#await getData()}
+		Mohon tunggu...
+	{:then _}
+		{#each $pengumuman as item}
+			<PengumumanDetail pengumuman={item} />
+		{/each}
+	{/await}
+</Block>
