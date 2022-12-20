@@ -71,6 +71,14 @@ export const serviceClient = {
 		);
 		const resp: IJadwalKuliah[] = await r.json();
 		if (r.status == 200) jadwal.update(() => resp);
+	}, jadwalMingguan: async (hari: number) => {
+		const r = await fetch(
+			`/onedevice/services/jadwal?access_token=${encodeURIComponent(
+				get(authUser)!.accessToken
+			)}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}&hari=${hari}`
+		);
+		const resp: IJadwalKuliah[] = await r.json();
+		return resp
 	},
 	historiPresensi: async (semester: number, tahunAkademik: string) => {
 		const r = await fetch(
