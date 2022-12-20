@@ -11,7 +11,7 @@
 	import { authUser } from '$lib/stores/preferences';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
-	$: if ($authUser && browser) {
+	$: if ($authUser?.accessToken && browser) {
 		if (
 			!$page.url.pathname.startsWith('/onedevice') &&
 			!$page.url.pathname.startsWith('/presensi')

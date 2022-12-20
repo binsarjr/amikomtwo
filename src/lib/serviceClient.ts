@@ -16,20 +16,21 @@ export const serviceClient = {
 		const formdata = new FormData();
 		formdata.set('nim', get(preferences).nim);
 		formdata.set('password', get(preferences).password);
-		try {
-			const r = await fetch('/onedevice/services/refresh', {
-				method: 'POST',
-				body: formdata
-			});
-			const response = await r.json();
+		const r = await fetch('/onedevice/services/refresh', {
+			method: 'POST',
+			body: formdata
+		});
+		const response = await r.json();
+		if (r.status == 200) {
 			authUser.update(() => ({
 				accessToken: response.access_token,
 				apiKey: response.api_key
 			}));
-		} catch (error) {
+		} else {
 			toast.error('Gagal Login.');
 			authUser.update(() => null);
 		}
+
 	},
 	bio: async () => {
 		const r = await fetch(
@@ -38,7 +39,7 @@ export const serviceClient = {
 			)}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}`
 		);
 		const resp: IBio = await r.json();
-		mahasiswa.update(() => resp);
+		if (r.status == 200) mahasiswa.update(() => resp);
 	},
 	initkhs: async () => {
 		const r = await fetch(
@@ -47,7 +48,7 @@ export const serviceClient = {
 			)}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}`
 		);
 		const resp: InitKHS = await r.json();
-		initKhs.update(() => resp);
+		if (r.status == 200) initKhs.update(() => resp);
 	},
 	jadwal: async (hari: number) => {
 		const r = await fetch(
@@ -56,7 +57,7 @@ export const serviceClient = {
 			)}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}&hari=${hari}`
 		);
 		const resp: IJadwalKuliah[] = await r.json();
-		jadwal.update(() => resp);
+		if (r.status == 200) jadwal.update(() => resp);
 	},
 	historiPresensi: async (semester: number, tahunAkademik: string) => {
 		const r = await fetch(
@@ -67,6 +68,6 @@ export const serviceClient = {
 			)}&semester=${semester}&tahun_akademik=${tahunAkademik}`
 		);
 		const resp: IPresence[] = await r.json();
-		return resp;
+		return (r.status == 200) ? resp : [];
 	}
 };

@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../lib/serviceClient';
 	import { authUser } from '../../lib/stores/preferences';
-	$: if (browser && !$authUser) goto('/');
+	$: if (browser && !$authUser?.accessToken) goto('/');
 	onMount(async () => {
 		await serviceClient.refresh();
 		serviceClient.initkhs();
