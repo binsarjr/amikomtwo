@@ -1,5 +1,6 @@
 import type {
 	IBio,
+	IHasilSemester,
 	IJadwalKuliah,
 	InitKHS,
 	IPresence,
@@ -9,7 +10,7 @@ import type {
 } from '@binsarjr/apiamikomone/lib/typings/Response';
 import toast from 'svelte-french-toast';
 import { get } from 'svelte/store';
-import { transkripNilai } from './stores/akademik';
+import { hasilStudiSemester, transkripNilai } from './stores/akademik';
 import { initKhs } from './stores/initKhs';
 import { jadwal } from './stores/jadwal';
 import { mahasiswa } from './stores/mahasiswa';
@@ -99,5 +100,16 @@ export const serviceClient = {
 		);
 		const resp: ITranskripNilai = await r.json();
 		if (r.status == 200) transkripNilai.update(() => resp);
+	},
+	hasilStudi: async (semester: number, tahunAkademik: string) => {
+		const r = await fetch(
+			`/onedevice/services/hasil-studi?access_token=${encodeURIComponent(
+				get(authUser)!.accessToken
+			)}&api_key=${encodeURIComponent(
+				get(authUser)!.apiKey
+			)}&semester=${semester}&tahun_akademik=${tahunAkademik}`
+		);
+		const resp: IHasilSemester = await r.json();
+		if (r.status == 200) hasilStudiSemester.update(() => resp);
 	},
 };

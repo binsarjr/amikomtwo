@@ -32,7 +32,7 @@
 <BlockTitle>Menu</BlockTitle>
 <List strongIos insetIos outlineIos>
 	<ListItem link title="Histori Presensi" href="/onedevice/histori-presensi" />
-	<ListItem link title="Hasil Studi" />
+	<ListItem link title="Hasil Studi" href="/onedevice/hasil-studi" />
 	<ListItem link title="Jadwal Kuliah" />
 	<ListItem link title="Transkrip" href="/onedevice/transkrip" />
 	<ListItem link title="Perpustakaan" />
