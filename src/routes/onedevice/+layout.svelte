@@ -7,6 +7,7 @@
 	import { serviceClient } from '../../lib/serviceClient';
 	import { initKhs } from '../../lib/stores/initKhs';
 	import { jadwal } from '../../lib/stores/jadwal';
+	import { ktmDigital } from '../../lib/stores/ktmDigital';
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
@@ -15,6 +16,7 @@
 		$mahasiswa = null;
 		$jadwal = [];
 		$initKhs = null;
+		$ktmDigital = null;
 		$historiPresensi = [];
 		goto('/');
 	}

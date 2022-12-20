@@ -40,6 +40,14 @@ export const serviceClient = {
 		);
 		const resp: IBio = await r.json();
 		if (r.status == 200) mahasiswa.update(() => resp);
+	}, ktm: async () => {
+		const r = await fetch(
+			`/onedevice/services/ktm?access_token=${encodeURIComponent(
+				get(authUser)!.accessToken
+			)}&api_key=${encodeURIComponent(get(authUser)!.apiKey)}`
+		);
+		const resp = await r.json();
+		return resp.status?.code == 200 ? `data:image/png;base64,${resp?.result?.hash}` : null
 	},
 	initkhs: async () => {
 		const r = await fetch(

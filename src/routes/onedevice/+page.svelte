@@ -37,5 +37,5 @@
 	<ListItem link title="Transkrip" />
 	<ListItem link title="Perpustakaan" />
 	<ListItem link title="Pembayaran" />
-	<ListItem link title="KTM" />
+	<ListItem link title="KTM" href="/onedevice/ktm" />
 </List>
