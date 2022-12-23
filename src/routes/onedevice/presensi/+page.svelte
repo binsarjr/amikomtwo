@@ -92,6 +92,11 @@
 		const id = toast.loading('Mohon Menunggu...');
 		const formdata = new FormData();
 		formdata.set('data', qrresult || '');
+		// add current user
+		formdata.append('nim', $preferences.nim);
+		formdata.append('password', $preferences.password);
+
+		// guest account
 		activeUsersGuest.map((user) => {
 			formdata.append('nim', user.nim);
 			formdata.append('password', user.password || '');
@@ -107,6 +112,7 @@
 			else toast.error(result.message);
 		});
 		toast.success('Antrian Selesai', { id });
+		qrresult = null;
 	};
 </script>
 
@@ -125,13 +131,7 @@
 </Block>
 
 <BlockTitle>Presensi Manual</BlockTitle>
-<form
-	action="?/qrcode"
-	method="post"
-	id="formqrcode"
-	on:submit={guestQrCodeSubmit}
-	use:enhance={myenhance()}
->
+<form action="?/qrcode" method="post" id="formqrcode" on:submit|preventDefault={guestQrCodeSubmit}>
 	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<input type="hidden" name="qrcode" bind:value={qrresult} />
 	<button class="hidden" />

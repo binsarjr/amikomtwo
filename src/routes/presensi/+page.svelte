@@ -113,6 +113,7 @@
 			else toast.error(result.message);
 		});
 		toast.success('Antrian Selesai', { id });
+		qrresult = null;
 	};
 </script>
 

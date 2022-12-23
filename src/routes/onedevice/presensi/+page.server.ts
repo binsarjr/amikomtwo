@@ -4,22 +4,22 @@ import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-	qrcode: async ({ request }) => {
-		const formdata = await request.formData();
-		const accessToken = formdata.get('access_token')?.toString() || '';
-		const qrresult = formdata.get('qrcode') as string;
-		const [_, response] = await Promise.all([
-			new Promise((resolve) => setTimeout(resolve, 1000)), // minimal proses harus 1 detik,
-			MikomOneDevice.Presence.Qrcode(accessToken, qrresult)
-		]);
-		if (response.status === PresenceStatus.Success) {
-			return {
-				success: response.message
-			};
-		} else {
-			return fail(409, { message: response.message });
-		}
-	},
+	// qrcode: async ({ request }) => {
+	// 	const formdata = await request.formData();
+	// 	const accessToken = formdata.get('access_token')?.toString() || '';
+	// 	const qrresult = formdata.get('qrcode') as string;
+	// 	const [_, response] = await Promise.all([
+	// 		new Promise((resolve) => setTimeout(resolve, 1000)), // minimal proses harus 1 detik,
+	// 		MikomOneDevice.Presence.Qrcode(accessToken, qrresult)
+	// 	]);
+	// 	if (response.status === PresenceStatus.Success) {
+	// 		return {
+	// 			success: response.message
+	// 		};
+	// 	} else {
+	// 		return fail(409, { message: response.message });
+	// 	}
+	// },
 	manual: async ({ request }) => {
 		const formdata = await request.formData();
 		const accessToken = formdata.get('access_token')?.toString() || '';
