@@ -1,0 +1,43 @@
+{
+    "short_name": "AmikomTWO",
+    "name": "Amikom TWO",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "background_color": "#8733d6",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#8733d6",
+    "shortcuts": [
+        {
+            "name": "Presensi Tamu",
+            "short_name": "Presensi Tamu",
+            "description": "Presensi cepat tanpa login",
+            "url": "/presensi",
+            "icons": [
+                {
+                    "src": "/favicon.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Amikom Two OneDevice",
+            "short_name": "AmikomTWO",
+            "description": "Halaman dashboard Amikom Two",
+            "url": "/onedevice",
+            "icons": [
+                {
+                    "src": "/favicon.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "description": "Sebuah website yang diadaptasi dari AmikomONE untuk solusi pengguna IOS. Terjamin aman karena bersifat open source.semua nya bisa dilihat secara terbuka. https://github.com/binsarjr/amikomtwo/wiki"
+}
