@@ -27,6 +27,7 @@
 		// get bio
 		serviceClient.bio();
 		serviceClient.jadwal(new Date().getDay());
+		serviceClient.pembayaran.bank();
 	});
 	const pages = {
 		home: '/onedevice',

@@ -5,7 +5,6 @@ import type {
 	InitKHS,
 	IPresence,
 	ITranskripNilai,
-	PageResponse,
 	Pengumuman
 } from '@binsarjr/apiamikomone/lib/typings/Response';
 import toast from 'svelte-french-toast';
@@ -14,6 +13,7 @@ import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademi
 import { initKhs } from './stores/initKhs';
 import { jadwal } from './stores/jadwal';
 import { mahasiswa } from './stores/mahasiswa';
+import { listBank } from './stores/pembayaran';
 import { authUser, preferences } from './stores/preferences';
 
 export const serviceClient = {
@@ -120,4 +120,24 @@ export const serviceClient = {
 		const resp: IHasilSemester = await r.json();
 		if (r.status == 200) hasilStudiSemester.update(() => resp);
 	},
+	pembayaran: {
+		bank: async () => {
+			const getData = async (accessToken: string, apiKey: string) => {
+				const r = await fetch(
+					`/onedevice/services/pembayaran/bank?access_token=${encodeURIComponent(accessToken)}&api_key=${encodeURIComponent(apiKey)}`
+				);
+				const resp: string[] = await r.json();
+				if (resp.length) listBank.update(() => resp)
+				return resp
+			}
+			let bank = get(listBank)
+			const userdata = get(authUser)!
+			if (bank.length) {
+				getData(userdata.accessToken, userdata.apiKey)
+				return bank
+			}
+			bank = await getData(userdata.accessToken, userdata.apiKey)
+			return bank
+		}
+	}
 };
