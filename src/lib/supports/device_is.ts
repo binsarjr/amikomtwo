@@ -1,14 +1,21 @@
 export const generateDeviceId = () => {
 	let result = '';
-	let characters = '10';
-	let charactersLength = characters.length;
+	const characters = '10';
+	const charactersLength = characters.length;
 	for (let i = 0; i < 64; i++) {
 		result += characters.charAt(Math.floor(Math.random() * charactersLength));
 	}
 	return parseInt(result, 2).toString(16).toUpperCase();
 };
 
-// 12.34.5678
+/**
+ * Membuat device ID dari npm (Nomor Induk Mahasiswa).
+ * Ini berfungsi untuk mengkonversi nomor npm ke dalam bentuk device ID dalam
+ * biner dan heksadesimal.
+ * 
+ * @param npm - NPM yang akan dikonversi.
+ * @returns device ID dalam bentuk heksadesimal.
+ */
 export const createDeviceIdFromNpm = (npm: string) => {
 	const [tahun, prodi, urutan] = npm.split('.', 3);
 
