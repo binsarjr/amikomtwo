@@ -219,6 +219,14 @@ export const serviceClient = {
 			}
 			bank = await getData();
 			return bank;
+		},
+		histori: async () => {
+			const getData = async () => {
+				const r = await reqService('/onedevice/services/pembayaran/histori');
+				const resp: string[] = await r.json();
+				return resp;
+			};
+			console.log(await getData());
 		}
 	}
 };

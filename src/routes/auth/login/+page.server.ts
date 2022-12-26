@@ -1,8 +1,6 @@
-import { MikomOneDevice, MikomSupports } from '@binsarjr/apiamikomone';
-import { error, fail } from '@sveltejs/kit';
-import { privateKey } from '../../../lib/config';
-import { authAttempt, encPassword } from '../../../lib/supports/auth';
-import type { Actions } from './$types';
+import { fail } from '@sveltejs/kit'
+import { authAttempt, encPassword } from '../../../lib/supports/auth'
+import type { Actions } from './$types'
 
 export const actions: Actions = {
 	default: async ({ request  }) => {

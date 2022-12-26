@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { historiPembayaran } from '$lib/stores/pembayaran';
 	import { Page, Navbar, Tabbar, TabbarLink } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../lib/serviceClient';
@@ -18,6 +19,7 @@
 		$initKhs = null;
 		$ktmDigital = null;
 		$historiPresensi = [];
+		$historiPembayaran = [];
 		goto('/');
 	}
 	onMount(async () => {

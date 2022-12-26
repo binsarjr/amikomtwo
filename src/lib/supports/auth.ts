@@ -1,5 +1,5 @@
 import { MikomOneDevice, MikomSupports } from '@binsarjr/apiamikomone'
-import { privateKey } from '../config'
+import { privateKey } from '../config.server'
 import { createDeviceIdFromNpm } from './device_is'
 
 /**
