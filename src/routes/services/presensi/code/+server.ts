@@ -1,7 +1,8 @@
-import { MikomOneDevice } from '@binsarjr/apiamikomone';
-import { PresenceStatus } from '@binsarjr/apiamikomone/lib/typings/Enum/Presence';
-import { json, type RequestHandler } from '@sveltejs/kit';
-import { authAttempt } from '../../../../lib/supports/auth';
+import { randomBetween, sleep } from '$lib/supports/utils'
+import { MikomOneDevice } from '@binsarjr/apiamikomone'
+import { PresenceStatus } from '@binsarjr/apiamikomone/lib/typings/Enum/Presence'
+import { json, type RequestHandler } from '@sveltejs/kit'
+import { authAttempt } from '../../../../lib/supports/auth'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const formdata = await request.formData();
@@ -23,6 +24,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					message: `${nim} Gagal Login, coba minta sign yang baru`
 				};
 			}
+
+			await sleep(randomBetween(100, 1000))
 
 			const response = await MikomOneDevice.Presence.Code(accessToken, code);
 			return {
