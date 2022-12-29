@@ -3,10 +3,12 @@ import type {
 	IHasilSemester,
 	IJadwalKuliah,
 	IPresence,
+	IPresenceDetail,
 	ITranskripNilai,
 	InitKHS,
 	Pengumuman
 } from '@binsarjr/apiamikomone/lib/typings/Response'
+import moment from 'moment'
 import toast from 'svelte-french-toast'
 import { get } from 'svelte/store'
 import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademik'
@@ -15,7 +17,6 @@ import { jadwal } from './stores/jadwal'
 import { mahasiswa } from './stores/mahasiswa'
 import { listBank } from './stores/pembayaran'
 import { authUser, preferences } from './stores/preferences'
-
 /**
  * Mendapatkan response dari service dengan menggunakan data dari user yang
  * telah login.
@@ -150,6 +151,27 @@ export const serviceClient = {
 		const r = await reqService('/onedevice/services/histori-presensi', searchParams);
 		const resp: IPresence[] = await r.json();
 		return r.status == 200 ? resp : [];
+	},
+	/**
+	 * Mengambil detil presensi dari API OneDevice berdasarkan 'krsId'.
+	 *
+	 * @param krsId - id dari karyawan yang akan diambil presensinya.
+	 * @returns array dari objek presensi detil jika berhasil, array kosong jika
+	 * gagal.
+	 */
+	detailPresensi: async (krsId: number) => {
+		const r = await reqService(`/onedevice/services/histori-presensi/${krsId}`);
+		const resp: IPresenceDetail[] = await r.json();
+		let results = r.status == 200 ? resp : [];
+		results = results
+			.map((d) => {
+				// @ts-ignore
+				d.TanggalMoment = moment(d.Tanggal);
+				return d;
+			})
+			// @ts-ignore
+			.sort((a, b) => b.TanggalMoment.unix() - a.TanggalMoment.unix());
+		return results;
 	},
 	/**
 	 * Fungsi yang digunakan untuk memuat dan memperbarui pengumuman.

@@ -14,6 +14,7 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
   konsta: ^1.0.2
+  moment: ^2.29.4
   nprogress: ^0.2.0
   postcss: ^8.4.18
   prettier: ^2.6.2
@@ -43,6 +44,7 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.26.0
   eslint-plugin-svelte3: 4.0.0_2enwihyagxuap4bespfpuzarfa
   konsta: 1.0.2
+  moment: 2.29.4
   nprogress: 0.2.0
   postcss: 8.4.18
   prettier: 2.7.1

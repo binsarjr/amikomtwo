@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../../lib/serviceClient';
@@ -7,15 +8,17 @@
 	import { historiPresensi } from '../../../lib/stores/presensi';
 
 	let semesterSelected: number = 0;
-	let semester: string | null = null;
 	let tahunAkademikSelected: string = '';
 	const refresh = async () => {
 		$historiPresensi = await serviceClient.historiPresensi(semesterSelected, tahunAkademikSelected);
 	};
 	onMount(async () => {
-		semesterSelected = $mahasiswa!.PeriodeAkademik.Semester || 0;
-		semester = $initKhs?.Semester.find((s) => s.Kode == semesterSelected)?.Nama || null;
-		tahunAkademikSelected = $mahasiswa!.PeriodeAkademik.TahunAkademik || '';
+		semesterSelected =
+			parseInt($page.url.searchParams.get('semester') || '') ||
+			$mahasiswa!.PeriodeAkademik.Semester ||
+			0;
+		tahunAkademikSelected =
+			$page.url.searchParams.get('tahun_ajaran') || $mahasiswa!.PeriodeAkademik.TahunAkademik || '';
 		refresh();
 	});
 </script>
@@ -50,7 +53,9 @@
 			<ListItem
 				header={histori.Kode + ' | ' + histori.JmlSks + ' SKS'}
 				title={histori.NamaMk}
-				after={histori.JmlPresensiKuliah}
+				after={histori.JmlPresensiKuliah.toString()}
+				link
+				href="/onedevice/histori-presensi/{histori.KrsId}?matkul={histori.NamaMk}&semester={semesterSelected}&tahun_ajaran={tahunAkademikSelected}"
 			/>
 		{:else}
 			<p>Tidak memiliki histori</p>
