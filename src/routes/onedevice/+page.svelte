@@ -10,12 +10,12 @@
 	import { pengumuman } from '../../lib/stores/akademik';
 
 	const getData = async () => {
-		if($pengumuman.length) {
-			serviceClient.pengumuman()
-			return
+		if ($pengumuman.length) {
+			serviceClient.pengumuman();
+			return;
 		}
-		return serviceClient.pengumuman()
-	}
+		return serviceClient.pengumuman();
+	};
 </script>
 
 <List strongIos insetIos>
@@ -59,6 +59,8 @@
 	{:then _}
 		{#each $pengumuman as item}
 			<PengumumanDetail pengumuman={item} />
+		{:else}
+			<p>Tidak ada pengumuman</p>
 		{/each}
 	{/await}
 </Block>
