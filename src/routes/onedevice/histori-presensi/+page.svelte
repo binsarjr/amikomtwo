@@ -55,7 +55,9 @@
 				title={histori.NamaMk}
 				after={histori.JmlPresensiKuliah.toString()}
 				link
-				href="/onedevice/histori-presensi/{histori.KrsId}?matkul={histori.NamaMk}&semester={semesterSelected}&tahun_ajaran={tahunAkademikSelected}"
+				href="/onedevice/histori-presensi/{histori.KrsId}?matkul={encodeURI(
+					histori.NamaMk
+				)}&semester={semesterSelected}&tahun_ajaran={tahunAkademikSelected}"
 			/>
 		{:else}
 			<p>Tidak memiliki histori</p>

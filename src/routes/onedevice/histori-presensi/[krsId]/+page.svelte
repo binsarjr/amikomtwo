@@ -3,7 +3,7 @@
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { serviceClient } from '../../../../lib/serviceClient';
 
-	$: namaMatkul = $page.url.searchParams.get('matkul');
+	$: namaMatkul = decodeURIComponent($page.url.searchParams.get('matkul') || '');
 </script>
 
 <Page class="pb-20">
