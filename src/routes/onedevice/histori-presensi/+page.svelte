@@ -55,7 +55,7 @@
 				title={histori.NamaMk}
 				after={histori.JmlPresensiKuliah.toString()}
 				link
-				href="/onedevice/histori-presensi/{histori.KrsId}?matkul={encodeURI(
+				href="/onedevice/histori-presensi/{histori.KrsId}?matkul={encodeURIComponent(
 					histori.NamaMk
 				)}&semester={semesterSelected}&tahun_ajaran={tahunAkademikSelected}"
 			/>
