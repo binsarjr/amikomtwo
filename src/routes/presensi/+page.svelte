@@ -124,7 +124,7 @@
 	<BlockTitle>Scan QrCode</BlockTitle>
 	<Block>
 		<!-- svelte-ignore a11y-media-has-caption -->
-		<video id="qr" class="max-h-[400px] w-full mx-auto" capture="environment"/>
+		<video id="qr" class="max-h-[400px] w-full mx-auto" capture="environment" />
 	</Block>
 	<Block>
 		<p>
@@ -133,7 +133,13 @@
 		</p>
 	</Block>
 	<Block>
-		<input id="qrimage" type="file" bind:files={qrImages} on:change={uploadImage} />
+		<input
+			capture="environment"
+			id="qrimage"
+			type="file"
+			bind:files={qrImages}
+			on:change={uploadImage}
+		/>
 	</Block>
 
 	<BlockTitle>Presensi Manual</BlockTitle>

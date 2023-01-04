@@ -128,7 +128,13 @@
 	</p>
 </Block>
 <Block>
-	<input id="qrimage" type="file" bind:files={qrImages} on:change={uploadImage} />
+	<input
+		id="qrimage"
+		capture="environment"
+		type="file"
+		bind:files={qrImages}
+		on:change={uploadImage}
+	/>
 </Block>
 
 <BlockTitle>Presensi Manual</BlockTitle>
