@@ -118,7 +118,8 @@
 
 <BlockTitle>Scan QrCode</BlockTitle>
 <Block>
-	<video id="qr" class="max-h-[400px] w-full mx-auto" />
+	<!-- svelte-ignore a11y-media-has-caption -->
+	<video id="qr" class="max-h-[400px] w-full mx-auto" capture="environment" />
 </Block>
 <Block>
 	<p>

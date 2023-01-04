@@ -152,12 +152,16 @@ export const serviceClient = {
 		const resp: IPresence[] = await r.json();
 		return r.status == 200 ? resp : [];
 	},
+
 	/**
-	 * Mengambil detil presensi dari API OneDevice berdasarkan 'krsId'.
+	 * Memuat detail presensi berdasarkan ID krs.
+	 * Melakukan permintaan layanan ke layanan histori-presensi dengan parameter
+	 * berupa ID KRS.
+	 * Mengembalikan respon berupa array of IPresenceDetail jika status respon 200,
+	 * atau array kosong jika status respon bukan 200.
 	 *
-	 * @param krsId - id dari karyawan yang akan diambil presensinya.
-	 * @returns array dari objek presensi detil jika berhasil, array kosong jika
-	 * gagal.
+	 * @param krsId - ID KRS untuk mengambil data presensi.
+	 * @returns array of IPresenceDetail, array kosong jika status respon bukan 200.
 	 */
 	detailPresensi: async (krsId: number) => {
 		const r = await reqService(`/onedevice/services/histori-presensi/${krsId}`);

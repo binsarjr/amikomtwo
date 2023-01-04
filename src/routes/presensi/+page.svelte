@@ -124,7 +124,7 @@
 	<BlockTitle>Scan QrCode</BlockTitle>
 	<Block>
 		<!-- svelte-ignore a11y-media-has-caption -->
-		<video id="qr" class="max-h-[400px] w-full mx-auto" />
+		<video id="qr" class="max-h-[400px] w-full mx-auto" capture="environment"/>
 	</Block>
 	<Block>
 		<p>
