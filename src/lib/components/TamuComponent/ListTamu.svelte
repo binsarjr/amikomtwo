@@ -27,7 +27,8 @@
 	};
 </script>
 
-{#if active}<List insetIos>
+{#if active}
+	<List>
 		{#each $usersGuest as guest, i}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
@@ -35,15 +36,14 @@
 				class:opacity-50={!activeSources.includes(guest)}
 				on:click={() => onClick(i)}
 				class="flex-grow"
-				title="Ketuk 2 kali untuk menghapus"
 			>
 				<ListItem header="Tamu {i + 1}" subtitle={guest.nim} title={guest.nama}>
 					<span
 						slot="after"
-						class="bg-red-500 px-2 py rounded text-white text-sm font-semibold"
+						class="bg-red-500 text-center px-2 py rounded text-white text-sm font-semibold"
 						on:dblclick={() => {
 							$usersGuest = $usersGuest.filter((d) => d != guest);
-						}}>Ketuk 2x Untuk Hapus</span
+						}}>Ketuk 2x<br />Untuk Hapus</span
 					>
 				</ListItem>
 			</div>
