@@ -14,8 +14,8 @@
 		"@binsarjr/apiamikomone": "^1.4.3",
 		"@fontsource/fira-mono": "^4.5.0",
 		"@neoconfetti/svelte": "^1.0.0",
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "1.0.0-next.589",
+		"@sveltejs/adapter-auto": "^1.0.3",
+		"@sveltejs/kit": "^1.10.0",
 		"@types/cookie": "^0.5.1",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
@@ -30,7 +30,7 @@
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
 		"qr-scanner": "^1.4.1",
-		"svelte": "^3.55.0",
+		"svelte": "^3.55.1",
 		"svelte-check": "^2.7.1",
 		"svelte-french-toast": "^1.0.3",
 		"svelte-local-storage-store": "^0.3.1",
@@ -40,5 +40,158 @@
 		"typescript": "^4.7.4",
 		"vite": "^4.0.0"
 	},
-	"type": "module"
+	"type": "module",
+	"exports": {
+		"./package.json": "./package.json",
+		"./components/ImportTamu.svelte": {
+			"types": "./package/components/ImportTamu.svelte.d.ts",
+			"svelte": "./package/components/ImportTamu.svelte",
+			"default": "./package/components/ImportTamu.svelte"
+		},
+		"./components/PengumumanDetail.svelte": {
+			"types": "./package/components/PengumumanDetail.svelte.d.ts",
+			"svelte": "./package/components/PengumumanDetail.svelte",
+			"default": "./package/components/PengumumanDetail.svelte"
+		},
+		"./components/TamuComponent/ListTamu.svelte": {
+			"types": "./package/components/TamuComponent/ListTamu.svelte.d.ts",
+			"svelte": "./package/components/TamuComponent/ListTamu.svelte",
+			"default": "./package/components/TamuComponent/ListTamu.svelte"
+		},
+		"./config.server": {
+			"types": "./package/config.server.d.ts",
+			"default": "./package/config.server.js"
+		},
+		"./forms/myenhance": {
+			"types": "./package/forms/myenhance.d.ts",
+			"default": "./package/forms/myenhance.js"
+		},
+		"./serviceClient": {
+			"types": "./package/serviceClient.d.ts",
+			"default": "./package/serviceClient.js"
+		},
+		"./stores/akademik": {
+			"types": "./package/stores/akademik.d.ts",
+			"default": "./package/stores/akademik.js"
+		},
+		"./stores/initKhs": {
+			"types": "./package/stores/initKhs.d.ts",
+			"default": "./package/stores/initKhs.js"
+		},
+		"./stores/jadwal": {
+			"types": "./package/stores/jadwal.d.ts",
+			"default": "./package/stores/jadwal.js"
+		},
+		"./stores/ktmDigital": {
+			"types": "./package/stores/ktmDigital.d.ts",
+			"default": "./package/stores/ktmDigital.js"
+		},
+		"./stores/mahasiswa": {
+			"types": "./package/stores/mahasiswa.d.ts",
+			"default": "./package/stores/mahasiswa.js"
+		},
+		"./stores/pembayaran": {
+			"types": "./package/stores/pembayaran.d.ts",
+			"default": "./package/stores/pembayaran.js"
+		},
+		"./stores/preferences": {
+			"types": "./package/stores/preferences.d.ts",
+			"default": "./package/stores/preferences.js"
+		},
+		"./stores/presensi": {
+			"types": "./package/stores/presensi.d.ts",
+			"default": "./package/stores/presensi.js"
+		},
+		"./stores/userguest": {
+			"types": "./package/stores/userguest.d.ts",
+			"default": "./package/stores/userguest.js"
+		},
+		"./supports/auth": {
+			"types": "./package/supports/auth.d.ts",
+			"default": "./package/supports/auth.js"
+		},
+		"./supports/device_is": {
+			"types": "./package/supports/device_is.d.ts",
+			"default": "./package/supports/device_is.js"
+		},
+		"./supports/toastPromise": {
+			"types": "./package/supports/toastPromise.d.ts",
+			"default": "./package/supports/toastPromise.js"
+		},
+		"./supports/userguest": {
+			"types": "./package/supports/userguest.d.ts",
+			"default": "./package/supports/userguest.js"
+		},
+		"./supports/utils": {
+			"types": "./package/supports/utils.d.ts",
+			"default": "./package/supports/utils.js"
+		}
+	},
+	"files": [
+		"package"
+	],
+	"typesVersions": {
+		">4.0": {
+			"components/ImportTamu.svelte": [
+				"./package/components/ImportTamu.svelte.d.ts"
+			],
+			"components/PengumumanDetail.svelte": [
+				"./package/components/PengumumanDetail.svelte.d.ts"
+			],
+			"components/TamuComponent/ListTamu.svelte": [
+				"./package/components/TamuComponent/ListTamu.svelte.d.ts"
+			],
+			"config.server": [
+				"./package/config.server.d.ts"
+			],
+			"forms/myenhance": [
+				"./package/forms/myenhance.d.ts"
+			],
+			"serviceClient": [
+				"./package/serviceClient.d.ts"
+			],
+			"stores/akademik": [
+				"./package/stores/akademik.d.ts"
+			],
+			"stores/initKhs": [
+				"./package/stores/initKhs.d.ts"
+			],
+			"stores/jadwal": [
+				"./package/stores/jadwal.d.ts"
+			],
+			"stores/ktmDigital": [
+				"./package/stores/ktmDigital.d.ts"
+			],
+			"stores/mahasiswa": [
+				"./package/stores/mahasiswa.d.ts"
+			],
+			"stores/pembayaran": [
+				"./package/stores/pembayaran.d.ts"
+			],
+			"stores/preferences": [
+				"./package/stores/preferences.d.ts"
+			],
+			"stores/presensi": [
+				"./package/stores/presensi.d.ts"
+			],
+			"stores/userguest": [
+				"./package/stores/userguest.d.ts"
+			],
+			"supports/auth": [
+				"./package/supports/auth.d.ts"
+			],
+			"supports/device_is": [
+				"./package/supports/device_is.d.ts"
+			],
+			"supports/toastPromise": [
+				"./package/supports/toastPromise.d.ts"
+			],
+			"supports/userguest": [
+				"./package/supports/userguest.d.ts"
+			],
+			"supports/utils": [
+				"./package/supports/utils.d.ts"
+			]
+		}
+	}
 }
