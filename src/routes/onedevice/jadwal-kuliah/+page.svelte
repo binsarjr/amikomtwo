@@ -13,7 +13,8 @@
 		NavbarBackLink,
 		Page
 	} from 'konsta/svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import toast from 'svelte-french-toast';
 	import { serviceClient } from '../../../lib/serviceClient';
 	import { jadwalMingguan } from '../../../lib/stores/jadwal';
 	import { ktmDigital } from '../../../lib/stores/ktmDigital';
@@ -23,19 +24,25 @@
 	let idHariSelected = todayId.toString();
 	let jadwalSelected: IJadwalKuliah[] = [];
 	const getJadwal = async () => {
+		toast.loading('sync', { position: 'top-right' });
 		let idHari = parseInt(idHariSelected);
 		if ($jadwalMingguan[idHari]) {
 			jadwalSelected = $jadwalMingguan[idHari];
 			serviceClient.jadwalMingguan(idHari).then((jadwal) => {
 				$jadwalMingguan[idHari] = jadwal;
+				toast.remove();
 			});
 			return;
 		}
 		jadwalSelected = await serviceClient.jadwalMingguan(idHari);
 		$jadwalMingguan[idHari] = jadwalSelected;
+		toast.remove();
 	};
 	onMount(() => {
 		getJadwal();
+	});
+	onDestroy(() => {
+		toast.remove();
 	});
 </script>
 
