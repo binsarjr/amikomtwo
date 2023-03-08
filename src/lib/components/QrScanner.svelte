@@ -4,6 +4,7 @@
 	// @ts-ignore
 	import QrScanner from 'qr-scanner';
 	import { browser } from '$app/environment';
+	import { writable } from 'svelte-local-storage-store';
 
 	let selectedDeviceId: string;
 	const codeReader = new BrowserQRCodeReader();
@@ -26,7 +27,7 @@
 		});
 	}
 
-	let range = 1;
+	let range = writable('zoom', 1);
 	let loaded = false;
 	const load = async () => {
 		await navigator.mediaDevices.getUserMedia({
@@ -79,7 +80,7 @@
 				let track = stream.getVideoTracks()[0];
 				let constraints = track.getConstraints();
 				// @ts-ignore
-				constraints.advanced = [{ zoom: range }];
+				constraints.advanced = [{ zoom: $range }];
 				await track.applyConstraints(constraints);
 				video.srcObject = stream;
 			})
@@ -89,7 +90,7 @@
 	};
 	let rangeId: any;
 
-	$: if (range && browser) {
+	$: if ($range && browser) {
 		rangeId && clearTimeout(rangeId);
 		rangeId = setTimeout(() => changeZoomScale(), 500);
 	}
@@ -103,16 +104,16 @@
 			{#each [1, 2, 4, 6, 8, 10] as targetRange}
 				<button
 					type="button"
-					on:click={() => (range = targetRange)}
+					on:click={() => ($range = targetRange)}
 					class="text-white p-4"
-					class:active={range == targetRange}
+					class:active={$range == targetRange}
 				>
 					<span>{targetRange}x</span>
 				</button>
 			{/each}
 		</div>
 		<div class="w-full px-4 py-2">
-			<input type="range" bind:value={range} class="w-full" min="1" max="10" />
+			<input type="range" bind:value={$range} class="w-full" min="1" max="10" />
 		</div>
 		<div class="w-full px-4 py-2">
 			{#if loaded}
