@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { BrowserCodeReader, BrowserMultiFormatReader, BrowserQRCodeReader, type IScannerControls } from '@zxing/browser';
+	import {
+		BrowserCodeReader,
+		BrowserMultiFormatReader,
+		BrowserQRCodeReader,
+		type IScannerControls
+	} from '@zxing/browser';
 	// @ts-ignore
 	import QrScanner from 'qr-scanner';
 	import { browser } from '$app/environment';
@@ -10,14 +15,14 @@
 	export let imageUrl: string | null = null;
 	let selectedDeviceId = writable<string | undefined>('cameraDeviceId', undefined);
 	const codeReader = new BrowserMultiFormatReader();
-	let controls: IScannerControls|null=null
+	let controls: IScannerControls | null = null;
 	let video: HTMLVideoElement;
 
 	let err: string;
 
-	let min=1
-	let max=10
-
+	let isZoomSupport = false;
+	let min = 1;
+	let max = 10;
 
 	let videoInputDevices: MediaDeviceInfo[] = [];
 
@@ -37,9 +42,9 @@
 
 	let range = writable('zoom', 1);
 	const load = async () => {
-		if(controls) {
-			controls.stop()
-			controls=null
+		if (controls) {
+			controls.stop();
+			controls = null;
 		}
 		videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
 		if (!videoInputDevices.find((p) => p.deviceId == $selectedDeviceId)) {
@@ -50,7 +55,7 @@
 		console.log(`Started decode from camera with id ${$selectedDeviceId}`);
 
 		// you can use the controls to stop() the scan or switchTorch() if available
-		controls=await codeReader.decodeFromVideoDevice(
+		controls = await codeReader.decodeFromVideoDevice(
 			$selectedDeviceId,
 			video,
 			async (_result, error, controls) => {
@@ -65,14 +70,16 @@
 				// returned from the method.
 			}
 		);
+
 		// @ts-ignore
-		let capabilities = controls.streamVideoCapabilitiesGet()
+		let capabilities = controls.streamVideoCapabilitiesGet();
 		// @ts-ignore
-		min = capabilities?.zoom?.min || 1
+		min = capabilities?.zoom?.min || 1;
 		// @ts-ignore
-		max = capabilities?.zoom?.max || 1
-		changeZoomScale()
-		
+		max = capabilities?.zoom?.max || 1;
+		// @ts-ignore
+		isZoomSupport = !!capabilities?.zoom;
+		changeZoomScale();
 	};
 	$: if ($selectedDeviceId && browser) {
 		load();
@@ -90,11 +97,14 @@
 	const changeZoomScale = async () => {
 		if (controls) {
 			// @ts-ignore
-			controls.streamVideoConstraintsApply({advanced: [{ 
-				// @ts-ignore
-				zoom: $range
-			 }]})
-			
+			controls.streamVideoConstraintsApply({
+				advanced: [
+					{
+						// @ts-ignore
+						zoom: $range
+					}
+				]
+			});
 		}
 	};
 
@@ -107,21 +117,27 @@
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video id="video" class="w-full mx-auto" />
 	<div class="absolute bottom-0 w-full flex flex-col items-end">
-		<div class="w-full flex justify-around items-center gap-2" id="zoom">
-			{#each [1, 2, 4, 6, 8, 10] as targetRange}
-				<button
-					type="button"
-					on:click={() => ($range = targetRange)}
-					class="text-white p-4"
-					class:active={parseInt($range.toString()||'') == targetRange}
-				>
-					<span>{targetRange}x</span>
-				</button>
-			{/each}
-		</div>
-		<div class="w-full px-4 py-2">
-			<input type="range" bind:value={$range} class="w-full" {min} {max} />
-		</div>
+		{#if isZoomSupport}
+			<div class="w-full flex justify-around items-center gap-2" id="zoom">
+				{#each [1, 2, 4, 6, 8, 10] as targetRange}
+					<button
+						type="button"
+						on:click={() => ($range = targetRange)}
+						class="text-white p-4"
+						class:active={parseInt($range.toString() || '') == targetRange}
+					>
+						<span>{targetRange}x</span>
+					</button>
+				{/each}
+			</div>
+			<div class="w-full px-4 py-2">
+				<input type="range" bind:value={$range} class="w-full" {min} {max} />
+			</div>
+		{:else}
+			<div class="w-full px-4 py-2">
+				<p class="text-white">Zoom is not supported by your device selection</p>
+			</div>
+		{/if}
 		<div class="w-full px-4 py-2">
 			<select on:change={change} class="w-full px-4 py-2">
 				<option disabled selected>-- Pilih Kamera--</option>
