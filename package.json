@@ -193,5 +193,9 @@
 				"./package/supports/utils.d.ts"
 			]
 		}
+	},
+	"dependencies": {
+		"@zxing/browser": "^0.1.1",
+		"@zxing/library": "^0.19.2"
 	}
 }

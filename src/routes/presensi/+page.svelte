@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	// @ts-ignore
-	import QrScanner from 'qr-scanner';
 	import {
 		Block,
 		BlockTitle,
@@ -13,15 +11,15 @@
 		NavbarBackLink,
 		Page
 	} from 'konsta/svelte';
-	import { afterNavigate } from '$app/navigation';
-	import { navigating } from '$app/stores';
 	import toast from 'svelte-french-toast';
 	import { usersGuest, type UserGuest } from '../../lib/stores/userguest';
 	import ListTamu from '../../lib/components/TamuComponent/ListTamu.svelte';
 	import ImportTamu from '../../lib/components/ImportTamu.svelte';
+	import QrScanner from '../../lib/components/QrScanner.svelte';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
+	let imageUrl:string;
 	let code = '';
 	let activeUsersGuest: UserGuest[] = $usersGuest;
 	$: if (qrresult) {
@@ -30,64 +28,23 @@
 			document.getElementById('formqrcode')?.querySelector('button')?.click();
 		}, 20);
 	}
-	let qrscanner: any;
-	$: {
-		if ($navigating) {
-			// @ts-ignore
-			if (qrscanner) {
-				qrscanner.destroy();
-				qrscanner.stop();
-			}
-			qrscanner = null;
-		}
-	}
-
-	afterNavigate(async () => {
-		// @ts-ignore
-		qrscanner = new QrScanner(
-			// @ts-ignore
-			document.getElementById('qr'),
-			(res: any) => {
-				// skip process when qrresult is not yet empty
-				if (qrresult != null) return;
-				qrresult = res.data;
-			},
-			{
-				highlightScanRegion: true,
-				highlightCodeOutline: true,
-				calculateScanRegion: (v) => {
-					const smallestDimension = Math.min(v.videoWidth, v.videoHeight);
-
-					// Make scan region smaller to match better small qr codes
-					const scanRegionSize = Math.round((1 / 4) * smallestDimension);
-
-					let region: QrScanner.ScanRegion = {
-						x: Math.round((v.videoWidth - scanRegionSize) / 2),
-						y: Math.round((v.videoHeight - scanRegionSize) / 2),
-						width: scanRegionSize,
-						height: scanRegionSize
-					};
-					return region;
-				}
-			}
-		);
-		qrscanner.setInversionMode('both');
-		qrscanner.start();
-	});
+	
 
 	const uploadImage = async () => {
 		// skip process when qrresult is not yet empty
-		if (qrresult != null || !qrImages?.length) return;
+		if (!qrImages?.length) return;
 		try {
-			const res = await Promise.any([QrScanner.scanImage(qrImages[0])]);
-			if (res) qrresult = res;
+			let reader = new FileReader();
+            reader.onload = e => {
+                 imageUrl = e.target!.result?.toString()||''
+            };
+            reader.readAsDataURL(qrImages[0]);
 		} catch (error) {
 			alert('Gagal scan qrcode.cobalah dengan qrcode yang lain');
 		}
 	};
 
 	const guestCodeSubmit = async () => {
-		if (activeUsersGuest.length === 0) return;
 		const id = toast.loading('Mohon Menunggu...');
 		const formdata = new FormData();
 		formdata.set('code', code);
@@ -108,7 +65,6 @@
 		toast.success('Antrian Selesai', { id });
 	};
 	const guestQrCodeSubmit = async () => {
-		if (activeUsersGuest.length === 0) return;
 		const id = toast.loading('Mohon Menunggu...');
 		const formdata = new FormData();
 		formdata.set('data', qrresult || '');
@@ -137,8 +93,7 @@
 	</Navbar>
 	<BlockTitle>Scan QrCode</BlockTitle>
 	<Block>
-		<!-- svelte-ignore a11y-media-has-caption -->
-		<video id="qr" class="max-h-[400px] w-full mx-auto" capture="environment" />
+		<QrScanner bind:result={qrresult} bind:imageUrl/>
 	</Block>
 	<Block>
 		<p>
