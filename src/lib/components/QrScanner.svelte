@@ -20,7 +20,6 @@
 
 	let err: string;
 
-	let isZoomSupport = false;
 	let min = 1;
 	let max = 10;
 
@@ -77,8 +76,6 @@
 		min = capabilities?.zoom?.min || 1;
 		// @ts-ignore
 		max = capabilities?.zoom?.max || 1;
-		// @ts-ignore
-		isZoomSupport = !!capabilities?.zoom;
 		changeZoomScale();
 	};
 	$: if ($selectedDeviceId && browser) {
@@ -117,27 +114,22 @@
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video id="video" class="w-full mx-auto" />
 	<div class="absolute bottom-0 w-full flex flex-col items-end">
-		{#if isZoomSupport}
-			<div class="w-full flex justify-around items-center gap-2" id="zoom">
-				{#each [1, 2, 4, 6, 8, 10] as targetRange}
-					<button
-						type="button"
-						on:click={() => ($range = targetRange)}
-						class="text-white p-4"
-						class:active={parseInt($range.toString() || '') == targetRange}
-					>
-						<span>{targetRange}x</span>
-					</button>
-				{/each}
-			</div>
-			<div class="w-full px-4 py-2">
-				<input type="range" bind:value={$range} class="w-full" {min} {max} />
-			</div>
-		{:else}
-			<div class="w-full px-4 py-2">
-				<p class="text-white">Zoom is not supported by your device selection</p>
-			</div>
-		{/if}
+		<div class="w-full flex justify-around items-center gap-2" id="zoom">
+			{#each [1, 2, 4, 6, 8, 10] as targetRange}
+				<button
+					type="button"
+					on:click={() => ($range = targetRange)}
+					class="text-white p-4"
+					class:active={parseInt($range.toString() || '') == targetRange}
+				>
+					<span>{targetRange}x</span>
+				</button>
+			{/each}
+		</div>
+		<div class="w-full px-4 py-2">
+			<input type="range" bind:value={$range} class="w-full" {min} {max} />
+		</div>
+
 		<div class="w-full px-4 py-2">
 			<select on:change={change} class="w-full px-4 py-2">
 				<option disabled selected>-- Pilih Kamera--</option>
