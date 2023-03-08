@@ -9,7 +9,7 @@
 	const codeReader = new BrowserQRCodeReader();
 	let video: HTMLVideoElement;
 
-	export let result: string|null;
+	export let result: string | null;
 	export let imageUrl: string | null = null;
 
 	const scanImage = async (url: string) => {
@@ -20,18 +20,18 @@
 		return res;
 	};
 	$: if (browser && imageUrl) {
-		scanImage(imageUrl).then(res =>{
-			result=res
-			imageUrl=null
-		})
+		scanImage(imageUrl).then((res) => {
+			result = res;
+			imageUrl = null;
+		});
 	}
 
 	let range = 1;
+	let loaded = false;
 	const load = async () => {
 		await navigator.mediaDevices.getUserMedia({
-			video:true
-		})
-
+			video: true
+		});
 
 		// choose your media device (webcam, frontal camera, back camera, etc.)
 
@@ -48,6 +48,7 @@
 			// you can also use controls API in this scope like the controls
 			// returned from the method.
 		});
+		loaded = true;
 	};
 	$: if (selectedDeviceId && browser) {
 		load();
@@ -57,7 +58,7 @@
 		await load();
 	});
 
-	const change = async (e:any) => {
+	const change = async (e: any) => {
 		selectedDeviceId = e.target.value;
 		await load();
 		changeZoomScale();
@@ -114,14 +115,16 @@
 			<input type="range" bind:value={range} class="w-full" min="1" max="10" />
 		</div>
 		<div class="w-full px-4 py-2">
-		{#await BrowserCodeReader.listVideoInputDevices() then videoInputDevices}
-			<select on:change={change} class="w-full px-4 py-2">
-				<option disabled selected>-- Pilih Kamera (default: environment)--</option>
-				{#each videoInputDevices as videoInputDevice, i}
-					<option value={videoInputDevice.deviceId}>{videoInputDevice.label}</option>
-				{/each}
-			</select>
-		{/await}
+			{#if loaded}
+				{#await BrowserCodeReader.listVideoInputDevices() then videoInputDevices}
+					<select on:change={change} class="w-full px-4 py-2">
+						<option disabled selected>-- Pilih Kamera (default: environment)--</option>
+						{#each videoInputDevices as videoInputDevice, i}
+							<option value={videoInputDevice.deviceId}>{videoInputDevice.label}</option>
+						{/each}
+					</select>
+				{/await}
+			{/if}
 		</div>
 	</div>
 </div>
