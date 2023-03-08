@@ -103,7 +103,6 @@
 <Block>
 	<input
 		id="qrimage"
-		capture="environment"
 		type="file"
 		bind:files={qrImages}
 		on:change={uploadImage}
