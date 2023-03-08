@@ -109,7 +109,7 @@
 			<input type="range" bind:value={range} class="w-full" min="1" max="10" />
 		</div>
 		{#await BrowserCodeReader.listVideoInputDevices() then videoInputDevices}
-			<select on:change={change} class="w-full px-4 py-2">
+			<select on:change={change} class="w-full px-4 py-2 mx-2">
 				<option disabled selected>-- Pilih Kamera (default: environment)--</option>
 				{#each videoInputDevices as videoInputDevice, i}
 					<option value={videoInputDevice.deviceId}>{videoInputDevice.label}</option>

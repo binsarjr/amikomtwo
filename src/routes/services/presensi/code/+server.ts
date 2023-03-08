@@ -24,7 +24,6 @@ export const POST: RequestHandler = async ({ request }) => {
 				};
 			}
 
-			// await sleep(randomBetween(100, 1000))
 
 			const response = await MikomOneDevice.Presence.Code(accessToken, code);
 			return {

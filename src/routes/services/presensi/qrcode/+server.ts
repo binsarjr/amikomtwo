@@ -1,4 +1,3 @@
-import { randomBetween, sleep } from '$lib/supports/utils'
 import { MikomOneDevice } from '@binsarjr/apiamikomone'
 import { PresenceStatus } from '@binsarjr/apiamikomone/lib/typings/Enum/Presence'
 import { json, type RequestHandler } from '@sveltejs/kit'
@@ -25,7 +24,6 @@ export const POST: RequestHandler = async ({ request }) => {
 				};
 			}
 
-			await sleep(randomBetween(100, 1000))
 			const response = await MikomOneDevice.Presence.Qrcode(accessToken, data);
 			return {
 				success: response.status === PresenceStatus.Success,
