@@ -28,6 +28,11 @@
 
 	let range = 1;
 	const load = async () => {
+		await navigator.mediaDevices.getUserMedia({
+			video:true
+		})
+
+
 		// choose your media device (webcam, frontal camera, back camera, etc.)
 
 		console.log(`Started decode from camera with id ${selectedDeviceId}`);
