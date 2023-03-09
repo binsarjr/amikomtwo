@@ -98,7 +98,6 @@
 			if ($isIos) {
 				await navigator.mediaDevices.getUserMedia({
 					video: {
-
 						// @ts-ignore
 						zoom: {
 							ideal: $range
@@ -115,6 +114,12 @@
 </script>
 
 <div class="relative">
+	{#if $isIos}
+		<p>
+			Berhubung banyaknya problem yang terjadi di ios seperti tidak bisa scan qrcode dan sebagainya.
+			Saya menyarankan menggunakan kode terlebih dahulu
+		</p>
+	{/if}
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video id="video" class="w-full mx-auto" />
 	<div class="absolute bottom-0 w-full flex flex-col items-end">
