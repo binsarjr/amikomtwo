@@ -27,6 +27,7 @@
 		serviceClient.initkhs();
 		serviceClient.ktm();
 
+			serviceClient.transkrip();
 		serviceClient.pengumuman();
 		// get bio
 		serviceClient.bio();

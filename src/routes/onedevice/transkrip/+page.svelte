@@ -1,15 +1,6 @@
 <script>
-	import { serviceClient } from '$lib/serviceClient';
 	import { transkripNilai } from '$lib/stores/akademik';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
-	import { onMount } from 'svelte';
-	const getTranskrip = async () => {
-		if ($transkripNilai) {
-			serviceClient.transkrip();
-			return;
-		}
-		await serviceClient.transkrip();
-	};
 </script>
 
 <Page>
@@ -17,31 +8,24 @@
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 
-	{#await getTranskrip()}
-		<p>Mohon tunggu...</p>
-	{:then _}
-		{#if $transkripNilai}
-			<List strongIos insetIos>
-				<ListItem title="IPK" after={$transkripNilai.Ipk.toString()} />
-				<ListItem title="Jumlah SKS" after={$transkripNilai.JmlSks.toString()} />
+	{#if $transkripNilai}
+		<List strongIos insetIos>
+			<ListItem title="IPK" after={$transkripNilai.Ipk.toString()} />
+			<ListItem title="Jumlah SKS" after={$transkripNilai.JmlSks.toString()} />
+			<ListItem title="Jumlah SKS Konsentrasi" after={$transkripNilai.SksKonsentrasi.toString()} />
+			<ListItem title="Jumlah SKS Pilihan" after={$transkripNilai.SksPilihan.toString()} />
+			<ListItem title="Jumlah SKS Wajib" after={$transkripNilai.SksWajib.toString()} />
+		</List>
+		<BlockTitle>Transkrip Nilai</BlockTitle>
+		<List strongIos insetIos class="mb-20">
+			{#each $transkripNilai.Transkrip as transkrip}
 				<ListItem
-					title="Jumlah SKS Konsentrasi"
-					after={$transkripNilai.SksKonsentrasi.toString()}
+					title={transkrip.NamaMk}
+					header={transkrip.Kode}
+					subtitle={transkrip.NamaSifatMk + ' ' + transkrip.JmlSks + ' SKS'}
+					after={transkrip.Nilai}
 				/>
-				<ListItem title="Jumlah SKS Pilihan" after={$transkripNilai.SksPilihan.toString()} />
-				<ListItem title="Jumlah SKS Wajib" after={$transkripNilai.SksWajib.toString()} />
-			</List>
-			<BlockTitle>Transkrip Nilai</BlockTitle>
-			<List strongIos insetIos>
-				{#each $transkripNilai.Transkrip as transkrip}
-					<ListItem
-						title={transkrip.NamaMk}
-						header={transkrip.Kode}
-						subtitle={transkrip.NamaSifatMk + ' ' + transkrip.JmlSks + ' SKS'}
-						after={transkrip.Nilai}
-					/>
-				{/each}
-			</List>
-		{/if}
-	{/await}
+			{/each}
+		</List>
+	{/if}
 </Page>
