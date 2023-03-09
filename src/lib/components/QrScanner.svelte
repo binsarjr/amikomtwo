@@ -18,7 +18,6 @@
 	let controls: IScannerControls | null = null;
 	let video: HTMLVideoElement;
 
-	let err: string;
 
 	let min = 1;
 	let max = 10;
@@ -61,12 +60,6 @@
 				if (!result) {
 					result = _result?.toString() || '';
 				}
-				// if(error) err="Dari zxing coder "+error?.toString()
-
-				// console.log(result, 'bro');
-				// use the result and error values to choose your actions
-				// you can also use controls API in this scope like the controls
-				// returned from the method.
 			}
 		);
 
@@ -75,7 +68,7 @@
 		// @ts-ignore
 		min = capabilities?.zoom?.min || 1;
 		// @ts-ignore
-		max = capabilities?.zoom?.max || 1;
+		max = capabilities?.zoom?.max || 10;
 		changeZoomScale();
 	};
 	$: if ($selectedDeviceId && browser) {
@@ -144,9 +137,7 @@
 		</div>
 	</div>
 </div>
-{#if err}
-	<div>Jika menemukan pesan ini mohon screenshot dan laporkan keadmin: {err}</div>
-{/if}
+
 
 <style>
 	#zoom .active span {
