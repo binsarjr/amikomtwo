@@ -12,7 +12,7 @@ export const generateDeviceId = () => {
  * Membuat device ID dari npm (Nomor Induk Mahasiswa).
  * Ini berfungsi untuk mengkonversi nomor npm ke dalam bentuk device ID dalam
  * biner dan heksadesimal.
- * 
+ *
  * @param npm - NPM yang akan dikonversi.
  * @returns device ID dalam bentuk heksadesimal.
  */

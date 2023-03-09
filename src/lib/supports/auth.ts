@@ -1,13 +1,13 @@
-import { MikomOneDevice, MikomSupports } from '@binsarjr/apiamikomone'
-import { privateKey } from '../config.server'
-import { createDeviceIdFromNpm } from './device_is'
+import { MikomOneDevice, MikomSupports } from '@binsarjr/apiamikomone';
+import { privateKey } from '../config.server';
+import { createDeviceIdFromNpm } from './device_is';
 
 /**
  * Mendapatkan password raw dari parameter input.
  * Fungsi ini menggunakan regular expression untuk memvalidasi password.
  * Jika password tidak valid, akan melakukan dekripsi password dengan
  * menggunakan kunci private.
- * 
+ *
  * @param password - password untuk diekstrak.
  * @returns password raw.
  */
@@ -17,7 +17,7 @@ export const getRawPassword = (password: string) => {
 		if (!validPassword)
 			// maybe encrypted
 			password = MikomSupports.Encryption.decrypt(password, privateKey);
-	// eslint-disable-next-line no-empty
+		// eslint-disable-next-line no-empty
 	} catch (ex) {}
 	return password;
 };

@@ -19,7 +19,6 @@
 	let controls: IScannerControls | null = null;
 	let video: HTMLVideoElement;
 
-
 	let min = 1;
 	let max = 10;
 
@@ -46,8 +45,8 @@
 			controls = null;
 		}
 		await navigator?.mediaDevices
-        ?.getUserMedia({ video: true })
-        .catch(() => toast.error("Kamera tidak tersedia. Pastikan device ada dan telah diizinkan"))
+			?.getUserMedia({ video: true })
+			.catch(() => toast.error('Kamera tidak tersedia. Pastikan device ada dan telah diizinkan'));
 
 		videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
 		if (!videoInputDevices.find((p) => p.deviceId == $selectedDeviceId)) {
@@ -142,7 +141,6 @@
 		</div>
 	</div>
 </div>
-
 
 <style>
 	#zoom .active span {

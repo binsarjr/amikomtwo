@@ -12,7 +12,6 @@
 	} from 'konsta/svelte';
 	import ImportTamu from '../../../lib/components/ImportTamu.svelte';
 	import ListTamu from '../../../lib/components/TamuComponent/ListTamu.svelte';
-
 </script>
 
 <Page>
@@ -20,6 +19,6 @@
 		<NavbarBackLink slot="left" text="Back" href="/onedevice/profile" component="a" />
 	</Navbar>
 	<BlockTitle>List Tamu</BlockTitle>
-	<ImportTamu  />
+	<ImportTamu />
 	<ListTamu />
 </Page>

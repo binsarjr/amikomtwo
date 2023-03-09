@@ -22,9 +22,6 @@
 	</Block>
 	<BlockTitle>Pembayaran {$listBank[bankSelectedIndex]}</BlockTitle>
 	<List strongIos insetIos outlineIos>
-			<ListItem
-				
-			/>
-		
+		<ListItem />
 	</List>
 </Page>

@@ -1,5 +1,5 @@
-import { MikomOneDevice } from '@binsarjr/apiamikomone'
-import type { RequestHandler } from '@sveltejs/kit'
+import { MikomOneDevice } from '@binsarjr/apiamikomone';
+import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url, params }) => {
 	const krsId = parseInt(params.krsId || '');

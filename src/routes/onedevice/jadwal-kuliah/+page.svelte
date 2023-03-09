@@ -20,12 +20,11 @@
 	let jadwalSelected: IJadwalKuliah[] = [];
 	const getJadwal = async () => {
 		let idHari = parseInt(idHariSelected);
-		jadwalSelected = $jadwal.filter(jadwal => jadwal.IdHari==idHari)	
+		jadwalSelected = $jadwal.filter((jadwal) => jadwal.IdHari == idHari);
 	};
 	onMount(() => {
 		getJadwal();
 	});
-	
 </script>
 
 <Page>
@@ -52,13 +51,12 @@
 		{#each jadwalSelected as jadwal}
 			<ListItem
 				title={jadwal.MataKuliah}
-				header={jadwal.JenisKuliah + (!!jadwal.Keterangan ? " ("+jadwal.Keterangan+")" : '')}
+				header={jadwal.JenisKuliah + (!!jadwal.Keterangan ? ' (' + jadwal.Keterangan + ')' : '')}
 				subtitle={jadwal.Ruang + ' | ' + jadwal.Waktu}
 				text={jadwal.EmailDosen}
 				after={jadwal.Kode}
 				footer={jadwal.NamaDosen}
 			/>
-			
 		{:else}
 			<ListItem title="Tidak ada jadwal" />
 		{/each}

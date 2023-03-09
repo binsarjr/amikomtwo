@@ -5,5 +5,5 @@
 </script>
 
 {#if browser}
-	<script  on:load on:error src={url}></script>
+	<script on:load on:error src={url}></script>
 {/if}

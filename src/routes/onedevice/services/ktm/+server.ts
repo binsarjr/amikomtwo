@@ -5,5 +5,5 @@ export const GET: RequestHandler = async ({ url }) => {
 	const access_token = url.searchParams.get('access_token')?.toString() || '';
 	const apikey = url.searchParams.get('api_key')?.toString() || '';
 	const resp = await MikomOneDevice.Mahasiswa.KtmDigital(access_token, apikey);
-	return json(resp)
+	return json(resp);
 };

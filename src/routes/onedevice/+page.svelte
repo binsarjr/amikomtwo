@@ -15,7 +15,7 @@
 
 <BlockTitle>Jadwal Kuliah Hari Ini</BlockTitle>
 <List strongIos insetIos outlineIos>
-	{#each $jadwal.filter(jadwal => jadwal.IdHari==new Date().getDay()) as jadwal}
+	{#each $jadwal.filter((jadwal) => jadwal.IdHari == new Date().getDay()) as jadwal}
 		<ListItem
 			title={jadwal.MataKuliah}
 			header={jadwal.JenisKuliah}
@@ -42,10 +42,9 @@
 <BlockTitle>Pengumuman</BlockTitle>
 
 <Block>
-	
-		{#each $pengumuman as item}
-			<PengumumanDetail pengumuman={item} />
-		{:else}
-			<p>Tidak ada pengumuman</p>
-		{/each}
+	{#each $pengumuman as item}
+		<PengumumanDetail pengumuman={item} />
+	{:else}
+		<p>Tidak ada pengumuman</p>
+	{/each}
 </Block>

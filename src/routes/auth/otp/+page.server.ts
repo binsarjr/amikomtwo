@@ -3,12 +3,12 @@ import { error, type Actions } from '@sveltejs/kit';
 import { createDeviceIdFromNpm, generateDeviceId } from '../../../lib/supports/device_is';
 
 export const actions: Actions = {
-	verify: async ({ request  }) => {
+	verify: async ({ request }) => {
 		const formData = await request.formData();
 		const otp = formData.get('otp') as string;
 		const nim = formData.get('nim') as string;
 		const device_id = createDeviceIdFromNpm(nim);
-		
+
 		try {
 			await MikomOneDevice.Device.Verify(nim, otp, device_id);
 			return {

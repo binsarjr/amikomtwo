@@ -15,7 +15,7 @@
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
-	let imageUrl:string;
+	let imageUrl: string;
 	let code = '';
 	let activeUsersGuest: UserGuest[] = $usersGuest;
 	let except = [$usersGuest.find((guest) => $preferences.nim == guest.nim) as UserGuest];
@@ -25,23 +25,20 @@
 			document.getElementById('formqrcode')?.querySelector('button')?.click();
 		}, 20);
 	}
-	
 
 	const uploadImage = async () => {
 		// skip process when qrresult is not yet empty
 		if (!qrImages?.length) return;
 		try {
 			let reader = new FileReader();
-            reader.onload = e => {
-                 imageUrl = e.target!.result?.toString()||''
-            };
-            reader.readAsDataURL(qrImages[0]);
+			reader.onload = (e) => {
+				imageUrl = e.target!.result?.toString() || '';
+			};
+			reader.readAsDataURL(qrImages[0]);
 		} catch (error) {
 			alert('Gagal scan qrcode.cobalah dengan qrcode yang lain');
 		}
 	};
-
-
 
 	const guestCodeSubmit = async () => {
 		const id = toast.loading('Mohon Menunggu...');
@@ -87,7 +84,7 @@
 			else toast.error(result.message);
 		});
 		toast.success('Antrian Selesai', { id });
-		await sleep(1000)
+		await sleep(1000);
 		qrresult = null;
 	};
 </script>
@@ -103,12 +100,7 @@
 	</p>
 </Block>
 <Block>
-	<input
-		id="qrimage"
-		type="file"
-		bind:files={qrImages}
-		on:change={uploadImage}
-	/>
+	<input id="qrimage" type="file" bind:files={qrImages} on:change={uploadImage} />
 </Block>
 
 <BlockTitle>Presensi Manual</BlockTitle>
