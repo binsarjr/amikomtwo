@@ -5,6 +5,7 @@
 	import { historiPembayaran } from '$lib/stores/pembayaran';
 	import { Page, Navbar, Tabbar, TabbarLink } from 'konsta/svelte';
 	import { onMount } from 'svelte';
+	import toast from 'svelte-french-toast';
 	import { serviceClient } from '../../lib/serviceClient';
 	import { initKhs } from '../../lib/stores/initKhs';
 	import { jadwal } from '../../lib/stores/jadwal';
@@ -24,15 +25,26 @@
 	}
 	onMount(async () => {
 		await serviceClient.refresh();
-		serviceClient.initkhs();
-		serviceClient.ktm();
+		const id = toast.loading('Sync', { position: 'top-right' });
+		try {
+			await Promise.all([
+				serviceClient.initkhs(),
+				serviceClient.ktm(),
 
-			serviceClient.transkrip();
-		serviceClient.pengumuman();
-		// get bio
-		serviceClient.bio();
-		serviceClient.jadwal();
-		serviceClient.pembayaran.bank();
+				serviceClient.transkrip(),
+				serviceClient.pengumuman(),
+
+				serviceClient.bio(),
+				serviceClient.jadwal(),
+				serviceClient.pembayaran.bank()
+			]);
+			toast.success('selesai', { id, position: 'top-right' });
+		} catch (e) {
+			toast.error('gagal sync cek kembali koneksimu atau server sedang down', {
+				id,
+				position: 'top-right'
+			});
+		}
 	});
 	const pages = {
 		home: '/onedevice',
