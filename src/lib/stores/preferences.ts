@@ -1,4 +1,6 @@
-import { writable } from 'svelte-local-storage-store';
+import { writable } from 'svelte-local-storage-store'
+
+export let isIos = writable('isIos',false)
 
 export let preferences = writable('preferences', {
 	nim: '',

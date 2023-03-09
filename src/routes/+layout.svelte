@@ -8,9 +8,10 @@
 
 	// NProgress css
 	import 'nprogress/nprogress.css';
-	import { authUser } from '$lib/stores/preferences';
+	import { authUser, isIos } from '$lib/stores/preferences';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	$: if ($authUser?.accessToken && browser) {
 		if (
 			!$page.url.pathname.startsWith('/onedevice') &&
@@ -35,6 +36,10 @@
 			NProgress.done();
 		}
 	}
+	onMount(() => {
+		// @ts-ignore
+		$isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+	})
 </script>
 
 <!-- See This: https://svelte-french-toast.vercel.app/ -->

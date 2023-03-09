@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import {
-		BrowserMultiFormatReader,
-		type IScannerControls
-	} from '@zxing/browser';
+	import { BrowserMultiFormatReader, type IScannerControls } from '@zxing/browser';
 	// @ts-ignore
 	import QrScanner from 'qr-scanner';
 	import { browser } from '$app/environment';
 	import { writable } from 'svelte-local-storage-store';
 	import toast from 'svelte-french-toast';
+	import { isIos } from '../stores/preferences';
 
 	export let result: string | null;
 	export let imageUrl: string | null = null;
@@ -97,6 +95,17 @@
 					}
 				]
 			});
+			if ($isIos) {
+				await navigator.mediaDevices.getUserMedia({
+					video: {
+
+						// @ts-ignore
+						zoom: {
+							ideal: $range
+						}
+					}
+				});
+			}
 		}
 	};
 
