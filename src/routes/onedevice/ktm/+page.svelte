@@ -7,15 +7,6 @@
 	import { ktmDigital } from '../../../lib/stores/ktmDigital';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
 	import { authUser, preferences } from '../../../lib/stores/preferences';
-	const getktm = async () => {
-		if ($ktmDigital) {
-			serviceClient.ktm();
-			return $ktmDigital;
-		}
-		$ktmDigital = await serviceClient.ktm();
-		return $ktmDigital;
-	};
-	onMount(() => {});
 </script>
 
 <Page>
@@ -23,23 +14,19 @@
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 	<Block>
-		{#await getktm()}
-			Tunggu sebentar...
-		{:then _}
-			{#if $ktmDigital}
-				<a
-					download="ktmdigital.png"
-					href={$ktmDigital}
-					title="KTM Digital"
-					target="_blank"
-					rel="noreferrer"
-				>
-					<img src={$ktmDigital} alt="" />
-				</a>
-				<span>Klik Gambar untuk mendownload</span>
-			{:else}
-				<span>Ktm digital tidak dapat diambil.Mohon pastikan foto profile sudah ada</span>
-			{/if}
-		{/await}
+		{#if $ktmDigital}
+			<a
+				download="ktmdigital.png"
+				href={$ktmDigital}
+				title="KTM Digital"
+				target="_blank"
+				rel="noreferrer"
+			>
+				<img src={$ktmDigital} alt="" />
+			</a>
+			<span>Klik Gambar untuk mendownload</span>
+		{:else}
+			<span>Ktm digital tidak dapat diambil.Mohon pastikan foto profile sudah ada</span>
+		{/if}
 	</Block>
 </Page>

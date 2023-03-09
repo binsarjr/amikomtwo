@@ -14,6 +14,7 @@ import { get } from 'svelte/store'
 import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademik'
 import { initKhs } from './stores/initKhs'
 import { jadwal } from './stores/jadwal'
+import { ktmDigital } from './stores/ktmDigital'
 import { mahasiswa } from './stores/mahasiswa'
 import { listBank } from './stores/pembayaran'
 import { authUser, preferences } from './stores/preferences'
@@ -87,9 +88,12 @@ export const serviceClient = {
 	 */
 	ktm: async () => {
 		const r = await reqService('/onedevice/services/ktm')
+		// jika mungkin server down
+		if(!(r.status.toString().startsWith('2') || r.status.toString().startsWith('4'))) return
 
 		const resp = await r.json()
-		return resp.status?.code == 200 ? `data:image/png;base64,${resp?.result?.hash}` : null
+		
+		ktmDigital.set(resp.status?.code == 200 ? `data:image/png;base64,${resp?.result?.hash}` : null)
 	},
 	/**
 	 * Memanggil fungsi reqService untuk mengirim permintaan 'onedevice / services /
