@@ -4,6 +4,7 @@
 	import { Block, Button, Link, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { serviceClient } from '../../../lib/serviceClient';
+	import { initKhs } from '../../../lib/stores/initKhs';
 	import { ktmDigital } from '../../../lib/stores/ktmDigital';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
 	import { authUser, preferences } from '../../../lib/stores/preferences';
@@ -16,7 +17,7 @@
 	<Block>
 		{#if $ktmDigital}
 			<a
-				download="ktmdigital.png"
+				download="ktmdigital-{$mahasiswa?.Mhs.Npm}.png"
 				href={$ktmDigital}
 				title="KTM Digital"
 				target="_blank"
