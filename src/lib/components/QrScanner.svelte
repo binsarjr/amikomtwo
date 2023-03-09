@@ -10,6 +10,7 @@
 	import QrScanner from 'qr-scanner';
 	import { browser } from '$app/environment';
 	import { writable } from 'svelte-local-storage-store';
+	import toast from 'svelte-french-toast';
 
 	export let result: string | null;
 	export let imageUrl: string | null = null;
@@ -44,6 +45,10 @@
 			controls.stop();
 			controls = null;
 		}
+		await navigator?.mediaDevices
+        ?.getUserMedia({ video: true })
+        .catch(() => toast.error("Kamera tidak tersedia. Pastikan device ada dan telah diizinkan"))
+
 		videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
 		if (!videoInputDevices.find((p) => p.deviceId == $selectedDeviceId)) {
 			$selectedDeviceId = videoInputDevices[0].deviceId;
