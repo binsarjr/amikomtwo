@@ -13,7 +13,7 @@
 		NavbarBackLink,
 		Page
 	} from 'konsta/svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { jadwal } from '../../../lib/stores/jadwal';
 	const todayId = new Date().getDay();
 	let idHariSelected = todayId.toString();
@@ -52,12 +52,13 @@
 		{#each jadwalSelected as jadwal}
 			<ListItem
 				title={jadwal.MataKuliah}
-				header={jadwal.JenisKuliah}
+				header={jadwal.JenisKuliah + (!!jadwal.Keterangan ? " ("+jadwal.Keterangan+")" : '')}
 				subtitle={jadwal.Ruang + ' | ' + jadwal.Waktu}
 				text={jadwal.EmailDosen}
 				after={jadwal.Kode}
 				footer={jadwal.NamaDosen}
 			/>
+			
 		{:else}
 			<ListItem title="Tidak ada jadwal" />
 		{/each}

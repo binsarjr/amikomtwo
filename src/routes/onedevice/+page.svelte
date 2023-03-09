@@ -1,21 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { jadwal } from '$lib/stores/jadwal';
 	import { mahasiswa } from '$lib/stores/mahasiswa';
-	import { authUser } from '$lib/stores/preferences';
 	import { Block, BlockTitle, List, ListItem } from 'konsta/svelte';
-	import { onMount } from 'svelte';
 	import PengumumanDetail from '../../lib/components/PengumumanDetail.svelte';
-	import { serviceClient } from '../../lib/serviceClient';
 	import { pengumuman } from '../../lib/stores/akademik';
-
-	const getData = async () => {
-		if ($pengumuman.length) {
-			serviceClient.pengumuman();
-			return;
-		}
-		return serviceClient.pengumuman();
-	};
 </script>
 
 <List strongIos insetIos>
@@ -54,13 +42,10 @@
 <BlockTitle>Pengumuman</BlockTitle>
 
 <Block>
-	{#await getData()}
-		Mohon tunggu...
-	{:then _}
+	
 		{#each $pengumuman as item}
 			<PengumumanDetail pengumuman={item} />
 		{:else}
 			<p>Tidak ada pengumuman</p>
 		{/each}
-	{/await}
 </Block>
