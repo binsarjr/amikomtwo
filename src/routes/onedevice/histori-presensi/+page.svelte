@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import toast from 'svelte-french-toast';
 	import { serviceClient } from '../../../lib/serviceClient';
 	import { initKhs } from '../../../lib/stores/initKhs';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
@@ -10,7 +11,9 @@
 	let semesterSelected: number = 0;
 	let tahunAkademikSelected: string = '';
 	const refresh = async () => {
+		const id = toast.loading('sync', { position: 'top-right' });
 		$historiPresensi = await serviceClient.historiPresensi(semesterSelected, tahunAkademikSelected);
+		toast.success('selesai', { id, position: 'top-right' });
 	};
 	onMount(async () => {
 		semesterSelected =
@@ -20,6 +23,9 @@
 		tahunAkademikSelected =
 			$page.url.searchParams.get('tahun_ajaran') || $mahasiswa!.PeriodeAkademik.TahunAkademik || '';
 		refresh();
+	});
+	onDestroy(() => {
+		toast.remove();
 	});
 </script>
 

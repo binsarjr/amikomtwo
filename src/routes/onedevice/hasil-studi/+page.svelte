@@ -3,7 +3,8 @@
 	import { hasilStudiSemester, transkripNilai } from '$lib/stores/akademik';
 	import { mahasiswa } from '$lib/stores/mahasiswa';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import toast from 'svelte-french-toast';
 	import { initKhs } from '../../../lib/stores/initKhs';
 
 	let semesterSelected: number = 0;
@@ -11,16 +12,24 @@
 	let tahunAkademikSelected: string = '';
 	const refresh = async () => {
 		if ($hasilStudiSemester) {
-			serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected);
+			const id = toast.loading('sync', { position: 'top-right' });
+			serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected).then((_) => {
+				toast.success('selesai', { id, position: 'top-right' });
+			});
 			return;
 		}
+		const id = toast.loading('sync', { position: 'top-right' });
 		await serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected);
+		toast.success('selesai', { id, position: 'top-right' });
 	};
 	onMount(() => {
 		semesterSelected = $mahasiswa!.PeriodeAkademik.Semester || 0;
 		semester = $initKhs?.Semester.find((s) => s.Kode == semesterSelected)?.Nama || null;
 		tahunAkademikSelected = $mahasiswa!.PeriodeAkademik.TahunAkademik || '';
 		refresh();
+	});
+	onDestroy(() => {
+		toast.remove();
 	});
 </script>
 
@@ -61,7 +70,7 @@
 					title={khs.NamaMk}
 					header={khs.Kode}
 					subtitle={khs.JmlSks + ' SKS'}
-					after={khs.Nilai || "Tidak Ada"}
+					after={khs.Nilai || 'Tidak Ada'}
 				/>
 			{/each}
 		</List>
