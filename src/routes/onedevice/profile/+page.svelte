@@ -42,4 +42,5 @@
 		>
 	</span>
 	<Button largeIos outlineIos onClick={onLogoutClick}>{keluar}</Button>
+<Link class="my-5" target="_blank" href="https://github.com/binsarjr/amikomtwo">Source Code</Link>
 </Block>
