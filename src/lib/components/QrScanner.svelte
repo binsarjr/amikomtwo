@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import {
-		BrowserCodeReader,
 		BrowserMultiFormatReader,
-		BrowserQRCodeReader,
 		type IScannerControls
 	} from '@zxing/browser';
 	// @ts-ignore
