@@ -16,6 +16,7 @@
 	import ListTamu from '../../lib/components/TamuComponent/ListTamu.svelte';
 	import ImportTamu from '../../lib/components/ImportTamu.svelte';
 	import QrScanner from '../../lib/components/QrScanner.svelte';
+	import { sleep } from '../../lib/supports/utils';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -83,6 +84,7 @@
 			else toast.error(result.message);
 		});
 		toast.success('Antrian Selesai', { id });
+		await sleep(1000)
 		qrresult = null;
 	};
 </script>
