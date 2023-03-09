@@ -38,8 +38,8 @@
 	}
 	onMount(() => {
 		// @ts-ignore
-		$isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-	})
+		$isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+	});
 </script>
 
 <!-- See This: https://svelte-french-toast.vercel.app/ -->
