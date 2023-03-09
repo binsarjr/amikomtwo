@@ -14,36 +14,18 @@
 		Page
 	} from 'konsta/svelte';
 	import { onDestroy, onMount } from 'svelte';
-	import toast from 'svelte-french-toast';
-	import { serviceClient } from '../../../lib/serviceClient';
-	import { jadwalMingguan } from '../../../lib/stores/jadwal';
-	import { ktmDigital } from '../../../lib/stores/ktmDigital';
-	import { mahasiswa } from '../../../lib/stores/mahasiswa';
-	import { authUser, preferences } from '../../../lib/stores/preferences';
+	import { jadwal } from '../../../lib/stores/jadwal';
 	const todayId = new Date().getDay();
 	let idHariSelected = todayId.toString();
 	let jadwalSelected: IJadwalKuliah[] = [];
 	const getJadwal = async () => {
-		toast.loading('sync', { position: 'top-right' });
 		let idHari = parseInt(idHariSelected);
-		if ($jadwalMingguan[idHari]) {
-			jadwalSelected = $jadwalMingguan[idHari];
-			serviceClient.jadwalMingguan(idHari).then((jadwal) => {
-				$jadwalMingguan[idHari] = jadwal;
-				toast.remove();
-			});
-			return;
-		}
-		jadwalSelected = await serviceClient.jadwalMingguan(idHari);
-		$jadwalMingguan[idHari] = jadwalSelected;
-		toast.remove();
+		jadwalSelected = $jadwal.filter(jadwal => jadwal.IdHari==idHari)	
 	};
 	onMount(() => {
 		getJadwal();
 	});
-	onDestroy(() => {
-		toast.remove();
-	});
+	
 </script>
 
 <Page>

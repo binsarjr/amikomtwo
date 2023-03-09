@@ -27,7 +27,7 @@
 
 <BlockTitle>Jadwal Kuliah Hari Ini</BlockTitle>
 <List strongIos insetIos outlineIos>
-	{#each $jadwal as jadwal}
+	{#each $jadwal.filter(jadwal => jadwal.IdHari==new Date().getDay()) as jadwal}
 		<ListItem
 			title={jadwal.MataKuliah}
 			header={jadwal.JenisKuliah}

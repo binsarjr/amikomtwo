@@ -28,7 +28,7 @@
 
 		// get bio
 		serviceClient.bio();
-		serviceClient.jadwal(new Date().getDay());
+		serviceClient.jadwal();
 		serviceClient.pembayaran.bank();
 	});
 	const pages = {
