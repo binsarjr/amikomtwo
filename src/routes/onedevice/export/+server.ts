@@ -1,6 +1,6 @@
-import type { IBio } from '@binsarjr/apiamikomone/lib/typings/Response';
-import type { RequestHandler } from '@sveltejs/kit';
-import { encryptGuestData } from '../../../lib/supports/userguest';
+import type { IBio } from '@binsarjr/apiamikomone/lib/typings/Response'
+import type { RequestHandler } from '@sveltejs/kit'
+import { encryptGuestData } from '../../../lib/supports/userguest'
 
 export const GET: RequestHandler = async ({ setHeaders, url }) => {
 	let password = url.searchParams.get('password') as string;
@@ -9,7 +9,8 @@ export const GET: RequestHandler = async ({ setHeaders, url }) => {
 	) as IBio;
 	let filename = `amikomtwo-signature-${mahasiswa.Mhs.Npm}`;
 	setHeaders({
-		'Content-Disposition': 'attachment; filename=' + filename + '.signature.txt'
+		'Content-Disposition': 'attachment; filename=' + filename + '.signature.txt',
+		'cache-control': 'public,max-age=60'
 	});
 
 	let encrypted = encryptGuestData(mahasiswa, password);
