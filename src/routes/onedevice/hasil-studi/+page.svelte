@@ -8,23 +8,25 @@
 	import { initKhs } from '../../../lib/stores/initKhs';
 
 	let semesterSelected: number = 0;
-	let semester: string | null = null;
 	let tahunAkademikSelected: string = '';
 	const refresh = async () => {
+		const cache = !(
+			tahunAkademikSelected == $mahasiswa?.PeriodeAkademik.TahunAkademik &&
+			semesterSelected == $mahasiswa.PeriodeAkademik.Semester
+		);
 		if ($hasilStudiSemester) {
 			const id = toast.loading('sync', { position: 'top-right' });
-			serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected).then((_) => {
+			serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache).then((_) => {
 				toast.success('selesai', { id, position: 'top-right' });
 			});
 			return;
 		}
 		const id = toast.loading('sync', { position: 'top-right' });
-		await serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected);
+		await serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache);
 		toast.success('selesai', { id, position: 'top-right' });
 	};
 	onMount(() => {
 		semesterSelected = $mahasiswa!.PeriodeAkademik.Semester || 0;
-		semester = $initKhs?.Semester.find((s) => s.Kode == semesterSelected)?.Nama || null;
 		tahunAkademikSelected = $mahasiswa!.PeriodeAkademik.TahunAkademik || '';
 		refresh();
 	});

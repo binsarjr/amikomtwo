@@ -201,10 +201,11 @@ export const serviceClient = {
 	 * @param tahunAkademik - tahun akademik yang ingin dicari.
 	 * @returns data hasil studi dalam bentuk IHasilSemester.
 	 */
-	hasilStudi: async (semester: number, tahunAkademik: string) => {
+	hasilStudi: async (semester: number, tahunAkademik: string, cache = false) => {
 		const searchParams = new URLSearchParams();
 		searchParams.set('semester', semester.toString());
 		searchParams.set('tahun_akademik', tahunAkademik);
+		if (cache) searchParams.set('cache', 'true');
 		const r = await reqService('/onedevice/services/hasil-studi', searchParams);
 
 		const resp: IHasilSemester = await r.json();
