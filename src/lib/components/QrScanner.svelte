@@ -95,16 +95,16 @@
 					}
 				]
 			});
-			if ($isIos) {
-				await navigator.mediaDevices.getUserMedia({
-					video: {
-						// @ts-ignore
-						zoom: {
-							ideal: $range
-						}
-					}
-				});
-			}
+			// if ($isIos) {
+			// 	await navigator.mediaDevices.getUserMedia({
+			// 		video: {
+			// 			// @ts-ignore
+			// 			zoom: {
+			// 				ideal: $range
+			// 			}
+			// 		}
+			// 	});
+			// }
 		}
 	};
 
@@ -124,7 +124,7 @@
 	<video id="video" class="w-full mx-auto" />
 	<div class="absolute bottom-0 w-full flex flex-col items-end">
 		{#if $isIos}
-			<p class="text-white">Ios Belum support untuk zoom in/out</p>
+			<p class="text-white px-4">Ios Belum support untuk zoom in/out</p>
 		{:else}
 			<div class="w-full flex justify-around items-center gap-2" id="zoom">
 				{#each [1, 2, 4, 6, 8, 10] as targetRange}
