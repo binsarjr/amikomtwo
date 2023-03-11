@@ -10,7 +10,6 @@ export const GET: RequestHandler = async ({ setHeaders, url }) => {
 	let filename = `amikomtwo-signature-${mahasiswa.Mhs.Npm}`;
 	setHeaders({
 		'Content-Disposition': 'attachment; filename=' + filename + '.signature.txt',
-		'cache-control': 'public,max-age=60'
 	});
 
 	let encrypted = encryptGuestData(mahasiswa, password);

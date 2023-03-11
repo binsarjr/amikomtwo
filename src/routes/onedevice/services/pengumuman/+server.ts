@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ url ,setHeaders}) => {
 	setHeaders({
 		'ETag': etag,
 		// satu bulan
-		'cache-control': 'public,max-age=2592000'
+		'cache-control': 'public,max-age=3600'
 	})
 	return json(response.results);
 };
