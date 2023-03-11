@@ -57,6 +57,10 @@ export const serviceClient = {
 			body: formdata
 		});
 		const response = await r.json();
+		if(r.status.toString().startsWith('5')) {
+			console.error(r)
+			throw new Error("Ada error dari server. kemungkinan server down")
+		}
 		if (r.status == 200) {
 			authUser.update(() => ({
 				accessToken: response.access_token,

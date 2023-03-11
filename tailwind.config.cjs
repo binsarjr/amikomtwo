@@ -6,7 +6,11 @@ module.exports = konstaConfig({
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	darkMode: 'class', // 'media' or 'class'
 	theme: {
-		extend: {}
+		extend: {
+			colors: {
+				primary: '#8733d6'
+			}
+		}
 	},
 	variants: {
 		extend: {}

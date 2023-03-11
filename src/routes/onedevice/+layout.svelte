@@ -24,9 +24,10 @@
 		goto('/');
 	}
 	onMount(async () => {
-		await serviceClient.refresh();
 		const id = toast.loading('Sync', { position: 'top-right' });
 		try {
+			await serviceClient.refresh();
+
 			await Promise.all([
 				serviceClient.initkhs(),
 				serviceClient.ktm(),
@@ -39,7 +40,7 @@
 				serviceClient.pembayaran.bank()
 			]);
 			toast.success('selesai', { id, position: 'top-right' });
-		} catch (e) {
+		} catch (error) {
 			toast.error('gagal sync cek kembali koneksimu atau server sedang down', {
 				id,
 				position: 'top-right'
