@@ -41,7 +41,7 @@
 			]);
 			toast.success('selesai', { id, position: 'top-right' });
 		} catch (error) {
-			toast.error('gagal sync cek kembali koneksimu atau server sedang down', {
+			toast.error('gagal sync cek kembali koneksimu atau mungkin server amikom sedang down', {
 				id,
 				position: 'top-right'
 			});
