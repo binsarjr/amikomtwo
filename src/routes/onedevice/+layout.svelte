@@ -24,9 +24,9 @@
 		goto('/');
 	}
 	onMount(async () => {
+		await serviceClient.refresh();
 		const id = toast.loading('Sync', { position: 'top-right' });
 		try {
-			await serviceClient.refresh();
 
 			await Promise.all([
 				serviceClient.initkhs(),

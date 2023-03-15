@@ -11,9 +11,9 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 	const response = await MikomOneDevice.Presence.All(access_token, apikey, semester, tahunAkademik);
 	const etag = crypto.createHash('md5').update(JSON.stringify(response)).digest('hex')
 	setHeaders({
-		'ETag': etag,
 		// satu bulan
-		'cache-control': 'public,max-age=3600'
+		'cache-control': 'public,max-age=60'
+		// 'cache-control': 'public,max-age=3600'
 	})
 	return new Response(JSON.stringify(response));
 };

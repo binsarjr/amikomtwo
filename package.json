@@ -18,6 +18,7 @@
 		"@sveltejs/adapter-auto": "^1.0.3",
 		"@sveltejs/kit": "^1.10.0",
 		"@types/cookie": "^0.5.1",
+		"@types/etag": "^1.8.1",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.12",
@@ -198,6 +199,7 @@
 	},
 	"dependencies": {
 		"@zxing/browser": "^0.1.1",
-		"@zxing/library": "^0.19.2"
+		"@zxing/library": "^0.19.2",
+		"etag": "^1.8.1"
 	}
 }
