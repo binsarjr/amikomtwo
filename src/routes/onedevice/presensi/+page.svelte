@@ -103,12 +103,12 @@
 	<input id="qrimage" type="file" bind:files={qrImages} on:change={uploadImage} />
 </Block>
 
-<BlockTitle>Presensi Manual</BlockTitle>
 <form action="?/qrcode" method="post" id="formqrcode" on:submit|preventDefault={guestQrCodeSubmit}>
 	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<input type="hidden" name="qrcode" bind:value={qrresult} />
 	<button class="hidden" />
 </form>
+<BlockTitle>Presensi Manual</BlockTitle>
 <form action="?/manual" method="post" on:submit={guestCodeSubmit} use:enhance={myenhance()}>
 	<input type="hidden" name="access_token" value={$authUser?.accessToken} />
 	<List strongIos insetIos>

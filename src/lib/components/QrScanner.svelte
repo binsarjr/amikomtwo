@@ -41,7 +41,14 @@
 			controls = null;
 		}
 		await navigator?.mediaDevices
-			?.getUserMedia({ video: true })
+			?.getUserMedia({
+				video: {
+					deviceId: $selectedDeviceId||undefined,
+					facingMode: {
+						exact: 'environment'
+					}
+				}
+			})
 			.catch(() => toast.error('Kamera tidak tersedia. Pastikan device ada dan telah diizinkan'));
 
 		videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
