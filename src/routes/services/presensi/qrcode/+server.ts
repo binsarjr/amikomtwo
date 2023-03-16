@@ -2,6 +2,7 @@ import { MikomOneDevice } from '@binsarjr/apiamikomone';
 import { PresenceStatus } from '@binsarjr/apiamikomone/lib/typings/Enum/Presence';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { authAttempt } from '../../../../lib/supports/auth';
+import { sleep,randomBetween } from '$lib/supports/utils'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const formdata = await request.formData();
@@ -13,6 +14,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			const nim = value.toString();
 			const password = allPassword[i].toString();
 
+			await sleep(randomBetween(500,1000))
 			let accessToken = '';
 			try {
 				const { access_token } = await authAttempt(nim, password);
@@ -23,7 +25,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					message: `${nim} Gagal Login, coba minta sign yang baru`
 				};
 			}
-
+			await sleep()
 			const response = await MikomOneDevice.Presence.Qrcode(accessToken, data);
 			return {
 				success: response.status === PresenceStatus.Success,
