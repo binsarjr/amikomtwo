@@ -1,4 +1,5 @@
 <script lang="ts">
+	import  Push  from 'push.js'
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -13,7 +14,7 @@
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
-	import Push from 'push.js'
+	import Worker from './worker?worker'
 	
 
 
@@ -28,11 +29,14 @@
 		goto('/');
 	}
 	onMount(async () => {
-		Push.clear()
-		Push.create('Jadwal Kuliah \nasd\nsip', {
-			icon:'/favicon.png',
-			body: 'test'
+	const appWorker = new Worker()
+		appWorker.addEventListener('message', () =>{
+			Push.create('Testing interval 07:00', {
+	icon: '/favicon.png',
+	body: 'test'
+});
 		})
+		
 		await serviceClient.refresh();
 		const id = toast.loading('Sync', { position: 'top-right' });
 		try {
