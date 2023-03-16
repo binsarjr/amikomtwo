@@ -15,6 +15,8 @@
 	let controls: IScannerControls | null = null;
 	let video: HTMLVideoElement;
 
+	let isCameraAvailable=true
+
 	let min = 1;
 	let max = 10;
 
@@ -49,7 +51,11 @@
 					}
 				}
 			})
-			.catch(() => toast.error('Kamera tidak tersedia. Pastikan device ada dan telah diizinkan'));
+			.catch(() => {
+				if(isCameraAvailable) isCameraAvailable=false
+				else return
+			toast.error('Kamera belakang tidak tersedia. Pastikan device ada dan telah diizinkan. Abaikan jika kamu menggunakan kamera depan')
+			});
 
 		videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
 		if (!videoInputDevices.find((p) => p.deviceId == $selectedDeviceId)) {
