@@ -13,6 +13,10 @@
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
+	import Push from 'push.js'
+	
+
+
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
 		$mahasiswa = null;
@@ -24,6 +28,11 @@
 		goto('/');
 	}
 	onMount(async () => {
+		Push.clear()
+		Push.create('Jadwal Kuliah \nasd\nsip', {
+			icon:'/favicon.png',
+			body: 'test'
+		})
 		await serviceClient.refresh();
 		const id = toast.loading('Sync', { position: 'top-right' });
 		try {
