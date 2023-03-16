@@ -18,7 +18,7 @@
 	{#each $jadwal.filter((jadwal) => jadwal.IdHari == new Date().getDay()) as jadwal}
 		<ListItem
 			title={jadwal.MataKuliah}
-			header={jadwal.JenisKuliah}
+			header={jadwal.JenisKuliah + (!!jadwal.Keterangan ? ' (' + jadwal.Keterangan + ')' : '')}
 			subtitle={jadwal.Ruang + ' | ' + jadwal.Waktu}
 			text={jadwal.EmailDosen}
 			after={jadwal.Kode}
