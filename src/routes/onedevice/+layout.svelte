@@ -29,6 +29,9 @@
 		goto('/');
 	}
 	onMount(async () => {
+	Push.create('Testing Notif', {
+	icon: '/favicon.png',
+});
 	const appWorker = new Worker()
 		appWorker.addEventListener('message', () =>{
 			Push.create('Testing interval 07:00', {
