@@ -1,5 +1,5 @@
 {
-	"name": "amikomtwo-remake",
+	"name": "amikomtwo",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "SECRET_GUEST_KEY=iGY1TwdySNUjD3lfC0r0kMP72Gviu9Ti vite dev",
