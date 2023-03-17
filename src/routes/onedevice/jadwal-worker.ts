@@ -45,11 +45,14 @@ addEventListener('message', (event) => {
 			timeEnd.set('seconds', 0);
 
 			let sisaWaktu = timeStart.diff(moment(), 'minutes');
-			if (sisaWaktu < 30 && sisaWaktu > 0) {
+			let waktuBerjalan = timeEnd.diff(moment(), 'minutes');
+			if (sisaWaktu < 30) {
+				if (waktuBerjalan <= 0) return;
 				postMessage({
 					id: jadwal.IdHari.toString() + jadwal.IdJam.toString() + jadwal.IdKuliah.toString(),
 					title: `${jadwal.MataKuliah}`,
 					timeout: timeEnd.diff(timeStart, 'milliseconds'),
+					silent: sisaWaktu < 0,
 					body: `
 ${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
 

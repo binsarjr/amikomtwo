@@ -43,6 +43,7 @@
 			Push.create(event.data.title, {
 				icon: '/favicon.png',
 				body: event.data.body,
+				silent: event.data.silent,
 				tag: 'jadwal',
 				timeout: event.data.timeout as number
 			});
