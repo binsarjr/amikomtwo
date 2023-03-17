@@ -13,9 +13,9 @@ addEventListener('message', (event) => {
 		if (jadwal) {
 			postMessage({
 				id: JSON.stringify(jadwal),
-				title: `${jadwal.MataKuliah}`,
+				title: `${jadwal.MataKuliah} (Mendatang)`,
 				body: `
-${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
+${jadwal.JenisKuliah} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
 
 Waktu: ${jadwal.Waktu}
 Ruang: ${jadwal.Ruang}

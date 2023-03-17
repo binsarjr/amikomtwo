@@ -2,6 +2,7 @@ import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response'
 import { findJadwalBerlangsung } from '../../supports/utils'
 
 addEventListener('message', (event) => {
+	let id = '';
 	setInterval(() => {
 		const now = new Date();
 		const jadwalHariIni = (event.data as IJadwalKuliah[]).filter(
@@ -11,11 +12,13 @@ addEventListener('message', (event) => {
 		// ambil jadwal mendatang 30 menit sebelumnya
 		const jadwal = findJadwalBerlangsung(jadwalHariIni);
 		if (jadwal) {
+			if (id == JSON.stringify(jadwal)) return;
+			id = JSON.stringify(jadwal);
 			postMessage({
-				id: JSON.stringify(jadwal),
-				title: `${jadwal.MataKuliah}`,
+				id,
+				title: `${jadwal.MataKuliah} (Berlangsung)`,
 				body: `
-${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
+${jadwal.JenisKuliah} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
 
 Waktu: ${jadwal.Waktu}
 Ruang: ${jadwal.Ruang}
