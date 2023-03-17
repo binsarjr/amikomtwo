@@ -29,30 +29,31 @@ addEventListener('message', (event) => {
 			const [mulai, selesai] = jadwal.Waktu.split('-', 2);
 			let timeStart = moment();
 			// @ts-ignore
-			timeStart.set('hours', mulai.split(':')[0])
+			timeStart.set('hours', mulai.split(':')[0]);
 			// @ts-ignore
-			timeStart.set('minutes', mulai.split(':')[1])
-			timeStart.set('seconds', 0)
+			timeStart.set('minutes', mulai.split(':')[1]);
+			timeStart.set('seconds', 0);
 
 			let timeEnd = moment();
 			// @ts-ignore
-			timeEnd.set('hours', selesai.split(':')[0])
+			timeEnd.set('hours', selesai.split(':')[0]);
 			// @ts-ignore
-			timeEnd.set('minutes', selesai.split(':')[1])
-			timeEnd.set('seconds', 0)
+			timeEnd.set('minutes', selesai.split(':')[1]);
+			timeEnd.set('seconds', 0);
 
-			if(timeStart.diff(moment(), 'minutes') < 30) {
+			let sisaWaktu = timeStart.diff(moment(), 'minutes');
+			if (sisaWaktu < 30 && sisaWaktu > 0) {
 				postMessage({
 					title: `${jadwal.MataKuliah}`,
-					timeout: timeEnd.diff(timeStart,'milliseconds'),
+					timeout: timeEnd.diff(timeStart, 'milliseconds'),
 					body: `
-${jadwal.Ruang} ${(!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : '')} 
+${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
 
 Waktu: ${jadwal.Waktu}
 Ruang: ${jadwal.Ruang}
 Dosen: ${jadwal.NamaDosen}
 					`.trim()
-				})
+				});
 			}
 		});
 	}, 1000);
