@@ -29,7 +29,7 @@
 	}
 
 	let jadwalWorker: Worker;
-	let alreadySendScheduleNotification=writable('jadwal_notif',0)
+	let alreadySendScheduleNotification=writable('jadwalnotif',0)
 	$: if (browser && $jadwal.length) {
 		if(jadwalWorker) {
 			jadwalWorker.terminate()
@@ -45,6 +45,10 @@
 				body: event.data.body,
 				silent: event.data.silent,
 				tag: 'jadwal',
+				// @ts-ignore
+				onClose: () => {
+					$alreadySendScheduleNotification=0
+				},
 				timeout: event.data.timeout as number
 			});
 		});
