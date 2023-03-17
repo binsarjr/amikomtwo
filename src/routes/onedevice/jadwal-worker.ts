@@ -26,7 +26,10 @@ addEventListener('message', (event) => {
 			(val) => val.IdHari == now.getDay()
 		);
 		jadwalHariIni.map((jadwal) => {
-			const [mulai, selesai] = jadwal.Waktu.split('-', 2);
+			let [mulai, selesai] = jadwal.Waktu.split('-', 2);
+			mulai = '10:30';
+			selesai = '11:30';
+
 			let timeStart = moment();
 			// @ts-ignore
 			timeStart.set('hours', mulai.split(':')[0]);
