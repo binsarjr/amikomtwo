@@ -16,6 +16,7 @@
 	import { historiPresensi } from '../../lib/stores/presensi';
 	import Worker from './jadwal-worker?worker';
 	import { writable } from 'svelte-local-storage-store';
+	import { findJadwalBerlangsung } from '../../lib/supports/utils';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -29,28 +30,30 @@
 	}
 
 	let jadwalWorker: Worker;
-	let alreadySendScheduleNotification=writable('jadwalnotif',0)
+	let alreadySendScheduleNotification = writable('jadwalnotif', 0);
 	$: if (browser && $jadwal.length) {
-		if(jadwalWorker) {
-			jadwalWorker.terminate()
+		if (jadwalWorker) {
+			jadwalWorker.terminate();
 		}
-		jadwalWorker= new Worker();
-		jadwalWorker.postMessage($jadwal)
-		Push.clear()
+		jadwalWorker = new Worker();
+		jadwalWorker.postMessage($jadwal);
+		Push.clear();
 		jadwalWorker.addEventListener('message', (event) => {
 			// if(event.data.id == $alreadySendScheduleNotification)return
 			// $alreadySendScheduleNotification = event.data.id as number
-			Push.create(event.data.title, {
-				icon: '/favicon.png',
-				body: event.data.body,
-				tag: 'jadwal',
-				silent:event.data.tipe=='berlangsung',
-				// @ts-ignore
-				onClose: () => {
-					$alreadySendScheduleNotification=0
-				},
-				requireInteraction:true
-			});
+			if (event.data.id !== JSON.stringify(findJadwalBerlangsung($jadwal))) {
+				Push.create(event.data.title, {
+					icon: '/favicon.png',
+					body: event.data.body,
+					tag: 'jadwal',
+					silent: event.data.tipe == 'berlangsung',
+					// @ts-ignore
+					onClose: () => {
+						$alreadySendScheduleNotification = 0;
+					},
+					requireInteraction: true
+				});
+			}
 		});
 	}
 	onMount(async () => {
