@@ -1,5 +1,5 @@
 <script lang="ts">
-	import  Push  from 'push.js'
+	import Push from 'push.js';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -14,9 +14,7 @@
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
-	import Worker from './worker?worker'
-	
-
+	import Worker from './jadwal-worker?worker';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -28,23 +26,30 @@
 		$historiPembayaran = [];
 		goto('/');
 	}
+
+	let jadwalWorker: Worker;
+	$: if (browser && $jadwal.length) {
+		if(jadwalWorker) {
+			jadwalWorker.terminate()
+		}
+		jadwalWorker= new Worker();
+		jadwalWorker.postMessage($jadwal)
+		Push.clear()
+		jadwalWorker.addEventListener('message', (event) => {
+			Push.create(event.data.title, {
+				icon: '/favicon.png',
+				body: event.data.body,
+				tag: 'jadwal',
+				timeout: event.data.timeout as number
+			});
+		});
+	}
 	onMount(async () => {
-		const now = new Date()
-	Push.create('Testing Notif '+now.getHours()+":"+now.getMinutes(), {
-	icon: '/favicon.png',
-});
-	const appWorker = new Worker()
-		appWorker.addEventListener('message', () =>{
-			Push.create('Testing interval 07:00', {
-	icon: '/favicon.png',
-	body: 'test'
-});
-		})
-		
+		Push.Permission.request();
+
 		await serviceClient.refresh();
 		const id = toast.loading('Sync', { position: 'top-right' });
 		try {
-
 			await Promise.all([
 				serviceClient.initkhs(),
 				serviceClient.ktm(),
