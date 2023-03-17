@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { jadwal } from './../../stores/jadwal';
+	import { jadwal } from '../../stores/jadwal';
 	import { browser } from '$app/environment';
-	import Worker from './jadwal-berlangsung?worker';
-	import { findJadwalBerlangsung } from '../../supports/utils';
+	import Worker from './jadwal-mendatang?worker';
 
 	import Push from 'push.js';
 
@@ -17,8 +16,7 @@
 				Push.create(event.data.title, {
 					icon: '/favicon.png',
 					body: event.data.body,
-					tag: 'jadwal-berlangsung',
-					silent: true,
+					tag: 'jadwal-mendatang',
 					requireInteraction: true,
                    
 				});
