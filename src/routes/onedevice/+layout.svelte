@@ -43,13 +43,12 @@
 			Push.create(event.data.title, {
 				icon: '/favicon.png',
 				body: event.data.body,
-				silent: event.data.silent,
 				tag: 'jadwal',
 				// @ts-ignore
 				onClose: () => {
 					$alreadySendScheduleNotification=0
 				},
-				timeout: event.data.timeout as number
+				requireInteraction:true
 			});
 		});
 	}

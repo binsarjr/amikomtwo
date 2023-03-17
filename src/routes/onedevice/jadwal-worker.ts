@@ -1,7 +1,7 @@
 // const idWorker = writable<any>(0);
 
 import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response'
-import moment from 'moment'
+import { findJadwalSebelumWaktu } from '../../lib/supports/utils'
 
 // if (get(idWorker) !== null) {
 // 	clearInterval(idWorker as any);
@@ -25,34 +25,12 @@ addEventListener('message', (event) => {
 		const jadwalHariIni = (event.data as IJadwalKuliah[]).filter(
 			(val) => val.IdHari == now.getDay()
 		);
-		jadwalHariIni.map((jadwal) => {
-			let [mulai, selesai] = jadwal.Waktu.split('-', 2);
-			mulai = '10:45';
-			selesai = '11:30';
-
-			let timeStart = moment();
-			// @ts-ignore
-			timeStart.set('hours', mulai.split(':')[0]);
-			// @ts-ignore
-			timeStart.set('minutes', mulai.split(':')[1]);
-			timeStart.set('seconds', 0);
-
-			let timeEnd = moment();
-			// @ts-ignore
-			timeEnd.set('hours', selesai.split(':')[0]);
-			// @ts-ignore
-			timeEnd.set('minutes', selesai.split(':')[1]);
-			timeEnd.set('seconds', 0);
-
-			let sisaWaktu = timeStart.diff(moment(), 'minutes');
-			let waktuBerjalan = timeEnd.diff(moment(), 'minutes');
-			if (sisaWaktu < 30) {
-				if (waktuBerjalan <= 0) return;
-				postMessage({
-					id: jadwal.IdHari.toString() + jadwal.IdJam.toString() + jadwal.IdKuliah.toString(),
+		// ambil jadwal yang waktunya 30 menit sebelumnya
+		const jadwal = findJadwalSebelumWaktu(jadwalHariIni, 30,'minutes')
+		if(jadwal)  {
+postMessage({
+					id: JSON.stringify(jadwal),
 					title: `${jadwal.MataKuliah}`,
-					timeout: timeEnd.diff(moment(), 'milliseconds'),
-					silent: sisaWaktu < 0,
 					body: `
 ${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
 
@@ -61,7 +39,6 @@ Ruang: ${jadwal.Ruang}
 Dosen: ${jadwal.NamaDosen}
 					`.trim()
 				});
-			}
-		});
+		}
 	}, 1000);
 });
