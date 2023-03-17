@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Push from 'push.js';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -13,6 +14,8 @@
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
+	import JadwalBerlangsungServiceWorker from '../../lib/Notifications/Jadwal/JadwalBerlangsungServiceWorker.svelte';
+
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
 		$mahasiswa = null;
@@ -23,11 +26,13 @@
 		$historiPembayaran = [];
 		goto('/');
 	}
+
 	onMount(async () => {
+		Push.Permission.request();
+
 		await serviceClient.refresh();
 		const id = toast.loading('Sync', { position: 'top-right' });
 		try {
-
 			await Promise.all([
 				serviceClient.initkhs(),
 				serviceClient.ktm(),
@@ -53,6 +58,8 @@
 		profile: '/onedevice/profile'
 	};
 </script>
+
+	<JadwalBerlangsungServiceWorker/>
 
 <Page>
 	<Navbar title="Amikom TWO" />

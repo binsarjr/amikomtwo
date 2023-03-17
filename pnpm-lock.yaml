@@ -24,6 +24,7 @@ specifiers:
   postcss: ^8.4.18
   prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
+  push.js: ^1.0.12
   qr-scanner: ^1.4.1
   svelte: ^3.55.1
   svelte-check: ^2.7.1
@@ -40,6 +41,7 @@ dependencies:
   '@zxing/browser': 0.1.1_@zxing+library@0.19.2
   '@zxing/library': 0.19.2
   etag: 1.8.1
+  push.js: 1.0.12
 
 devDependencies:
   '@binsarjr/apiamikomone': 1.4.3
@@ -2674,6 +2676,10 @@ packages:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
     dev: true
+
+  /push.js/1.0.12:
+    resolution: {integrity: sha512-Mo/zkrPD58hcbMvC/9WveUPGz0PJ4T5UwQJP6DnMYbyxe7b1xM/9qqmJTMmDcprbZjCtLzf9wWtek7gA8O9QBw==}
+    dev: false
 
   /qr-scanner/1.4.1:
     resolution: {integrity: sha512-xiR90NONHTfTwaFgW/ihlqjGMIZg6ExHDOvGQRba1TvV+WVw7GoDArIOt21e+RO+9WiO4AJJq+mwc5f4BnGH3w==}
