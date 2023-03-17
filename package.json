@@ -1,9 +1,9 @@
 {
 	"name": "amikomtwo",
-	"version": "0.0.1",
+	"version": "0.9.2",
 	"scripts": {
-		"dev": "SECRET_GUEST_KEY=iGY1TwdySNUjD3lfC0r0kMP72Gviu9Ti vite dev",
-		"build": "SECRET_GUEST_KEY=iGY1TwdySNUjD3lfC0r0kMP72Gviu9Ti vite build",
+		"dev": "SECRET_GUEST_KEY=uB42yRoBfior1hE2LCwVDzMRX3V6IiY0 vite dev",
+		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
