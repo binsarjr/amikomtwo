@@ -15,6 +15,7 @@
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
 	import Worker from './jadwal-worker?worker';
+	import { writable } from 'svelte-local-storage-store';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -28,6 +29,7 @@
 	}
 
 	let jadwalWorker: Worker;
+	let alreadySendScheduleNotification=writable('jadwal_notif',0)
 	$: if (browser && $jadwal.length) {
 		if(jadwalWorker) {
 			jadwalWorker.terminate()
@@ -36,6 +38,8 @@
 		jadwalWorker.postMessage($jadwal)
 		Push.clear()
 		jadwalWorker.addEventListener('message', (event) => {
+			if(event.data.id == $alreadySendScheduleNotification)return
+			$alreadySendScheduleNotification = event.data.id as number
 			Push.create(event.data.title, {
 				icon: '/favicon.png',
 				body: event.data.body,
