@@ -9,12 +9,11 @@
 
 	let jadwalWorker: Worker;
     let alreadyNotified=false
-	$: if (browser && $jadwal.length) {
+	$: if (browser && $jadwal?.length) {
 		if (jadwalWorker) {
 			jadwalWorker.terminate();
 		}
 		jadwalWorker = new Worker();
-		jadwalWorker.postMessage($jadwal);
         jadwalWorker.addEventListener('message', (event) => {
 			if (!alreadyNotified) {
 
@@ -38,5 +37,6 @@
                 alreadyNotified=true
 			}
 		});
+		jadwalWorker.postMessage($jadwal);
 	}
 </script>

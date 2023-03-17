@@ -31,8 +31,8 @@ export const findJadwalBerlangsung = (
 		if (jadwal.IdHari != now.getDay()) return false;
 
 		let [mulai, selesai] = jadwal.Waktu.split('-', 2);
-		mulai = '10:45';
-		selesai = '11:30';
+		mulai = '11:00';
+		selesai = '12:30';
 
 		let timeStart = moment();
 		// @ts-ignore

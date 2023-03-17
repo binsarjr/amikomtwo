@@ -58,9 +58,8 @@
 		profile: '/onedevice/profile'
 	};
 </script>
-<template>
+
 	<JadwalBerlangsungServiceWorker/>
-</template>
 
 <Page>
 	<Navbar title="Amikom TWO" />
