@@ -15,6 +15,7 @@
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
 	import JadwalBerlangsungServiceWorker from '../../lib/Notifications/Jadwal/JadwalBerlangsungServiceWorker.svelte';
+	import JadwalMendatangServiceWorker from '../../lib/Notifications/Jadwal/JadwalMendatangServiceWorker.svelte';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -59,7 +60,8 @@
 	};
 </script>
 
-	<JadwalBerlangsungServiceWorker/>
+<JadwalBerlangsungServiceWorker />
+<JadwalMendatangServiceWorker />
 
 <Page>
 	<Navbar title="Amikom TWO" />
