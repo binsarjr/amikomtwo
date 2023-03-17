@@ -27,7 +27,7 @@ addEventListener('message', (event) => {
 		);
 		jadwalHariIni.map((jadwal) => {
 			let [mulai, selesai] = jadwal.Waktu.split('-', 2);
-			mulai = '10:30';
+			mulai = '10:45';
 			selesai = '11:30';
 
 			let timeStart = moment();
@@ -51,7 +51,7 @@ addEventListener('message', (event) => {
 				postMessage({
 					id: jadwal.IdHari.toString() + jadwal.IdJam.toString() + jadwal.IdKuliah.toString(),
 					title: `${jadwal.MataKuliah}`,
-					timeout: timeEnd.diff(timeStart, 'milliseconds'),
+					timeout: timeEnd.diff(moment(), 'milliseconds'),
 					silent: sisaWaktu < 0,
 					body: `
 ${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
