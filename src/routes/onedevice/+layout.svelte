@@ -29,7 +29,8 @@
 		goto('/');
 	}
 	onMount(async () => {
-	Push.create('Testing Notif', {
+		const now = new Date()
+	Push.create('Testing Notif '+now.getHours()+":"+now.getMinutes(), {
 	icon: '/favicon.png',
 });
 	const appWorker = new Worker()
