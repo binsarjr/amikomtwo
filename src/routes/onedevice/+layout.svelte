@@ -38,12 +38,13 @@
 		jadwalWorker.postMessage($jadwal)
 		Push.clear()
 		jadwalWorker.addEventListener('message', (event) => {
-			if(event.data.id == $alreadySendScheduleNotification)return
-			$alreadySendScheduleNotification = event.data.id as number
+			// if(event.data.id == $alreadySendScheduleNotification)return
+			// $alreadySendScheduleNotification = event.data.id as number
 			Push.create(event.data.title, {
 				icon: '/favicon.png',
 				body: event.data.body,
 				tag: 'jadwal',
+				silent:event.data.tipe=='berlangsung',
 				// @ts-ignore
 				onClose: () => {
 					$alreadySendScheduleNotification=0

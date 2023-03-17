@@ -1,7 +1,7 @@
 // const idWorker = writable<any>(0);
 
 import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response'
-import { findJadwalSebelumWaktu } from '../../lib/supports/utils'
+import { findJadwalBerlangsung, findJadwalSebelumWaktu } from '../../lib/supports/utils'
 
 // if (get(idWorker) !== null) {
 // 	clearInterval(idWorker as any);
@@ -25,20 +25,25 @@ addEventListener('message', (event) => {
 		const jadwalHariIni = (event.data as IJadwalKuliah[]).filter(
 			(val) => val.IdHari == now.getDay()
 		);
-		// ambil jadwal yang waktunya 30 menit sebelumnya
-		const jadwal = findJadwalSebelumWaktu(jadwalHariIni, 30,'minutes')
-		if(jadwal)  {
-postMessage({
-					id: JSON.stringify(jadwal),
-					title: `${jadwal.MataKuliah}`,
-					body: `
+
+		const createPostData = (tipe: 'berlangsung' | 'mendatang', jadwal: IJadwalKuliah) => ({
+			tipe,
+			id: JSON.stringify(jadwal),
+			title: `${jadwal.MataKuliah}`,
+			body: `
 ${jadwal.Ruang} ${!!jadwal.Keterangan ? '(' + jadwal.Keterangan + ')' : ''} 
 
 Waktu: ${jadwal.Waktu}
 Ruang: ${jadwal.Ruang}
 Dosen: ${jadwal.NamaDosen}
 					`.trim()
-				});
+		});
+		// ambil jadwal yang waktunya 30 menit sebelumnya
+		const jadwal = findJadwalSebelumWaktu(jadwalHariIni, 30, 'minutes');
+		if (jadwal) {
+			postMessage(createPostData('mendatang', jadwal));
 		}
+		const jadwalBerlangsung = findJadwalBerlangsung(jadwalHariIni);
+		if (jadwalBerlangsung) postMessage(createPostData('berlangsung', jadwalBerlangsung));
 	}, 1000);
 });
