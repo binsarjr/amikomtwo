@@ -70,16 +70,11 @@ export const findJadwalSebelumWaktu = (
 		timeStart.set('minutes', mulai.split(':')[1]);
 		timeStart.set('seconds', 0);
 
-		let timeEnd = moment();
-		// @ts-ignore
-		timeEnd.set('hours', selesai.split(':')[0]);
-		// @ts-ignore
-		timeEnd.set('minutes', selesai.split(':')[1]);
-		timeEnd.set('seconds', 0);
-
 		const diff = timeStart.diff(moment(), type);
-		if (diff >= unit && diff > 0) {
+		if (diff > 0 && diff <= unit) {
+
 			return jadwal;
 		}
+    return false;
 	});
 };
