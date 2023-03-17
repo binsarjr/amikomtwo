@@ -14,9 +14,7 @@
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
-	import Worker from './jadwal-worker?worker';
-	import { writable } from 'svelte-local-storage-store';
-	import { findJadwalBerlangsung } from '../../lib/supports/utils';
+	import JadwalBerlangsungServiceWorker from '../../lib/Notifications/Jadwal/JadwalBerlangsungServiceWorker.svelte';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -29,33 +27,6 @@
 		goto('/');
 	}
 
-	let jadwalWorker: Worker;
-	let alreadySendScheduleNotification = writable('jadwalnotif', 0);
-	$: if (browser && $jadwal.length) {
-		if (jadwalWorker) {
-			jadwalWorker.terminate();
-		}
-		jadwalWorker = new Worker();
-		jadwalWorker.postMessage($jadwal);
-		Push.clear();
-		jadwalWorker.addEventListener('message', (event) => {
-			// if(event.data.id == $alreadySendScheduleNotification)return
-			// $alreadySendScheduleNotification = event.data.id as number
-			if (event.data.id !== JSON.stringify(findJadwalBerlangsung($jadwal))) {
-				Push.create(event.data.title, {
-					icon: '/favicon.png',
-					body: event.data.body,
-					tag: 'jadwal',
-					silent: event.data.tipe == 'berlangsung',
-					// @ts-ignore
-					onClose: () => {
-						$alreadySendScheduleNotification = 0;
-					},
-					requireInteraction: true
-				});
-			}
-		});
-	}
 	onMount(async () => {
 		Push.Permission.request();
 
@@ -87,6 +58,9 @@
 		profile: '/onedevice/profile'
 	};
 </script>
+<template>
+	<JadwalBerlangsungServiceWorker/>
+</template>
 
 <Page>
 	<Navbar title="Amikom TWO" />
