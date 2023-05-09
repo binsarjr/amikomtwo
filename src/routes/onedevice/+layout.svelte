@@ -9,9 +9,10 @@
 	import toast from 'svelte-french-toast';
 	import { serviceClient } from '../../lib/serviceClient';
 	import { initKhs } from '../../lib/stores/initKhs';
-	import { jadwal } from '../../lib/stores/jadwal';
+	import { jadwal,jadwalMatkulAktif, jadwalHariIni } from '../../lib/stores/jadwal';
 	import { ktmDigital } from '../../lib/stores/ktmDigital';
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
+	import moment from 'moment'
 	import { authUser } from '../../lib/stores/preferences';
 	import { historiPresensi } from '../../lib/stores/presensi';
 	import JadwalBerlangsungServiceWorker from '../../lib/Notifications/Jadwal/JadwalBerlangsungServiceWorker.svelte';
@@ -27,6 +28,17 @@
 		$historiPresensi = [];
 		$historiPembayaran = [];
 		goto('/');
+	}
+	$:if($jadwal){
+		$jadwalHariIni = $jadwal.filter((jadwal) => jadwal.IdHari == new Date().getDay())
+	}
+	$: if($jadwalHariIni) {
+		$jadwalMatkulAktif =  $jadwalHariIni.find(item => {
+			const [start,end] = item.Waktu.split('-')
+			const mulai = moment(start, ['h:m', 'H:m']);
+			const selesai = moment(end, ['h:m', 'H:m']);
+			return moment().isBetween(mulai,selesai)
+		})
 	}
 
 	onMount(async () => {

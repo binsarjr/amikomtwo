@@ -8,10 +8,11 @@
 	import { navigating } from '$app/stores';
 	import toast from 'svelte-french-toast';
 	import { authUser, preferences } from '../../../lib/stores/preferences';
-	import { usersGuest, type UserGuest } from '../../../lib/stores/userguest';
+	import { usersGuest, type UserGuest,usersGuestStatus } from '../../../lib/stores/userguest';
 	import ListTamu from '../../../lib/components/TamuComponent/ListTamu.svelte';
 	import QrScanner from '../../../lib/components/QrScanner.svelte';
 	import { sleep } from '../../../lib/supports/utils';
+	import { jadwalMatkulAktif } from '$lib/stores/jadwal';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -19,6 +20,37 @@
 	let code = '';
 	let activeUsersGuest: UserGuest[] = $usersGuest;
 	let except = [$usersGuest.find((guest) => $preferences.nim == guest.nim) as UserGuest];
+	$: except = except.filter(Boolean)
+	$: activeUsersGuest = activeUsersGuest.filter(Boolean)
+	$: {
+		Object.entries($usersGuestStatus).map(([key,value]) => {
+			Object.entries(value).map(([nim, isActive]) => {
+				const user =$usersGuest.find((guest) => guest.nim === nim)
+				if(user) {
+
+				if(isActive) {
+					const index = activeUsersGuest.findIndex(guest => guest?.nim===nim)
+					if(activeUsersGuest[index]) {
+						activeUsersGuest[index] = user
+					} else {
+						activeUsersGuest[activeUsersGuest.length] = user
+					}
+				} else {
+					const index = except.findIndex(guest => guest?.nim ==nim)
+					if(except[index]) {
+						except[index] = user
+
+					} else {
+						except[except.length] = user
+
+					}
+
+		}
+		}
+			})
+		})
+	}
+
 	$: if (qrresult) {
 		//   need time for reactive
 		setTimeout(() => {
@@ -87,6 +119,34 @@
 		await sleep(1000);
 		qrresult = null;
 	};
+
+
+
+	const deactive = (e: CustomEvent<UserGuest>) => {
+		if($jadwalMatkulAktif) {
+			const id = `${$jadwalMatkulAktif.IdHari}${$jadwalMatkulAktif.IdJam}${$jadwalMatkulAktif.IdKuliah}`
+			if(!$usersGuestStatus[id]) $usersGuestStatus[id] = {}
+			$usersGuestStatus[id][e.detail.nim] = false
+
+			const index = except.findIndex(g => g?.nim===e.detail.nim)
+			except[except[index] ? index : except.length] = e.detail
+			activeUsersGuest = activeUsersGuest.filter(g => g.nim!==e.detail.nim)
+
+		}
+	}
+
+	const active = (e: CustomEvent<UserGuest>) => {
+		if($jadwalMatkulAktif) {
+			const id = `${$jadwalMatkulAktif.IdHari}${$jadwalMatkulAktif.IdJam}${$jadwalMatkulAktif.IdKuliah}`
+			if(!$usersGuestStatus[id]) $usersGuestStatus[id] = {}
+			$usersGuestStatus[id][e.detail.nim] = true
+
+			
+			const index = activeUsersGuest.findIndex(g => g?.nim===e.detail.nim)
+			activeUsersGuest[activeUsersGuest[index] ? index : activeUsersGuest.length] = e.detail
+			except = except.filter(g => g.nim!==e.detail.nim)
+		}
+	} 
 </script>
 
 <BlockTitle>Scan QrCode</BlockTitle>
@@ -131,4 +191,4 @@
 
 <BlockTitle>Presensi Bareng</BlockTitle>
 <Block>saat ini presensi akan berbarengan dengan guest tamu yang ada</Block>
-<ListTamu active bind:activeSources={activeUsersGuest} {except} />
+<ListTamu on:deactive={deactive} on:active={active} active bind:activeSources={activeUsersGuest} bind:except={except} />

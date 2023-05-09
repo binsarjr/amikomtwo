@@ -2,9 +2,12 @@
 	import { afterNavigate } from '$app/navigation';
 	import { List, ListItem } from 'konsta/svelte';
 	import { usersGuest, type UserGuest } from '../../stores/userguest';
+	import { createEventDispatcher } from 'svelte';
 	export let active = false;
 	export let activeSources: UserGuest[] = [];
 	export let except: UserGuest[] = [];
+
+	const dispatch = createEventDispatcher()
 
 	$: if ($usersGuest) {
 		activeSources = $usersGuest;
@@ -21,8 +24,11 @@
 		checkboxs[indexSource] = !checkboxs[indexSource];
 		if (activeSources.includes($usersGuest[indexSource])) {
 			activeSources = activeSources.filter((source) => source != $usersGuest[indexSource]);
+			dispatch('deactive', $usersGuest[indexSource])
 		} else {
 			activeSources[activeSources.length] = $usersGuest[indexSource];
+			dispatch('active', $usersGuest[indexSource])
+
 		}
 	};
 </script>
