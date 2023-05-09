@@ -9,7 +9,7 @@
 	import toast from 'svelte-french-toast';
 	import { serviceClient } from '../../lib/serviceClient';
 	import { initKhs } from '../../lib/stores/initKhs';
-	import { jadwal,jadwalMatkulAktif, jadwalHariIni } from '../../lib/stores/jadwal';
+	import { jadwal,jadwalMatkulAktif, jadwalHariIni, getIdFromJadwal } from '../../lib/stores/jadwal';
 	import { ktmDigital } from '../../lib/stores/ktmDigital';
 	import { mahasiswa } from '../../lib/stores/mahasiswa';
 	import moment from 'moment'
@@ -18,6 +18,7 @@
 	import JadwalBerlangsungServiceWorker from '../../lib/Notifications/Jadwal/JadwalBerlangsungServiceWorker.svelte';
 
 	import JadwalMendatangServiceWorker from '../../lib/Notifications/Jadwal/JadwalMendatangServiceWorker.svelte';
+	import { usersGuestStatus } from '../../lib/stores/userguest';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -27,12 +28,17 @@
 		$ktmDigital = null;
 		$historiPresensi = [];
 		$historiPembayaran = [];
+		$usersGuestStatus={}
 		goto('/');
 	}
 	$:if($jadwal){
 		$jadwalHariIni = $jadwal.filter((jadwal) => jadwal.IdHari == new Date().getDay())
+		$jadwal.map(jadwal => {
+			const id =getIdFromJadwal(jadwal)
+			if(!$usersGuestStatus[id]) $usersGuestStatus[id]={}
+		})
 	}
-	$: if($jadwalHariIni) {
+	$:  {
 		$jadwalMatkulAktif =  $jadwalHariIni.find(item => {
 			const [start,end] = item.Waktu.split('-')
 			const mulai = moment(start, ['h:m', 'H:m']);
@@ -79,7 +85,7 @@
 <Page>
 	<Navbar title="Amikom TWO" />
 
-	<Tabbar labels={true} class="left-0 bottom-0 fixed md:w-[465px] mx-auto left-0 right-0">
+	<Tabbar labels={true} class="left-0 bottom-0 fixed md:w-[465px] mx-auto right-0">
 		<TabbarLink
 			href={pages.home}
 			component="a"

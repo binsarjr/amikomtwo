@@ -15,14 +15,14 @@
 
 <BlockTitle>Jadwal Kuliah Hari Ini</BlockTitle>
 <List strongIos insetIos outlineIos>
-	{#each $jadwalHariIni as jadwal}
+	{#each $jadwalHariIni as {Keterangan, MataKuliah, JenisKuliah, Waktu, Ruang, EmailDosen,  Kode,NamaDosen}}
 		<ListItem
-			title={jadwal.MataKuliah}
-			header={jadwal.JenisKuliah + (!!jadwal.Keterangan ? ' (' + jadwal.Keterangan + ')' : '')}
-			subtitle={jadwal.Ruang + ' | ' + jadwal.Waktu}
-			text={jadwal.EmailDosen}
-			after={jadwal.Kode}
-			footer={jadwal.NamaDosen}
+			title={MataKuliah}
+			header={JenisKuliah + (!!Keterangan ? ' (' + Keterangan + ')' : '')}
+			subtitle={Ruang + ' | ' + Waktu}
+			text={EmailDosen}
+			after={Kode}
+			footer={NamaDosen}
 		/>
 	{:else}
 		<ListItem title="Tidak ada jadwal" />
