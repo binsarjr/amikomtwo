@@ -79,7 +79,7 @@
 		);
 
 		// @ts-ignore
-		let capabilities = controls.streamVideoCapabilitiesGet();
+		let capabilities = controls?.streamVideoCapabilitiesGet();
 		// @ts-ignore
 		min = capabilities?.zoom?.min || 1;
 		// @ts-ignore
