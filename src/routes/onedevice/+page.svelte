@@ -81,5 +81,5 @@
 <List strongIos insetIos outlineIos>
 	<ListItem link title="Kemahasiswaan (DAAK)" href="/onedevice/daak" />
 	<!-- <ListItem link title="Keuangan (DPK)" href="/onedevice/dpk" /> -->
-	<ListItem link title="Tentang Penulias" href="/onedevice/aboutme" />
+	<ListItem link title="Tentang Penulis" href="/onedevice/aboutme" />
 </List>
