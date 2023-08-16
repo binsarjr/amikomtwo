@@ -48,5 +48,26 @@ export const pembayaranRouter = t.router({
             }[]
         }>()
         return results
+    }),
+    histori: t.procedure.input(z.object({
+        npm: z.string(),
+        token: z.string(),
+
+    })).query(async ({ ctx, input: { npm, token } }) => {
+        const { results } = await ctx.request.get(`api/amikomone/payment/${npm}/histori`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }).json<{
+            results: {
+                bank: string
+                nama_kwj: string
+                nominal: number
+                semester: string
+                tgl_bayar: string
+                tha: string
+            }[]
+        }>()
+        return results
     })
 })
