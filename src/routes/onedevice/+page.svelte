@@ -67,7 +67,7 @@
 	<ListItem link title="Jadwal Kuliah" href="/onedevice/jadwal-kuliah" />
 	<ListItem link title="Transkrip" href="/onedevice/transkrip" />
 	<ListItem link title="Perpustakaan" />
-	<ListItem link title="Pembayaran" />
+	<ListItem link title="Pembayaran" href="/onedevice/pembayaran/biaya" />
 	<ListItem link title="KTM" href="/onedevice/ktm" />
 </List>
 

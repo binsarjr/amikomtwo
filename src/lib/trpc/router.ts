@@ -1,3 +1,4 @@
+import { pembayaranRouter } from '$lib/trpc/routes/pembayaran'
 import { presensi } from '$lib/trpc/routes/presensi'
 import { t } from '$lib/trpc/t'
 
@@ -11,5 +12,6 @@ export const router = t.router({
 		}[]
 
 		return data
-	})
+	}),
+	pembayaran: pembayaranRouter
 })

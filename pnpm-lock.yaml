@@ -84,6 +84,9 @@ devDependencies:
   eslint-plugin-svelte3:
     specifier: ^4.0.0
     version: 4.0.0(eslint@8.26.0)(svelte@4.0.5)
+  got:
+    specifier: '11'
+    version: 11.8.2
   konsta:
     specifier: ^1.0.2
     version: 1.0.2
@@ -1275,7 +1278,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 4.2.0
-      '@types/node': 18.11.4
+      '@types/node': 20.4.2
       '@types/responselike': 1.0.0
     dev: true
 
@@ -1338,7 +1341,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.11.4
+      '@types/node': 20.4.2
     dev: true
 
   /@types/semver@7.3.12:
