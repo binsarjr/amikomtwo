@@ -1,6 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit'
-import type { inferAsyncReturnType } from '@trpc/server'
-import got from 'got'
+import type { RequestEvent } from '@sveltejs/kit';
+import type { inferAsyncReturnType } from '@trpc/server';
+import got from 'got';
 
 // we're not using the event parameter is this example,
 // hence the eslint-disable rule
@@ -11,10 +11,10 @@ export async function createContext(event: RequestEvent) {
 		headers: {
 			'user-agent': '@m!k0mXv=#neMob!le'
 		}
-	})
+	});
 	return {
 		request
-	}
+	};
 }
 
-export type Context = inferAsyncReturnType<typeof createContext>
+export type Context = inferAsyncReturnType<typeof createContext>;

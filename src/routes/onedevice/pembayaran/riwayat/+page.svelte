@@ -74,7 +74,7 @@
 				{#each items as item}
 					<ListItem
 						title={item.nama_kwj}
-						subtitle={(new Date(item.tgl_bayar)).toLocaleDateString('id-ID')+' '+item.bank}
+						subtitle={new Date(item.tgl_bayar).toLocaleDateString('id-ID') + ' ' + item.bank}
 						text={'TA ' + item.tha + ' - ' + item.semester}
 						footer={'Rp.' + item.nominal.toLocaleString('id-ID')}
 					/>

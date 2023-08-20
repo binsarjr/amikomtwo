@@ -30,8 +30,8 @@
 		getData();
 	}
 	onDestroy(() => {
-		toast.remove()
-	})
+		toast.remove();
+	});
 </script>
 
 <div>

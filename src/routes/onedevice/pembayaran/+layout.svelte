@@ -14,7 +14,6 @@
 		riwayat: '/onedevice/pembayaran/riwayat',
 		tiket: '/onedevice/pembayaran/tiket'
 	};
-	;
 </script>
 
 <Page>

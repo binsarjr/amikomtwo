@@ -35,11 +35,7 @@
 	</Navbar>
 	<BlockTitle>Download & Link</BlockTitle>
 	<List strongIos insetIos outlineIos>
-		{#each [
-			{ title: 'Surat & Formulir', page: 'surat-formulir' },
-			{ title: 'Sertifikat Akreditasi', page: 'sertifikat-akreditasi' },
-			{ title: 'Buku Panduan Akademik', page: 'buku-panduan-akademik' },
-	] as { title, page }}
+		{#each [{ title: 'Surat & Formulir', page: 'surat-formulir' }, { title: 'Sertifikat Akreditasi', page: 'sertifikat-akreditasi' }, { title: 'Buku Panduan Akademik', page: 'buku-panduan-akademik' }] as { title, page }}
 			<ListItem link {title} href="/onedevice/daak/{page}/{title}" />
 		{/each}
 		<!-- <ListItem link title="Keuangan (DPK)" href="/onedevice/dpk" /> -->

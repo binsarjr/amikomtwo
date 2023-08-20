@@ -81,6 +81,11 @@
 <List strongIos insetIos outlineIos>
 	<ListItem link title="Kemahasiswaan (DAAK)" href="/onedevice/daak" />
 	<!-- <ListItem link title="Keuangan (DPK)" href="/onedevice/dpk" /> -->
-	<ListItem link title="Wikipedia AmikomTWO" href="https://github.com/binsarjr/amikomtwo/wiki" target="_blank" />
+	<ListItem
+		link
+		title="Wikipedia AmikomTWO"
+		href="https://github.com/binsarjr/amikomtwo/wiki"
+		target="_blank"
+	/>
 	<ListItem link title="Tentang Penulis" href="/onedevice/aboutme" />
 </List>
