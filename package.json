@@ -22,6 +22,7 @@
 		"@types/etag": "^1.8.1",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
+		"@zxing/library": "^0.19.2",
 		"autoprefixer": "^10.4.12",
 		"cheerio": "1.0.0-rc.12",
 		"eslint": "^8.16.0",
@@ -203,8 +204,6 @@
 	"dependencies": {
 		"@trpc/client": "^10.27.1",
 		"@trpc/server": "^10.27.1",
-		"@zxing/browser": "^0.1.1",
-		"@zxing/library": "^0.19.2",
 		"etag": "^1.8.1",
 		"events": "^3.3.0",
 		"fs": "0.0.1-security",

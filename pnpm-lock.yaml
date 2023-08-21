@@ -7,12 +7,6 @@ dependencies:
   '@trpc/server':
     specifier: ^10.27.1
     version: 10.27.1
-  '@zxing/browser':
-    specifier: ^0.1.1
-    version: 0.1.1(@zxing/library@0.19.2)
-  '@zxing/library':
-    specifier: ^0.19.2
-    version: 0.19.2
   etag:
     specifier: ^1.8.1
     version: 1.8.1
@@ -69,6 +63,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^5.27.0
     version: 5.40.1(eslint@8.26.0)(typescript@5.1.6)
+  '@zxing/library':
+    specifier: ^0.19.2
+    version: 0.19.2
   autoprefixer:
     specifier: ^10.4.12
     version: 10.4.12(postcss@8.4.18)
@@ -1503,16 +1500,6 @@ packages:
       - supports-color
     dev: true
 
-  /@zxing/browser@0.1.1(@zxing/library@0.19.2):
-    resolution: {integrity: sha512-fdcHrvvno1NnoiY5++kn/h2b9QnBNyqtK1JqbfY3dfmTdwyXCJr/aT2ZGyRcfe0D3I/THu1I5VJAcpoU0svQMQ==}
-    peerDependencies:
-      '@zxing/library': ^0.19.1
-    dependencies:
-      '@zxing/library': 0.19.2
-    optionalDependencies:
-      '@zxing/text-encoding': 0.9.0
-    dev: false
-
   /@zxing/library@0.19.2:
     resolution: {integrity: sha512-0aCQIbGXsDHcBuRYuZRZfJeLRYiPfdLxIlh5bY7k+k2bkxFwzla+75VyFi1rnjU5hqaZogdSH+Dw013YDsQOjg==}
     engines: {node: '>= 10.4.0'}
@@ -1520,12 +1507,12 @@ packages:
       ts-custom-error: 3.3.1
     optionalDependencies:
       '@zxing/text-encoding': 0.9.0
-    dev: false
+    dev: true
 
   /@zxing/text-encoding@0.9.0:
     resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /abbrev@1.1.1:
@@ -3984,7 +3971,7 @@ packages:
   /ts-custom-error@3.3.1:
     resolution: {integrity: sha512-5OX1tzOjxWEgsr/YEUWSuPrQ00deKLh6D7OTWcvNHm12/7QPyRh8SYpyWvA4IZv8H/+GQWQEh/kwo95Q9OVW1A==}
     engines: {node: '>=14.0.0'}
-    dev: false
+    dev: true
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
