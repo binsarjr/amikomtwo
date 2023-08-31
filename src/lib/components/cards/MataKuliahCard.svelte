@@ -21,6 +21,7 @@
 
 	const convertRuangan = (ruang: string) => {
 		if (ruang.toLowerCase().startsWith('vr')) return 'Virtual Room';
+		if (ruang.toLowerCase().startsWith('vl')) return 'Virtual Lab';
 		if (ruang.toLowerCase().startsWith('l')) {
 			ruang = ruang.replace(/^l\s{0,}/i, '');
 		}
