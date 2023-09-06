@@ -8,6 +8,7 @@
 	import { initKhs } from '../../../lib/stores/initKhs';
 	import PilihSemester from '../../../lib/components/PilihSemester.svelte';
 	import { browser } from '$app/environment';
+	import { ServerTimeout } from '$lib/error';
 
 	let semesterSelected = 0;
 	let tahunAkademikSelected = '';
@@ -18,14 +19,28 @@
 		);
 		if ($hasilStudiSemester) {
 			const id = toast.loading('sync');
-			serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache).then((_) => {
-				toast.success('selesai', { id });
-			});
+			Promise.race([
+				serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache),
+				ServerTimeout()
+			])
+				.then((_) => {
+					toast.success('selesai', { id });
+				})
+				.catch((_) => {
+					toast.error('Server  timeout', { id });
+				});
 			return;
 		}
 		const id = toast.loading('sync');
-		await serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache);
-		toast.success('selesai', { id });
+		try {
+			await Promise.race([
+				serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache),
+				ServerTimeout()
+			]);
+			toast.success('selesai', { id });
+		} catch (error) {
+			toast.error('Server Timeout', { id });
+		}
 	};
 	$: if (browser && semesterSelected) {
 		refresh();

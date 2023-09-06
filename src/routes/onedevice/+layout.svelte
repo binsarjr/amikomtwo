@@ -24,6 +24,7 @@
 
 	import JadwalMendatangServiceWorker from '../../lib/Notifications/Jadwal/JadwalMendatangServiceWorker.svelte';
 	import { usersGuestStatus } from '../../lib/stores/userguest';
+	import { ServerTimeout, ServerTimeoutError } from '$lib/error';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -60,16 +61,19 @@
 
 		const id = toast.loading('Sync');
 		try {
-			await Promise.all([
-				serviceClient.initkhs(),
-				serviceClient.ktm(),
+			await Promise.race([
+				Promise.all([
+					serviceClient.initkhs(),
+					serviceClient.ktm(),
 
-				serviceClient.transkrip(),
-				serviceClient.pengumuman(),
+					serviceClient.transkrip(),
+					serviceClient.pengumuman(),
 
-				serviceClient.bio(),
-				serviceClient.jadwal(),
-				serviceClient.pembayaran.bank()
+					serviceClient.bio(),
+					serviceClient.jadwal(),
+					serviceClient.pembayaran.bank()
+				]),
+				ServerTimeout()
 			]);
 			toast.success('selesai', { id });
 		} catch (error) {

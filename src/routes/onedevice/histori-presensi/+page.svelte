@@ -9,6 +9,8 @@
 	import { historiPresensi } from '../../../lib/stores/presensi';
 	import PilihSemester from '../../../lib/components/PilihSemester.svelte';
 	import { browser } from '$app/environment';
+	import { ServerTimeout } from '$lib/error';
+	import type { IPresence } from '@binsarjr/apiamikomone/lib/typings/Response';
 
 	let semesterSelected = 0;
 	let tahunAkademikSelected = '';
@@ -18,8 +20,15 @@
 		if (id) return;
 		id = toast.loading('sync');
 
-		$historiPresensi = await serviceClient.historiPresensi(semesterSelected, tahunAkademikSelected);
-		toast.success('selesai', { id });
+		try {
+			$historiPresensi = (await Promise.race([
+				serviceClient.historiPresensi(semesterSelected, tahunAkademikSelected),
+				ServerTimeout()
+			])) as IPresence[];
+			toast.success('selesai', { id });
+		} catch (err) {
+			toast.error('Server Timeout');
+		}
 		id = undefined;
 	};
 

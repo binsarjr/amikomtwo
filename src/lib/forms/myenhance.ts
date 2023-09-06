@@ -34,6 +34,7 @@ export const myenhance =
 							})
 						await applyAction(result)
 
+						id.set('')
 						return goto(result.data.location)
 					}
 				} else {
@@ -42,6 +43,7 @@ export const myenhance =
 							done()
 						})
 					await applyAction(result)
+					id.set('')
 					toast.remove()
 				}
 			}

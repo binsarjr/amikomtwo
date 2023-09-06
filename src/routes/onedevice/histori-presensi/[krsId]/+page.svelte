@@ -1,9 +1,17 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { serviceClient } from '../../../../lib/serviceClient';
+	import { ServerTimeout } from '$lib/error';
+	import type { IPresenceDetail } from '@binsarjr/apiamikomone/lib/typings/Response';
 
 	$: namaMatkul = decodeURIComponent($page.url.searchParams.get('matkul') || '');
+
+	const getData = async () =>
+		Promise.race([
+			serviceClient.detailPresensi(parseInt($page.params.krsId)),
+			ServerTimeout()
+		]) as Promise<IPresenceDetail[]>;
 </script>
 
 <Page class="pb-20">
@@ -20,7 +28,7 @@
 	{#if namaMatkul}
 		<BlockTitle>Mata Kuliah {namaMatkul}</BlockTitle>
 	{/if}
-	{#await serviceClient.detailPresensi(parseInt($page.params.krsId))}
+	{#await getData()}
 		<Block>Mohon menunggu...</Block>
 	{:then items}
 		<List strongIos insetIos>
