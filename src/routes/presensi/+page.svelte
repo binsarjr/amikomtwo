@@ -47,8 +47,11 @@
 		}
 	};
 
+	let submitting = false;
 	const guestCodeSubmit = async () => {
+		if (submitting) return;
 		const id = toast.loading('Mohon Menunggu...');
+		submitting = true;
 		const query: RouterInputs['presensi']['code'] = {
 			code,
 			accounts: []
@@ -66,9 +69,12 @@
 			else toast.error(result.message);
 		});
 		toast.success('Antrian Selesai', { id });
+		submitting = false;
 	};
 	const guestQrCodeSubmit = async () => {
+		if (submitting) return;
 		const id = toast.loading('Mohon Menunggu...');
+		submitting = true;
 		const query: RouterInputs['presensi']['qrcode'] = {
 			data: qrresult || '',
 			accounts: []
@@ -88,6 +94,7 @@
 		toast.success('Antrian Selesai', { id });
 		await sleep(1000);
 		qrresult = null;
+		submitting = false;
 	};
 </script>
 
