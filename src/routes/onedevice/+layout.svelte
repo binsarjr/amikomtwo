@@ -79,7 +79,6 @@
 						serviceClient.ktm(),
 						serviceClient.pengumuman(),
 						serviceClient.bio(),
-						serviceClient.jadwal(),
 						serviceClient.pembayaran.bank()
 					]);
 					toast.success('selesai', { id });

@@ -14,6 +14,8 @@
 
 	const dispatch = createEventDispatcher();
 	const sync = async () => {
+		// prevent when still loading
+		if (loading) return;
 		loading = true;
 		await tick();
 		const props = {
@@ -39,7 +41,7 @@
 		<ListItem
 			{title}
 			subtitle="Terakhir diperbarui:"
-			footer={(lastUpdate || 'belum diperbarui')+' (otomatis setiap 24jam)'}
+			footer={(lastUpdate || 'belum diperbarui') + ' (otomatis setiap 24jam)'}
 			colors={{
 				menuListItemTextIos: 'text-white',
 				menuListItemTextMaterial: 'text-white',

@@ -21,6 +21,10 @@
 	import MataKuliahCard from '../../../lib/components/cards/MataKuliahCard.svelte';
 	import { afterNavigate, beforeNavigate, goto, invalidate } from '$app/navigation';
 	import { pageLoader } from '../../../lib/stores/preferences';
+	import SyncButton from '$lib/components/SyncButton.svelte';
+	import { reqService } from '$lib/serviceClient';
+	import { sinkronisasi } from '$lib/stores/sinkronisasi';
+	import moment from 'moment';
 	const todayId = new Date().getDay();
 	let idHariSelected = $page.url.searchParams.get('id_hari') || todayId.toString();
 	let jadwalSelected: IJadwalKuliah[] = [];
@@ -39,6 +43,27 @@
 	afterNavigate(() => {
 		getJadwal();
 	});
+
+	$: syncNow = !$sinkronisasi.jadwal;
+	$: if (browser && $sinkronisasi.jadwal) {
+		// sync setiap 24jam
+		syncNow = moment().diff(moment($sinkronisasi.jadwal), 'hours') >= 24;
+	}
+
+	const onSync = async (e: { detail: { done: () => void } }) => {
+		const waitUntilDone = new Promise((resolve) => setTimeout(resolve, 2_000));
+		const r = await reqService('/onedevice/services/jadwal');
+
+		const resp: IJadwalKuliah[] = await r.json();
+		await waitUntilDone;
+		if (r.status == 200) {
+			$jadwal = resp;
+			$sinkronisasi.jadwal = moment().format();
+			getJadwal();
+		}
+
+		e.detail.done();
+	};
 </script>
 
 <Page>
@@ -99,5 +124,10 @@
 		{/each}
 	</List> -->
 
-	<div class="pb-10" />
+	<SyncButton
+		title="Jadwal Kuliah"
+		lastUpdate={$sinkronisasi.jadwal}
+		on:sync={onSync}
+		bind:syncNow
+	/>
 </Page>
