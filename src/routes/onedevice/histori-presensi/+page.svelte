@@ -21,10 +21,10 @@
 		id = toast.loading('sync');
 
 		try {
-			$historiPresensi = (await Promise.race([
-				serviceClient.historiPresensi(semesterSelected, tahunAkademikSelected),
-				ServerTimeout()
-			])) as IPresence[];
+			$historiPresensi = await serviceClient.historiPresensi(
+				semesterSelected,
+				tahunAkademikSelected
+			);
 			toast.success('selesai', { id });
 		} catch (err) {
 			toast.error('Server Timeout');

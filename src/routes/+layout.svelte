@@ -12,7 +12,6 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import NoticeBar from '$lib/components/NoticeBar.svelte';
 	$: if ($authUser?.accessToken && browser) {
 		if (
 			!$page.url.pathname.startsWith('/onedevice') &&
@@ -49,7 +48,6 @@
 <main class="md:w-[465px] mx-auto">
 	<Toaster position="top-right" />
 	<App theme="ios">
-		<NoticeBar />
 		<slot />
 	</App>
 </main>

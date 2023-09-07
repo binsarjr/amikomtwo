@@ -1,4 +1,4 @@
-import { ServerTimeout, ServerTimeoutError } from '$lib/error'
+import { ServerTimeoutError } from '$lib/error'
 import { fail } from '@sveltejs/kit'
 import { authAttempt, encPassword } from '../../../lib/supports/auth'
 import type { Actions } from './$types'
@@ -9,10 +9,8 @@ export const actions: Actions = {
 		const nim = formData.get('nim') as string
 		const password = formData.get('password') as string
 		try {
-			const response = await Promise.race([
-				authAttempt(nim, password),
-				ServerTimeout()
-			])
+			const response = await
+				authAttempt(nim, password)
 
 			return {
 				location: '/onedevice',

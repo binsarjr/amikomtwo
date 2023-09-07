@@ -1,5 +1,5 @@
-import { getMainContent } from '$lib/supports/utils';
-import type { PageServerLoad } from './$types';
+import { getMainContent } from '$Amikom'
+import type { PageServerLoad } from './$types'
 
 export const config = {
 	isr: {
@@ -9,6 +9,6 @@ export const config = {
 
 export const load: PageServerLoad = async () => {
 	return {
-		content: await getMainContent('https://daak.amikom.ac.id/page/kalender-akademik')
+		content: getMainContent('https://daak.amikom.ac.id/page/kalender-akademik')
 	};
 };

@@ -1,4 +1,4 @@
-import { ServerTimeout, ServerTimeoutError } from '$lib/error'
+import { ServerTimeoutError } from '$lib/error'
 import { fail, redirect, type Actions } from '@sveltejs/kit'
 import { MikomOneDevice } from '../../../Amikom'
 import { createDeviceIdFromNpm } from '../../../lib/supports/device_is'
@@ -11,10 +11,8 @@ export const actions: Actions = {
 		const device_id = createDeviceIdFromNpm(nim)
 
 		try {
-			await Promise.race([
-				MikomOneDevice.Device.Verify(nim, otp, device_id),
-				ServerTimeout()
-			])
+			await
+				MikomOneDevice.Device.Verify(nim, otp, device_id)
 			// return {
 			// 	location: 'login',
 			// 	success: 'OTP VAlid.'
@@ -32,10 +30,8 @@ export const actions: Actions = {
 		const tanggalLahir = formData.get('tanggal_lahir') as string
 		const nim = formData.get('nim') as string
 		try {
-			await Promise.race([
-				MikomOneDevice.Device.Otp(nim, tanggalLahir),
-				ServerTimeout()
-			])
+			await
+				MikomOneDevice.Device.Otp(nim, tanggalLahir)
 			return {
 				success: 'OTP Telah Dikirimkan.'
 			}

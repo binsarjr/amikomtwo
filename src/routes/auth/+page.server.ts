@@ -1,4 +1,4 @@
-import { ServerTimeout, ServerTimeoutError } from '$lib/error'
+import { ServerTimeoutError } from '$lib/error'
 import { fail, redirect, type Actions } from '@sveltejs/kit'
 import { MikomOneDevice } from '../../Amikom'
 
@@ -8,10 +8,7 @@ export const actions: Actions = {
 		const nim = formData.get('nim') as string
 		const tanggalLahir = formData.get('tanggal_lahir') as string
 		try {
-			await Promise.race([
-				MikomOneDevice.Device.Otp(nim, tanggalLahir),
-				ServerTimeout()
-			])
+			await MikomOneDevice.Device.Otp(nim, tanggalLahir)
 			// return {
 			// 	location: '/auth/otp',
 			// 	success: 'Data telah tervalidasi. Selanjutnya Meminta OTP'

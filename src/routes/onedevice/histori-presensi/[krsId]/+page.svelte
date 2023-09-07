@@ -7,11 +7,7 @@
 
 	$: namaMatkul = decodeURIComponent($page.url.searchParams.get('matkul') || '');
 
-	const getData = async () =>
-		Promise.race([
-			serviceClient.detailPresensi(parseInt($page.params.krsId)),
-			ServerTimeout()
-		]) as Promise<IPresenceDetail[]>;
+	const getData = async () => serviceClient.detailPresensi(parseInt($page.params.krsId));
 </script>
 
 <Page class="pb-20">

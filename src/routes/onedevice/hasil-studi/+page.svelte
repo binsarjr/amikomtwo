@@ -19,10 +19,8 @@
 		);
 		if ($hasilStudiSemester) {
 			const id = toast.loading('sync');
-			Promise.race([
-				serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache),
-				ServerTimeout()
-			])
+			serviceClient
+				.hasilStudi(semesterSelected, tahunAkademikSelected, cache)
 				.then((_) => {
 					toast.success('selesai', { id });
 				})
@@ -33,10 +31,7 @@
 		}
 		const id = toast.loading('sync');
 		try {
-			await Promise.race([
-				serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache),
-				ServerTimeout()
-			]);
+			await serviceClient.hasilStudi(semesterSelected, tahunAkademikSelected, cache);
 			toast.success('selesai', { id });
 		} catch (error) {
 			toast.error('Server Timeout', { id });
