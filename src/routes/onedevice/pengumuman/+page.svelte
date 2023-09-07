@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { sinkronisasi } from '$lib/stores/sinkronisasi';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import {
@@ -13,13 +14,35 @@
 		Page
 	} from 'konsta/svelte';
 	import { onMount } from 'svelte';
-	import { serviceClient } from '../../../lib/serviceClient';
+	import { reqService, serviceClient } from '../../../lib/serviceClient';
 	import { initKhs } from '../../../lib/stores/initKhs';
 	import { ktmDigital } from '../../../lib/stores/ktmDigital';
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
 	import { authUser, preferences } from '../../../lib/stores/preferences';
 	import { pengumuman } from '$lib/stores/akademik';
 	import PengumumanDetail from '$lib/components/PengumumanDetail.svelte';
+	import moment from 'moment';
+	import SyncButton from '$lib/components/SyncButton.svelte';
+
+	$: syncNow = !$sinkronisasi?.pengumuman;
+	$: if (browser && $sinkronisasi.pengumuman) {
+		// sync setiap 24jam
+		syncNow = moment().diff(moment($sinkronisasi.pengumuman), 'hours') >= 24;
+	}
+
+	const onSync = async (e: { detail: { done: () => void } }) => {
+		const waitUntilDone = new Promise((resolve) => setTimeout(resolve, 2_000));
+		const r = await reqService('/onedevice/services/pengumuman');
+		const resp = await r.json();
+
+		await waitUntilDone;
+		if (r.ok) {
+			$pengumuman = resp;
+			$sinkronisasi.pengumuman = moment().format();
+		}
+
+		e.detail.done();
+	};
 </script>
 
 <Page>
@@ -29,10 +52,20 @@
 	<BlockTitle>Pengumuman</BlockTitle>
 
 	<Block>
-		{#each $pengumuman as item}
-			<PengumumanDetail pengumuman={item} />
-		{:else}
-			<p>Tidak ada pengumuman</p>
-		{/each}
+		<div class="flex gap-5 flex-col">
+			{#each $pengumuman as item}
+				<div>
+					<PengumumanDetail pengumuman={item} />
+				</div>
+			{:else}
+				<p>Tidak ada pengumuman</p>
+			{/each}
+		</div>
 	</Block>
+	<SyncButton
+		title="Pengumuman"
+		lastUpdate={$sinkronisasi.pengumuman}
+		on:sync={onSync}
+		bind:syncNow
+	/>
 </Page>

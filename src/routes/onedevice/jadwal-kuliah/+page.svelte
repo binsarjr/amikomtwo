@@ -44,7 +44,7 @@
 		getJadwal();
 	});
 
-	$: syncNow = !$sinkronisasi.jadwal;
+	$: syncNow = !$sinkronisasi?.jadwal;
 	$: if (browser && $sinkronisasi.jadwal) {
 		// sync setiap 24jam
 		syncNow = moment().diff(moment($sinkronisasi.jadwal), 'hours') >= 24;

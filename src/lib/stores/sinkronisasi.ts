@@ -4,9 +4,11 @@ import { get } from "svelte/store"
 
 type SinkronisasiData = Partial<{
     initial: string
+    ktm: string
     bio: string
     jadwal: string
     transkrip: string
+    pengumuman: string
 }>
 
 export const sinkronisasi = persisted<SinkronisasiData>('sinkronisasi', {})

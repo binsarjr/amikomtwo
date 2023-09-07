@@ -36,7 +36,7 @@
 	$: if ($transkripNilai) {
 		transkrips = $transkripNilai.Transkrip;
 	}
-	$: syncNow = !$sinkronisasi.transkrip;
+	$: syncNow = !$sinkronisasi?.transkrip;
 	$: if (browser && $sinkronisasi.transkrip) {
 		// sync setiap 24jam
 		syncNow = moment().diff(moment($sinkronisasi.transkrip), 'hours') >= 24;

@@ -76,8 +76,6 @@
 				try {
 					await Promise.all([
 						serviceClient.initkhs(),
-						serviceClient.ktm(),
-						serviceClient.pengumuman(),
 						serviceClient.bio(),
 						serviceClient.pembayaran.bank()
 					]);
