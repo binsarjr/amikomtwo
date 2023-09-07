@@ -1,9 +1,9 @@
-import Auth from './Auth'
-import Mahasiswa from './Mahasiswa'
-import Presence from './Presence'
+import Auth from './Auth';
+import Mahasiswa from './Mahasiswa';
+import Presence from './Presence';
 
 export default {
-  Auth,
-  Mahasiswa,
-  Presence
-}
+	Auth,
+	Mahasiswa,
+	Presence
+};

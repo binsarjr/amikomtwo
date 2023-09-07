@@ -1,5 +1,5 @@
-import { getMainContent } from '$Amikom'
-import type { PageServerLoad } from './$types'
+import { getMainContent } from '$Amikom';
+import type { PageServerLoad } from './$types';
 
 export const config = {
 	isr: {

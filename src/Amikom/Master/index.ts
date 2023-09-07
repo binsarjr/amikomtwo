@@ -1,5 +1,5 @@
-import Prodi from './Prodi'
+import Prodi from './Prodi';
 
 export default {
-  Prodi
-}
+	Prodi
+};

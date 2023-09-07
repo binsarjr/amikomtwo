@@ -61,18 +61,17 @@
 
 		const id = toast.loading('Sync');
 		try {
-			await 
-				Promise.all([
-					serviceClient.initkhs(),
-					serviceClient.ktm(),
+			await Promise.all([
+				serviceClient.initkhs(),
+				serviceClient.ktm(),
 
-					serviceClient.transkrip(),
-					serviceClient.pengumuman(),
+				serviceClient.transkrip(),
+				serviceClient.pengumuman(),
 
-					serviceClient.bio(),
-					serviceClient.jadwal(),
-					serviceClient.pembayaran.bank()
-				])
+				serviceClient.bio(),
+				serviceClient.jadwal(),
+				serviceClient.pembayaran.bank()
+			]);
 			toast.success('selesai', { id });
 		} catch (error) {
 			toast.error('gagal sync cek kembali koneksimu atau mungkin server amikom sedang down', {
