@@ -60,6 +60,13 @@
 		<ListItem title="Tidak ada jadwal" />
 	{/each}
 </Lit> -->
+
+
+<!-- untuk kedepan -->
+<!-- <List strongIos insetIos outlineIos>
+	<ListItem link title="Sinkronisasi Data" href="/onedevice/sinkronisasi" />
+	
+</List> -->
 <BlockTitle>Menu</BlockTitle>
 <List strongIos insetIos outlineIos>
 	<ListItem link title="Histori Presensi" href="/onedevice/histori-presensi" />

@@ -8,17 +8,17 @@ import type {
 	ITranskripNilai,
 	InitKHS,
 	Pengumuman
-} from '$Amikom/typings/Response';
-import moment from 'moment';
-import toast from 'svelte-french-toast';
-import { get } from 'svelte/store';
-import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademik';
-import { initKhs } from './stores/initKhs';
-import { jadwal } from './stores/jadwal';
-import { ktmDigital } from './stores/ktmDigital';
-import { mahasiswa } from './stores/mahasiswa';
-import { listBank } from './stores/pembayaran';
-import { authUser, preferences } from './stores/preferences';
+} from '$Amikom/typings/Response'
+import moment from 'moment'
+import toast from 'svelte-french-toast'
+import { get } from 'svelte/store'
+import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademik'
+import { initKhs } from './stores/initKhs'
+import { jadwal } from './stores/jadwal'
+import { ktmDigital } from './stores/ktmDigital'
+import { mahasiswa } from './stores/mahasiswa'
+import { listBank } from './stores/pembayaran'
+import { authUser, preferences } from './stores/preferences'
 /**
  * Mendapatkan response dari service dengan menggunakan data dari user yang
  * telah login.
@@ -27,7 +27,7 @@ import { authUser, preferences } from './stores/preferences';
  * @param searchParams - Parameter pencarian yang opsional.
  * @returns Response dari service.
  */
-const reqService = async (endpoint: string, searchParams = new URLSearchParams()) => {
+export const reqService = async (endpoint: string, searchParams = new URLSearchParams()) => {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const userdata = get(authUser)!;
 	const url = new URL(window.location.href);

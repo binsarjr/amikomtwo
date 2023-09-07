@@ -1,7 +1,22 @@
 <script lang="ts">
 	import { transkripNilai } from '$lib/stores/akademik';
 	import type { ITranskripNilai } from '$Amikom/typings/Response';
-	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
+	import {
+		Block,
+		BlockTitle,
+		List,
+		ListItem,
+		Navbar,
+		NavbarBackLink,
+		Page,
+		Toolbar
+	} from 'konsta/svelte';
+	import moment from 'moment';
+	import Loader from '$lib/icons/Loader.svelte';
+	import SyncButton from '$lib/components/SyncButton.svelte';
+	import { reqService } from '$lib/serviceClient';
+	import { sinkronisasi } from '$lib/stores/sinkronisasi';
+	import { browser } from '$app/environment';
 
 	let transkrips: {
 		JmlSks: number;
@@ -21,6 +36,24 @@
 	$: if ($transkripNilai) {
 		transkrips = $transkripNilai.Transkrip;
 	}
+	$: syncNow = !$sinkronisasi.transkrip;
+	$: if (browser && $sinkronisasi.transkrip) {
+		// sync setiap 24jam
+		syncNow = moment().diff(moment($sinkronisasi.transkrip), 'hours') >= 24;
+	}
+	const onSync = async (e: { detail: { done: () => void } }) => {
+		const waitUntilDone = new Promise((resolve) => setTimeout(resolve, 2_000));
+		const r = await reqService('/onedevice/services/transkrip');
+
+		const resp: ITranskripNilai = await r.json();
+		await waitUntilDone;
+		if (r.status == 200) {
+			transkripNilai.update(() => resp);
+			$sinkronisasi.transkrip = moment().format();
+		}
+
+		e.detail.done();
+	};
 </script>
 
 <Page>
@@ -56,4 +89,10 @@
 			{/each}
 		</List>
 	{/if}
+	<SyncButton
+		title="Transkrip"
+		lastUpdate={$sinkronisasi?.transkrip}
+		on:sync={onSync}
+		bind:syncNow
+	/>
 </Page>

@@ -25,6 +25,7 @@
 	import JadwalMendatangServiceWorker from '../../lib/Notifications/Jadwal/JadwalMendatangServiceWorker.svelte';
 	import { usersGuestStatus } from '../../lib/stores/userguest';
 	import { ServerTimeout, ServerTimeoutError } from '$lib/error';
+	import { sinkronisasi } from '$lib/stores/sinkronisasi';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -57,26 +58,38 @@
 	onMount(async () => {
 		Push.Permission.request();
 
-		await serviceClient.refresh();
+		// sinkronisasi data data yang diperlukan pertama kali
+		{
+			await serviceClient.refresh();
+			let syncNow = false;
 
-		const id = toast.loading('Sync');
-		try {
-			await Promise.all([
-				serviceClient.initkhs(),
-				serviceClient.ktm(),
+			// jika belum pernah di sinkronkan maka sinkronkan sekarang
+			syncNow = !$sinkronisasi?.initial;
 
-				serviceClient.transkrip(),
-				serviceClient.pengumuman(),
+			// jika sudah melewati 24jam maka sinkron ulang
+			if ($sinkronisasi.initial) {
+				syncNow = moment().diff(moment($sinkronisasi.initial), 'hours') >= 24;
+			}
 
-				serviceClient.bio(),
-				serviceClient.jadwal(),
-				serviceClient.pembayaran.bank()
-			]);
-			toast.success('selesai', { id });
-		} catch (error) {
-			toast.error('gagal sync cek kembali koneksimu atau mungkin server amikom sedang down', {
-				id
-			});
+			if (syncNow) {
+				const id = toast.loading('Sync');
+				try {
+					await Promise.all([
+						serviceClient.initkhs(),
+						serviceClient.ktm(),
+						serviceClient.pengumuman(),
+						serviceClient.bio(),
+						serviceClient.jadwal(),
+						serviceClient.pembayaran.bank()
+					]);
+					toast.success('selesai', { id });
+					$sinkronisasi.initial = moment().format();
+				} catch (error) {
+					toast.error('gagal sync cek kembali koneksimu atau mungkin server amikom sedang down', {
+						id
+					});
+				}
+			}
 		}
 	});
 	const pages = {
