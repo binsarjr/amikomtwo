@@ -33,12 +33,20 @@ export const presensi = t.router({
 					continue;
 				}
 
-				const response = await MikomOneDevice.Presence.Code(accessToken, input.code);
-				responses.push({
-					success: response.status === PresenceStatus.Success,
-					message: `${nim} ${response.message}`
-				});
-				await sleep(200);
+				try {
+					const response = await MikomOneDevice.Presence.Code(accessToken, input.code);
+					responses.push({
+						success: response.status === PresenceStatus.Success,
+						message: `${nim} ${response.message}`
+					});
+					await sleep(200);
+				} catch (error) {
+					responses.push({
+						success: false,
+						message: `${nim} gagal presensi. mungkin server sedang down`
+					});
+					continue;
+				}
 			}
 			return responses;
 		}),
@@ -69,12 +77,20 @@ export const presensi = t.router({
 					continue;
 				}
 
-				const response = await MikomOneDevice.Presence.Qrcode(accessToken, input.data);
-				responses.push({
-					success: response.status === PresenceStatus.Success,
-					message: `${nim} ${response.message}`
-				});
-				await sleep(200);
+				try {
+					const response = await MikomOneDevice.Presence.Qrcode(accessToken, input.data);
+					responses.push({
+						success: response.status === PresenceStatus.Success,
+						message: `${nim} ${response.message}`
+					});
+					await sleep(200);
+				} catch (error) {
+					responses.push({
+						success: false,
+						message: `${nim} gagal presensi. mungkin server sedang down`
+					});
+					continue;
+				}
 			}
 			return responses;
 		})
