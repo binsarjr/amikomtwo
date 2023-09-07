@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { IJadwalKuliah } from '$Amikom/typings/Response';
 	import {
 		Block,
 		BlockTitle,

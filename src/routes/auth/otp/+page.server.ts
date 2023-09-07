@@ -1,6 +1,6 @@
 import { ServerTimeout, ServerTimeoutError } from '$lib/error'
-import { MikomOneDevice } from '@binsarjr/apiamikomone'
 import { fail, redirect, type Actions } from '@sveltejs/kit'
+import { MikomOneDevice } from '../../../Amikom'
 import { createDeviceIdFromNpm } from '../../../lib/supports/device_is'
 
 export const actions: Actions = {

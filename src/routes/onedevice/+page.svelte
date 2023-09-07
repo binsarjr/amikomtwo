@@ -6,7 +6,7 @@
 	import { pengumuman } from '../../lib/stores/akademik';
 	import HorizontalScrollContent from '../../lib/components/HorizontalScrollContent.svelte';
 	import MataKuliahCard from '../../lib/components/cards/MataKuliahCard.svelte';
-	import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { IJadwalKuliah } from '$Amikom/typings/Response';
 	import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 

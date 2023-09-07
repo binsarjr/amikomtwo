@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Pengumuman } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { Pengumuman } from '$Amikom/typings/Response';
 	import { Page } from 'konsta/svelte';
 	export let pengumuman: Pengumuman;
 	let show = false;

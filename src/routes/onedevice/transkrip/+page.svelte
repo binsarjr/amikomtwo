@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { transkripNilai } from '$lib/stores/akademik';
-	import type { ITranskripNilai } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { ITranskripNilai } from '$Amikom/typings/Response';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 
 	let transkrips: {

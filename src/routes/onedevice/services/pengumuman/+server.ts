@@ -1,5 +1,5 @@
-import { MikomOneDevice } from '@binsarjr/apiamikomone';
 import { json, type RequestHandler } from '@sveltejs/kit';
+import { MikomOneDevice } from '../../../../Amikom';
 import { makeObjectCache } from '../../../../lib/supports/utils';
 
 export const GET: RequestHandler = async ({ url, setHeaders }) => {

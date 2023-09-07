@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { MikomOneDevice } from '@binsarjr/apiamikomone';
 import type { RequestHandler } from '@sveltejs/kit';
 import moment from 'moment';
+import { MikomOneDevice } from '../../../../../Amikom';
 import { makeObjectCache } from '../../../../../lib/supports/utils';
 
 // import crypto from 'crypto'

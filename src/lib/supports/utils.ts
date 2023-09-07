@@ -1,4 +1,4 @@
-import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response';
+import type { IJadwalKuliah } from '$Amikom/typings/Response';
 import moment from 'moment';
 
 import Cheerio from 'cheerio';

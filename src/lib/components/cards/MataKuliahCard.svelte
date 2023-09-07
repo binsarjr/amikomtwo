@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { IJadwalKuliah } from '$Amikom/typings/Response';
 	import { autofocus } from '../../actions/focus';
 	import { onDestroy, onMount } from 'svelte';
 

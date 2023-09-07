@@ -1,4 +1,4 @@
-import type { IBio } from '@binsarjr/apiamikomone/lib/typings/Response';
+import type { IBio } from '$Amikom/typings/Response';
 import type { RequestHandler } from '@sveltejs/kit';
 import { encryptGuestData } from '../../../lib/supports/userguest';
 

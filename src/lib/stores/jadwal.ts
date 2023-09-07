@@ -1,4 +1,4 @@
-import type { IJadwalKuliah } from '@binsarjr/apiamikomone/lib/typings/Response';
+import type { IJadwalKuliah } from '$Amikom/typings/Response';
 
 import { persisted } from 'svelte-local-storage-store';
 import { writable } from 'svelte/store';

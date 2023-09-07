@@ -1,5 +1,5 @@
-import { MikomSupports } from '@binsarjr/apiamikomone';
-import type { IBio } from '@binsarjr/apiamikomone/lib/typings/Response';
+import type { IBio } from '$Amikom/typings/Response';
+import { MikomSupports } from '../../Amikom';
 import { privateKey } from '../config.server';
 import type { UserGuest } from '../stores/userguest';
 import { encPassword, getRawPassword } from './auth';

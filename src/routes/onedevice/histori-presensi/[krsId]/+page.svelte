@@ -3,7 +3,7 @@
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { serviceClient } from '../../../../lib/serviceClient';
 	import { ServerTimeout } from '$lib/error';
-	import type { IPresenceDetail } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { IPresenceDetail } from '$Amikom/typings/Response';
 
 	$: namaMatkul = decodeURIComponent($page.url.searchParams.get('matkul') || '');
 

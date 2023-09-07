@@ -1,9 +1,9 @@
+import { PresenceStatus } from '$Amikom/typings/Enum/Presence';
 import { authAttempt } from '$lib/supports/auth';
 import { sleep } from '$lib/supports/utils';
 import { t } from '$lib/trpc/t';
-import { MikomOneDevice } from '@binsarjr/apiamikomone';
-import { PresenceStatus } from '@binsarjr/apiamikomone/lib/typings/Enum/Presence';
 import { z } from 'zod';
+import { MikomOneDevice } from '../../../Amikom';
 
 export const presensi = t.router({
 	code: t.procedure

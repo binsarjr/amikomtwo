@@ -11,7 +11,6 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@binsarjr/apiamikomone": "^1.4.3",
 		"@fontsource/fira-mono": "^4.5.0",
 		"@iconify/json": "^2.2.32",
 		"@neoconfetti/svelte": "^1.0.0",
@@ -31,6 +30,7 @@
 		"got": "11",
 		"konsta": "^1.0.2",
 		"moment": "^2.29.4",
+		"node-forge": "^1.3.1",
 		"nprogress": "^0.2.0",
 		"postcss": "^8.4.18",
 		"prettier": "^2.6.2",

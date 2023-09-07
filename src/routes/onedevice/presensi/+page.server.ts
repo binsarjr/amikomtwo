@@ -1,6 +1,6 @@
-import { MikomOneDevice } from '@binsarjr/apiamikomone';
-import { PresenceStatus } from '@binsarjr/apiamikomone/lib/typings/Enum/Presence';
+import { PresenceStatus } from '$Amikom/typings/Enum/Presence';
 import { fail } from '@sveltejs/kit';
+import { MikomOneDevice } from '../../../Amikom';
 import type { Actions } from './$types';
 
 export const actions: Actions = {

@@ -10,7 +10,7 @@
 	import PilihSemester from '../../../lib/components/PilihSemester.svelte';
 	import { browser } from '$app/environment';
 	import { ServerTimeout } from '$lib/error';
-	import type { IPresence } from '@binsarjr/apiamikomone/lib/typings/Response';
+	import type { IPresence } from '$Amikom/typings/Response';
 
 	let semesterSelected = 0;
 	let tahunAkademikSelected = '';
