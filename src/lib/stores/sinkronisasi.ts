@@ -10,6 +10,7 @@ type SinkronisasiData = Partial<{
 	transkrip: string;
 	pengumuman: string;
 	hasilStudi: { [i: string]: string };
+	historiPresensi: { [i: string]: string };
 }>;
 
 export const sinkronisasi = persisted<SinkronisasiData>('sinkronisasi', {});

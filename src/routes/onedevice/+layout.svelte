@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { hasilStudiSemester } from '$lib/stores/akademik';
 	import Push from 'push.js';
 	import { browser } from '$app/environment';
 	import { goto, preloadCode } from '$app/navigation';
@@ -33,11 +34,13 @@
 		$jadwal = [];
 		$initKhs = null;
 		$ktmDigital = null;
-		$historiPresensi = [];
+		$historiPresensi = {};
 		$historiPembayaran = [];
+		$hasilStudiSemester = {};
 		$usersGuestStatus = {};
 		goto('/');
 	}
+	$: if (Array.isArray($historiPresensi) && browser && $historiPresensi) $historiPresensi = {};
 	$: if ($jadwal) {
 		$jadwalHariIni = $jadwal.filter((jadwal) => jadwal.IdHari == new Date().getDay());
 		$jadwal.map((jadwal) => {
