@@ -61,7 +61,6 @@
 	{/each}
 </Lit> -->
 
-
 <!-- untuk kedepan -->
 <!-- <List strongIos insetIos outlineIos>
 	<ListItem link title="Sinkronisasi Data" href="/onedevice/sinkronisasi" />

@@ -1,24 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type {
-	IBio,
-	IHasilSemester,
-	IJadwalKuliah,
-	IPresence,
-	IPresenceDetail,
-	ITranskripNilai,
-	InitKHS,
-	Pengumuman
-} from '$Amikom/typings/Response'
-import moment from 'moment'
-import toast from 'svelte-french-toast'
-import { get } from 'svelte/store'
-import { hasilStudiSemester, pengumuman, transkripNilai } from './stores/akademik'
-import { initKhs } from './stores/initKhs'
-import { jadwal } from './stores/jadwal'
-import { ktmDigital } from './stores/ktmDigital'
-import { mahasiswa } from './stores/mahasiswa'
-import { listBank } from './stores/pembayaran'
-import { authUser, preferences } from './stores/preferences'
+import type { IBio, IPresence, IPresenceDetail, InitKHS } from '$Amikom/typings/Response';
+import moment from 'moment';
+import toast from 'svelte-french-toast';
+import { get } from 'svelte/store';
+import { initKhs } from './stores/initKhs';
+import { ktmDigital } from './stores/ktmDigital';
+import { mahasiswa } from './stores/mahasiswa';
+import { listBank } from './stores/pembayaran';
+import { authUser, preferences } from './stores/preferences';
 /**
  * Mendapatkan response dari service dengan menggunakan data dari user yang
  * telah login.
@@ -118,18 +107,6 @@ export const serviceClient = {
 	},
 
 	/**
-	 * Memperbarui data jadwal kuliah dari server.
-	 * Fungsi ini akan mengirim permintaan ke server dan memperbarui data jadwal
-	 * yang diambil dari respons server.
-	 *
-	 * @returns void
-	 */
-	jadwal: async () => {
-		const r = await reqService('/onedevice/services/jadwal');
-		const resp: IJadwalKuliah[] = await r.json();
-		if (r.status == 200) jadwal.update(() => resp);
-	},
-	/**
 	 * Mengambil data histori presensi berdasarkan semester dan tahun akademik.
 	 * Data diambil melalui request ke layanan /onedevice/services/histori-presensi
 	 * dengan parameter semester dan tahun_akademik.
@@ -172,51 +149,7 @@ export const serviceClient = {
 			.sort((a, b) => b.TanggalMoment.unix() - a.TanggalMoment.unix());
 		return results;
 	},
-	/**
-	 * Fungsi yang digunakan untuk memuat dan memperbarui pengumuman.
-	 * Fungsi ini melakukan permintaan ke layanan / onedevice / services /
-	 * pengumuman
-	 * dan mengembalikan respon berupa array Pengumuman jika statusnya adalah 200.
-	 *
-	 * @returns array Pengumuman jika berhasil, null jika gagal.
-	 */
-	pengumuman: async () => {
-		const r = await reqService('/onedevice/services/pengumuman');
-		const resp: Pengumuman[] = await r.json();
-		if (r.status == 200) pengumuman.update(() => resp);
-	},
-	/**
-	 * Melakukan request ke endpoint '/onedevice/services/transkrip' untuk
-	 * mendapatkan sebuah transkrip nilai.
-	 * Berhasil mendapatkan response akan mengupdate state transkripNilai dengan
-	 * menggunakan data yang didapatkan.
-	 */
-	transkrip: async () => {
-		const r = await reqService('/onedevice/services/transkrip');
 
-		const resp: ITranskripNilai = await r.json();
-		if (r.status == 200) transkripNilai.update(() => resp);
-	},
-	/**
-	 * Mendapatkan data hasil studi untuk suatu semester dan tahun akademik tertentu
-	 * dari server.
-	 * Fungsi ini menggunakan URLSearchParams untuk membuat permintaan ke server dan
-	 * mendapatkan respon yang diperlukan.
-	 *
-	 * @param semester - semester yang ingin dicari.
-	 * @param tahunAkademik - tahun akademik yang ingin dicari.
-	 * @returns data hasil studi dalam bentuk IHasilSemester.
-	 */
-	hasilStudi: async (semester: number, tahunAkademik: string, cache = false) => {
-		const searchParams = new URLSearchParams();
-		searchParams.set('semester', semester.toString());
-		searchParams.set('tahun_akademik', tahunAkademik);
-		if (cache) searchParams.set('cache', 'true');
-		const r = await reqService('/onedevice/services/hasil-studi', searchParams);
-
-		const resp: IHasilSemester = await r.json();
-		if (r.status == 200) hasilStudiSemester.update(() => resp);
-	},
 	pembayaran: {
 		/**
 		 * Mendapatkan daftar bank yang didukung untuk metode pembayaran.
