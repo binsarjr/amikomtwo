@@ -33,7 +33,7 @@
 <List
 	strongIos
 	insetIos
-	class="border bg-primary  left-0 right-0 ios:bottom-13-safe material:bottom-16-safe sticky text-white hover:scale-95 transition-all"
+	class="border bg-primary  left-0 right-0 ios:bottom-13-safe material:bottom-16-safe sticky text-white"
 >
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
