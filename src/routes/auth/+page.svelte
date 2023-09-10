@@ -36,6 +36,7 @@
 		</List>
 		<Block insertIos>
 			<Button largeIos>Validasi NIM & Tanggal Lahir</Button>
+			<p class="mt-2">Sudah verifikasi amikomtwo? <a href="/auth/login">login sekarang</a></p>
 		</Block>
 	</form>
 </Page>

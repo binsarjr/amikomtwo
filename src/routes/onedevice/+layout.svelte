@@ -30,14 +30,8 @@
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
-		$mahasiswa = null;
-		$jadwal = [];
-		$initKhs = null;
-		$ktmDigital = null;
-		$historiPresensi = {};
-		$historiPembayaran = [];
-		$hasilStudiSemester = {};
-		$usersGuestStatus = {};
+		localStorage.clear();
+		sessionStorage.clear();
 		goto('/');
 	}
 	$: if (Array.isArray($historiPresensi) && browser && $historiPresensi) $historiPresensi = {};

@@ -52,6 +52,7 @@
 		</List>
 		<Block insertIos>
 			<Button largeIos>Masuk</Button>
+			<p class="mt-2">Belum verifikasi amikomtwo? <a href="/auth">verifikasi dulu</a></p>
 		</Block>
 	</form>
 </Page>
