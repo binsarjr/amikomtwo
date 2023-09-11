@@ -16,6 +16,7 @@
 	import { mahasiswa } from '../../../lib/stores/mahasiswa';
 	import type { RouterInputs } from '$lib/trpc/t';
 	import { trpc } from '$lib/trpc/client';
+	import { serviceClient } from '$lib/serviceClient';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -148,6 +149,10 @@
 			except = except.filter((g) => g.nim !== e.detail.nim);
 		}
 	};
+
+	onMount(async () => {
+		await serviceClient.refresh();
+	});
 
 	onDestroy(() => {
 		toast.remove();
