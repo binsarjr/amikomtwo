@@ -63,12 +63,16 @@
 			});
 		});
 
-		const results = await trpc($page).presensi.code.query(query);
-		results.map((result) => {
-			if (result.success) toast.success(result.message);
-			else toast.error(result.message);
-		});
-		toast.success('Antrian Selesai', { id });
+		try {
+			const results = await trpc($page).presensi.code.query(query);
+			results.map((result) => {
+				if (result.success) toast.success(result.message);
+				else toast.error(result.message);
+			});
+			toast.success('Antrian Selesai', { id });
+		} catch (error) {
+			toast.error('Gagal Presensi', { id });
+		}
 		submitting = false;
 	};
 	const guestQrCodeSubmit = async () => {
@@ -86,12 +90,16 @@
 			});
 		});
 
-		const results = await trpc($page).presensi.qrcode.query(query);
-		results.map((result) => {
-			if (result.success) toast.success(result.message);
-			else toast.error(result.message);
-		});
-		toast.success('Antrian Selesai', { id });
+		try {
+			const results = await trpc($page).presensi.qrcode.query(query);
+			results.map((result) => {
+				if (result.success) toast.success(result.message);
+				else toast.error(result.message);
+			});
+			toast.success('Antrian Selesai', { id });
+		} catch (error) {
+			toast.error('Gagal Presensi', { id });
+		}
 		await sleep(1000);
 		qrresult = null;
 		submitting = false;
