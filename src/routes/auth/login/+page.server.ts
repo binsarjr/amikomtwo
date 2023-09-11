@@ -1,5 +1,5 @@
-import { ServerTimeoutError } from '$lib/error';
 import { fail } from '@sveltejs/kit';
+import { RequestError } from 'got';
 import { authAttempt, encPassword } from '../../../lib/supports/auth';
 import type { Actions } from './$types';
 
@@ -19,8 +19,10 @@ export const actions: Actions = {
 				password: encPassword(password)
 			};
 		} catch (e) {
-			if (e instanceof ServerTimeoutError) {
-				return fail(422, { message: 'Server Timeout' });
+			if (e instanceof RequestError) {
+				if (e.name == 'TimeoutError') {
+					return fail(422, { message: 'Server Timeout' });
+				}
 			}
 			return fail(422, { message: 'NIM dan Password Tidak Valid!' });
 		}

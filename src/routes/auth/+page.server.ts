@@ -1,5 +1,5 @@
-import { ServerTimeoutError } from '$lib/error';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
+import { RequestError } from 'got';
 import { MikomOneDevice } from '../../Amikom';
 
 export const actions: Actions = {
@@ -14,8 +14,10 @@ export const actions: Actions = {
 			// 	success: 'Data telah tervalidasi. Selanjutnya Meminta OTP'
 			// };
 		} catch (err) {
-			if (err instanceof ServerTimeoutError) {
-				return fail(422, { message: 'Server Timeout' });
+			if (err instanceof RequestError) {
+				if (err.name == 'TimeoutError') {
+					return fail(422, { message: 'Server Timeout' });
+				}
 			}
 			return fail(422, { message: 'Cek NIM & Tanggal Lahir mu kembali' });
 		}

@@ -11,6 +11,7 @@
 	export let loading = false;
 	export let title = '';
 	export let syncNow = false;
+	export let suffixFooter = ' (otomatis setiap 24jam)';
 
 	const dispatch = createEventDispatcher();
 	const sync = async () => {
@@ -41,7 +42,7 @@
 		<ListItem
 			{title}
 			subtitle="Terakhir diperbarui:"
-			footer={(lastUpdate || 'belum diperbarui') + ' (otomatis setiap 24jam)'}
+			footer={(lastUpdate || 'belum diperbarui') + suffixFooter}
 			colors={{
 				menuListItemTextIos: 'text-white',
 				menuListItemTextMaterial: 'text-white',

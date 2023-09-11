@@ -1,5 +1,5 @@
-import { ServerTimeoutError } from '$lib/error';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
+import { RequestError } from 'got';
 import { MikomOneDevice } from '../../../Amikom';
 import { createDeviceIdFromNpm } from '../../../lib/supports/device_is';
 
@@ -17,8 +17,10 @@ export const actions: Actions = {
 			// 	success: 'OTP VAlid.'
 			// };
 		} catch (err) {
-			if (err instanceof ServerTimeoutError) {
-				return fail(422, { message: 'Server Timeout' });
+			if (err instanceof RequestError) {
+				if (err.name == 'TimeoutError') {
+					return fail(422, { message: 'Server Timeout' });
+				}
 			}
 			return fail(422, { message: 'OTP Tidak valid.' });
 		}
@@ -34,8 +36,10 @@ export const actions: Actions = {
 				success: 'OTP Telah Dikirimkan.'
 			};
 		} catch (err) {
-			if (err instanceof ServerTimeoutError) {
-				return fail(422, { message: 'Server Timeout' });
+			if (err instanceof RequestError) {
+				if (err.name == 'TimeoutError') {
+					return fail(422, { message: 'Server Timeout' });
+				}
 			}
 			return fail(422, {
 				message: 'NIM & Tanggal Lahir anda tidak valid.\nGagal Mengirimkan OTP'

@@ -9,7 +9,6 @@
 	import { initKhs } from '../../../lib/stores/initKhs';
 	import PilihSemester from '../../../lib/components/PilihSemester.svelte';
 	import { browser } from '$app/environment';
-	import { ServerTimeout } from '$lib/error';
 	import SyncButton from '$lib/components/SyncButton.svelte';
 	import moment from 'moment';
 	import type { IHasilSemester } from '$Amikom/typings/Response';

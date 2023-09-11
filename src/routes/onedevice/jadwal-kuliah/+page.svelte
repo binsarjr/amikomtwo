@@ -46,8 +46,8 @@
 
 	$: syncNow = !$sinkronisasi?.jadwal;
 	$: if (browser && $sinkronisasi.jadwal) {
-		// sync setiap 24jam
-		syncNow = moment().diff(moment($sinkronisasi.jadwal), 'hours') >= 24;
+		// sync setiap 3hari
+		syncNow = moment().diff(moment($sinkronisasi.jadwal), 'days') >= 3;
 	}
 
 	const onSync = async (e: { detail: { done: () => void } }) => {
@@ -128,6 +128,7 @@
 		title="Jadwal Kuliah"
 		lastUpdate={$sinkronisasi.jadwal}
 		on:sync={onSync}
+		suffixFooter=" (otomatis setiap 3hari)"
 		bind:syncNow
 	/>
 </Page>

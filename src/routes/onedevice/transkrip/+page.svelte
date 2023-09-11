@@ -38,8 +38,8 @@
 	}
 	$: syncNow = !$sinkronisasi?.transkrip;
 	$: if (browser && $sinkronisasi.transkrip) {
-		// sync setiap 24jam
-		syncNow = moment().diff(moment($sinkronisasi.transkrip), 'hours') >= 24;
+		// sync setiap 7hari  sekali
+		syncNow = moment().diff(moment($sinkronisasi.transkrip), 'days') >= 7;
 	}
 	const onSync = async (e: { detail: { done: () => void } }) => {
 		const waitUntilDone = new Promise((resolve) => setTimeout(resolve, 2_000));
@@ -93,6 +93,7 @@
 		title="Transkrip"
 		lastUpdate={$sinkronisasi?.transkrip}
 		on:sync={onSync}
+		suffixFooter=" (otomatis setiap 7hari)"
 		bind:syncNow
 	/>
 </Page>

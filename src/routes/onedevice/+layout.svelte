@@ -25,7 +25,6 @@
 
 	import JadwalMendatangServiceWorker from '../../lib/Notifications/Jadwal/JadwalMendatangServiceWorker.svelte';
 	import { usersGuestStatus } from '../../lib/stores/userguest';
-	import { ServerTimeout, ServerTimeoutError } from '$lib/error';
 	import { sinkronisasi } from '$lib/stores/sinkronisasi';
 
 	$: if (browser && !$authUser?.accessToken) {

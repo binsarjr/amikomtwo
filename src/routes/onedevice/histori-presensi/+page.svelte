@@ -10,7 +10,6 @@
 	import { historiPresensi } from '../../../lib/stores/presensi';
 	import PilihSemester from '../../../lib/components/PilihSemester.svelte';
 	import { browser } from '$app/environment';
-	import { ServerTimeout } from '$lib/error';
 	import type { IPresence } from '$Amikom/typings/Response';
 	import SyncButton from '$lib/components/SyncButton.svelte';
 	import moment from 'moment';
@@ -42,7 +41,7 @@
 
 		const resp: IPresence[] = await r.json();
 		await waitUntilDone;
-		if (r.status == 200) {
+		if (r.ok) {
 			$historiPresensi[identifier] = resp;
 			$sinkronisasi!.historiPresensi![identifier] = moment().format();
 		}
