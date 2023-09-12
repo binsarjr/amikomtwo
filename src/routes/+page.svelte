@@ -12,8 +12,8 @@
 	<Block class="flex flex-col gap-2">
 		<Button largeIos component="a" href="/auth">Masuk</Button>
 		<Button largeIos outline component="a" href="/presensi">Presensi Sebagai Tamu</Button>
-		<Link class="self-start" target="_blank" href="https://github.com/binsarjr/amikomtwo"
+		<!-- <Link class="self-start" target="_blank" href="https://github.com/binsarjr/amikomtwo"
 			>Source Code</Link
-		>
+		> -->
 	</Block>
 </Page>
