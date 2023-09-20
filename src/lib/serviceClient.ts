@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { IBio, IPresence, IPresenceDetail, InitKHS } from '$Amikom/typings/Response';
-import moment from 'moment';
-import toast from 'svelte-french-toast';
-import { get } from 'svelte/store';
-import { initKhs } from './stores/initKhs';
-import { ktmDigital } from './stores/ktmDigital';
-import { mahasiswa } from './stores/mahasiswa';
-import { listBank } from './stores/pembayaran';
-import { authUser, preferences } from './stores/preferences';
+import type { IBio, IPresence, IPresenceDetail, InitKHS } from '$Amikom/typings/Response'
+import moment from 'moment'
+import toast from 'svelte-french-toast'
+import { get } from 'svelte/store'
+import { initKhs } from './stores/initKhs'
+import { ktmDigital } from './stores/ktmDigital'
+import { mahasiswa } from './stores/mahasiswa'
+import { listBank } from './stores/pembayaran'
+import { authUser, preferences } from './stores/preferences'
 /**
  * Mendapatkan response dari service dengan menggunakan data dari user yang
  * telah login.
@@ -58,8 +58,8 @@ export const serviceClient = {
 				apiKey: response.api_key
 			}));
 		} else {
-			toast.error('Gagal Login.');
-			authUser.update(() => null);
+			toast.error('Gagal Login Sinkronisasi.');
+			// authUser.update(() => null);
 		}
 	},
 	/**
