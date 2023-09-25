@@ -1,6 +1,6 @@
-import { requestAmikomOne } from '$Amikom/Supports/request';
-import { ContentType } from '../typings/Headers';
-import type { ResponseResult } from '../typings/Response';
+import { requestAmikomOne } from '$Amikom/Supports/request'
+import { ContentType } from '../typings/Headers'
+import type { ResponseResult } from '../typings/Response'
 
 /**
  * OneDevice hanya bisa satu deviceId
@@ -20,7 +20,8 @@ export default {
 				},
 				form: {
 					npm,
-					tgl_lahir: tglLahir
+					tgl_lahir: tglLahir,
+					virtual_host: "request_otp"
 				}
 			})
 			.json(),
@@ -52,4 +53,4 @@ export default {
 				}
 			})
 			.json()
-};
+}
