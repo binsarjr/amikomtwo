@@ -25,6 +25,7 @@
 	import { reqService } from '$lib/serviceClient';
 	import { sinkronisasi } from '$lib/stores/sinkronisasi';
 	import moment from 'moment';
+	import { networkStatus } from '$lib/components/PWA/store';
 	const todayId = new Date().getDay();
 	let idHariSelected = $page.url.searchParams.get('id_hari') || todayId.toString();
 	let jadwalSelected: IJadwalKuliah[] = [];
@@ -67,7 +68,7 @@
 </script>
 
 <Page>
-	<Navbar title="Jadwal Kuliah">
+	<Navbar title="Jadwal Kuliah" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 	<Block>

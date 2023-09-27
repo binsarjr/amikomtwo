@@ -20,6 +20,7 @@
 	import type { RouterInputs } from '$lib/trpc/t';
 	import { trpc } from '$lib/trpc/client';
 	import { page } from '$app/stores';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	let qrImages: FileList | null;
 	let qrresult: string | null;
@@ -107,7 +108,7 @@
 </script>
 
 <Page>
-	<Navbar title="AmikomTWO">
+	<Navbar title="AmikomTWO" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" onClick={() => history.back()} />
 	</Navbar>
 	<BlockTitle>Scan QrCode</BlockTitle>

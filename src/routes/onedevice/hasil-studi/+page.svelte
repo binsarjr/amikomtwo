@@ -12,6 +12,7 @@
 	import SyncButton from '$lib/components/SyncButton.svelte';
 	import moment from 'moment';
 	import type { IHasilSemester } from '$Amikom/typings/Response';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	let semesterSelected = 0;
 	let tahunAkademikSelected = '';
@@ -55,7 +56,7 @@
 </script>
 
 <Page>
-	<Navbar title="Hasil Studi">
+	<Navbar title="Hasil Studi" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 	<Block>

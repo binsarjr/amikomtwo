@@ -7,6 +7,7 @@
 	import { Page, Navbar, Tabbar, TabbarLink, NavbarBackLink } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import toast from 'svelte-french-toast';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	const pages = {
 		biaya: '/onedevice/pembayaran/biaya',
@@ -17,7 +18,7 @@
 </script>
 
 <Page>
-	<Navbar title="Pembayaran">
+	<Navbar title="Pembayaran" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 

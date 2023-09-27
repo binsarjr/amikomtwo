@@ -11,6 +11,7 @@
 	import { authUser, preferences } from '../../../lib/stores/preferences';
 	import SyncButton from '$lib/components/SyncButton.svelte';
 	import moment from 'moment';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	$: syncNow = !$sinkronisasi?.ktm;
 	$: if (browser && $sinkronisasi.ktm) {
@@ -34,7 +35,7 @@
 </script>
 
 <Page>
-	<Navbar title="Amikom TWO">
+	<Navbar title="Amikom TWO" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 	<Block>

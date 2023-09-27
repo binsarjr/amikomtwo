@@ -23,6 +23,7 @@
 	import PengumumanDetail from '$lib/components/PengumumanDetail.svelte';
 	import moment from 'moment';
 	import SyncButton from '$lib/components/SyncButton.svelte';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	$: syncNow = !$sinkronisasi?.pengumuman;
 	$: if (browser && $sinkronisasi.pengumuman) {
@@ -46,7 +47,7 @@
 </script>
 
 <Page>
-	<Navbar title="Amikom TWO">
+	<Navbar title="Amikom TWO" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 	<BlockTitle>Pengumuman</BlockTitle>
