@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { Block, BlockTitle, List, ListItem, Navbar, NavbarBackLink, Page } from 'konsta/svelte';
 	import { serviceClient } from '../../../../lib/serviceClient';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	$: namaMatkul = decodeURIComponent($page.url.searchParams.get('matkul') || '');
 
@@ -9,7 +10,7 @@
 </script>
 
 <Page class="pb-20">
-	<Navbar title="Detail Presensi">
+	<Navbar title="Detail Presensi" subtitle={$networkStatus}>
 		<NavbarBackLink
 			slot="left"
 			text="Back"

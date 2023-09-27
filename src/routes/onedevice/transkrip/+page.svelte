@@ -17,6 +17,7 @@
 	import { reqService } from '$lib/serviceClient';
 	import { sinkronisasi } from '$lib/stores/sinkronisasi';
 	import { browser } from '$app/environment';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	let transkrips: {
 		JmlSks: number;
@@ -57,7 +58,7 @@
 </script>
 
 <Page>
-	<Navbar title="Transkrip">
+	<Navbar title="Transkrip" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 

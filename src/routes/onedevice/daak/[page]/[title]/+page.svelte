@@ -14,11 +14,12 @@
 	} from 'konsta/svelte';
 
 	import type { PageData } from './$types';
+	import { networkStatus } from '$lib/components/PWA/store';
 	export let data: PageData;
 </script>
 
 <Page>
-	<Navbar title="Amikom TWO">
+	<Navbar title="Amikom TWO" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice/daak" component="a" />
 	</Navbar>
 

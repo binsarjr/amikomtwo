@@ -1,6 +1,8 @@
 <script>
+	import { networkStatus } from './../lib/components/PWA/store'
 	import '../app.css';
-	import { App, Block, Button, Page } from 'konsta/svelte';
+
+	import { App, Block, Button, Page, Notification } from 'konsta/svelte';
 	import { Toaster } from 'svelte-french-toast';
 	// @ts-ignore: no types
 	import NProgress from 'nprogress';
@@ -42,8 +44,23 @@
 		// @ts-ignore: no types
 		$isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 	});
+
+	let notificationNetwork = false;
+	
 </script>
 
+{#await import('$lib/components/PWA/PWAProvider.svelte') then { default: PWAProvider }}
+	<PWAProvider on:offline={() => (notificationNetwork = true)}>
+		<Notification
+			opened={notificationNetwork}
+			title="Network Status"
+			subtitle="You are {$networkStatus} now"
+			button
+			onClick={() => (notificationNetwork = false)}
+			onClose={() => (notificationNetwork = false)}
+		/>
+	</PWAProvider>
+{/await}
 <!-- See This: https://svelte-french-toast.vercel.app/ -->
 <main class="md:w-[465px] mx-auto">
 	<Toaster position="top-right" />

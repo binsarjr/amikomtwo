@@ -1,9 +1,10 @@
 <script>
+	import { networkStatus } from '$lib/components/PWA/store';
 	import { Page, Navbar, Block, Button, List, ListItem, BlockTitle, Link } from 'konsta/svelte';
 </script>
 
 <Page>
-	<Navbar title="AmikomTWO" />
+	<Navbar title="AmikomTWO" subtitle="{$networkStatus}" />
 
 	<Block strongIos insetIos>
 		<p>Terima Kasih sudah mempercayakan AmikomTWO</p>

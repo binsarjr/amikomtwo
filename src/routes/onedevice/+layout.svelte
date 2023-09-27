@@ -1,4 +1,5 @@
 <script lang="ts">
+	
 	import { hasilStudiSemester } from '$lib/stores/akademik';
 	import Push from 'push.js';
 	import { browser } from '$app/environment';
@@ -26,6 +27,7 @@
 	import JadwalMendatangServiceWorker from '../../lib/Notifications/Jadwal/JadwalMendatangServiceWorker.svelte';
 	import { usersGuestStatus } from '../../lib/stores/userguest';
 	import { sinkronisasi } from '$lib/stores/sinkronisasi';
+	import { networkStatus } from '$lib/components/PWA/store';
 
 	$: if (browser && !$authUser?.accessToken) {
 		// clean data when user logout
@@ -96,7 +98,7 @@
 <JadwalMendatangServiceWorker />
 
 <Page>
-	<Navbar title="Amikom TWO" />
+	<Navbar title="Amikom TWO" subtitle="{$networkStatus}" />
 
 	<Tabbar labels={true} class="left-0 bottom-0 fixed md:w-[465px] mx-auto right-0">
 		<TabbarLink

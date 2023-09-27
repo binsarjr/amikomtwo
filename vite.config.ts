@@ -1,8 +1,11 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import Icons from 'unplugin-icons/vite';
-import type { UserConfig } from 'vite';
+import { sveltekit } from '@sveltejs/kit/vite'
+import Icons from 'unplugin-icons/vite'
+import type { UserConfig } from 'vite'
 
 const config: UserConfig = {
+	define: {
+		'process.env.NODE_ENV': '"production"',
+	},
 	plugins: [
 		sveltekit(),
 		Icons({
@@ -10,6 +13,6 @@ const config: UserConfig = {
 			autoInstall: true
 		})
 	]
-};
+}
 
-export default config;
+export default config

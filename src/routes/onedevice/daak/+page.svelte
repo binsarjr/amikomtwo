@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import { networkStatus } from '$lib/components/PWA/store';
 	import {
 		Block,
 		BlockTitle,
@@ -30,7 +31,7 @@
 </script>
 
 <Page>
-	<Navbar title="Amikom TWO">
+	<Navbar title="Amikom TWO" subtitle={$networkStatus}>
 		<NavbarBackLink slot="left" text="Back" href="/onedevice" component="a" />
 	</Navbar>
 	<BlockTitle>Download & Link</BlockTitle>

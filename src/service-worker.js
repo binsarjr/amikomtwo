@@ -1,61 +1,68 @@
-import { build, files, version } from '$service-worker';
+import {
+    build,
+    files,
+    prerendered,
+    version
+} from '$service-worker'
+import {
+    cleanupOutdatedCaches,
+    precacheAndRoute
+} from 'workbox-precaching'
+import {
+    registerRoute,
+} from 'workbox-routing'
+import {
+    StaleWhileRevalidate,
+    NetworkOnly
+} from 'workbox-strategies'
 
-// Create a unique cache name for this deployment
-const CACHE = `cache-${version}`;
 
-const ASSETS = [
-	...build, // the app itself
-	...files // everything in `static`
-];
+const precache_list = [
+    ...build,
+    ...files,
+    ...prerendered,
+].map(s => ({
+    url: s,
+    revision: version
+}))
 
-self.addEventListener('install', (event) => {
-	// Create a new cache and add all files to it
-	async function addFilesToCache() {
-		const cache = await caches.open(CACHE);
-		await cache.addAll(ASSETS);
-	}
+// console.log(precache_list, 'precache_list')
 
-	event.waitUntil(addFilesToCache());
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING')
+        self.skipWaiting()
+})
+self.addEventListener("install", (event) => {
+    self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-	// Remove previous cached data from disk
-	async function deleteOldCaches() {
-		for (const key of await caches.keys()) {
-			if (key !== CACHE) await caches.delete(key);
-		}
-	}
 
-	event.waitUntil(deleteOldCaches());
-});
+precacheAndRoute(precache_list)
 
-self.addEventListener('fetch', (event) => {
-	// ignore POST requests etc
-	if (event.request.method !== 'GET') return;
+cleanupOutdatedCaches()
 
-	async function respond() {
-		const url = new URL(event.request.url);
-		const cache = await caches.open(CACHE);
 
-		// `build`/`files` can always be served from the cache
-		if (ASSETS.includes(url.pathname)) {
-			return cache.match(event.request);
-		}
 
-		// for everything else, try the network first, but
-		// fall back to the cache if we're offline
-		try {
-			const response = await fetch(event.request);
 
-			if (response.status === 200) {
-				cache.put(event.request, response.clone());
-			}
+registerRoute(({
+    url
+}) => [
+    '/onedevice',
+    '/onedevice/profile',
+    '/onedevice/kalender',
+    '/onedevice/transkrip',
+    '/onedevice/ktm',
+    '/onedevice/hasil-studi',
+    '/onedevice/pengumuman',
 
-			return response;
-		} catch {
-			return cache.match(event.request);
-		}
-	}
+].includes(url.pathname), new StaleWhileRevalidate())
 
-	event.respondWith(respond());
-});
+registerRoute(({
+    url,
+}) => [
+    '/service/fotomhs',
+    '/onedevice/histori-presensi',
+    '/onedevice/pembayaran',
+    '/onedevice/daak',
+    '/onedevice/jadwal-kuliah'
+].some(pathname => url.pathname.startsWith(pathname)), new StaleWhileRevalidate())
