@@ -90,7 +90,7 @@
 	<ListItem
 		link
 		title="Wikipedia AmikomTWO"
-		href="https://github.com/binsarjr/amikomtwo/wiki"
+		href="https://github.com/binsarjr/amikomtwo-wikipedia/wiki"
 		target="_blank"
 	/>
 	<ListItem link title="Tentang Penulis" href="/onedevice/aboutme" />

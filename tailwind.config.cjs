@@ -8,7 +8,8 @@ module.exports = konstaConfig({
 	theme: {
 		extend: {
 			colors: {
-				primary: '#8733d6'
+				primary: '#8733d6',
+				secondary: '#2E4374'
 			}
 		}
 	},
