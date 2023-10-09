@@ -51,9 +51,11 @@ export const decryptGuestData = (encrypted: string) => {
 		password: string
 		device_id: string
 	} = JSON.parse(encrypted)
-	const { password } = JSON.parse(
+	const { password, device_id } = JSON.parse(
 		MikomSupports.Encryption.decrypt(encObject.signature, privateKey)
 	)
 	encObject.password = encPassword(password)
+	if (device_id)
+		encObject.device_id = device_id
 	return encObject
 }

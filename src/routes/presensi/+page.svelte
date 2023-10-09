@@ -60,6 +60,7 @@
 		guests.map((user) => {
 			query.accounts.push({
 				nim: user.nim,
+				device_id: user?.device_id || '',
 				password: user?.password || ''
 			});
 		});
@@ -87,6 +88,7 @@
 		guests.map((user) => {
 			query.accounts.push({
 				nim: user.nim,
+				device_id: user?.device_id || '',
 				password: user?.password || ''
 			});
 		});

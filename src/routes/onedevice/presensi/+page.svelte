@@ -79,7 +79,8 @@
 			if (except.includes(user)) return;
 			query.accounts.push({
 				nim: user.nim,
-				password: user?.password || ''
+				password: user?.password || '',
+				device_id: user?.device_id || ''
 			});
 		});
 
@@ -109,7 +110,9 @@
 			if (except.includes(user)) return;
 			query.accounts.push({
 				nim: user.nim,
-				password: user?.password || ''
+				password: user?.password || '',
+
+				device_id: user?.device_id || ''
 			});
 		});
 

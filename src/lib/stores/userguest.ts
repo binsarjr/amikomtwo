@@ -1,4 +1,4 @@
-import { persisted } from 'svelte-local-storage-store';
+import { persisted } from 'svelte-local-storage-store'
 export interface UserGuest {
 	nim: string;
 	nama: string;
@@ -7,6 +7,7 @@ export interface UserGuest {
 		presensi: boolean;
 	};
 	password?: string;
+	device_id?: string;
 }
 export const usersGuest = persisted<UserGuest[]>('usersguest', []);
 
