@@ -8,8 +8,9 @@ export const actions: Actions = {
 		const formData = await request.formData()
 		const nim = formData.get('nim') as string
 		const password = formData.get('password') as string
+		const device_id = formData.get('device_id') as string
 		try {
-			const response = await authAttempt(nim, password)
+			const response = await authAttempt(nim, password, device_id)
 
 			return {
 				location: '/onedevice',

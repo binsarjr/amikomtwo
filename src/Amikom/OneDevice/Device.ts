@@ -16,7 +16,8 @@ export default {
 		requestAmikomOne
 			.post('https://ds.amikom.ac.id/api/amikomone/device/otp', {
 				headers: {
-					'content-type': ContentType.FormEncoded
+					'content-type': ContentType.FormEncoded,
+					'user-agent': 'okhttp/5.0.0-alpha.2',
 				},
 				form: {
 					npm,
@@ -32,7 +33,8 @@ export default {
 		requestAmikomOne
 			.post('https://ds.amikom.ac.id/api/amikomone/device/register', {
 				headers: {
-					'content-type': ContentType.FormEncoded
+					'content-type': ContentType.FormEncoded,
+					'user-agent': 'okhttp/5.0.0-alpha.2',
 				},
 				form: {
 					npm,

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
 	import { invalidate } from '$app/navigation';
 	import { myenhance } from '$lib/forms/myenhance';
@@ -26,11 +27,21 @@
 				invalidate('/onedevice');
 			}
 		});
+
+	let deviceId = '';
+	$preferences.deviceId = deviceId;
 </script>
 
 <Page>
 	<Navbar title="Login" />
-	<form action="" method="post" use:enhance={doLogin()}>
+	<form
+		action=""
+		method="post"
+		on:submit={() => {
+			$preferences.deviceId = deviceId;
+		}}
+		use:enhance={doLogin()}
+	>
 		<List strongIos insetIos>
 			<ListInput
 				outline
@@ -48,6 +59,17 @@
 				name="password"
 				required
 				placeholder="Password Akun Mahasiswa"
+			/>
+			<ListInput
+				outline
+				label="Device ID"
+				type="text"
+				name="device_id"
+				value={deviceId}
+				onInput={(e) => {
+					deviceId = e.target.value;
+				}}
+				placeholder="Device ID (Optional)"
 			/>
 		</List>
 		<Block insertIos>

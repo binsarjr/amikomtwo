@@ -1,6 +1,6 @@
-import { MikomOneDevice, MikomSupports } from '../../Amikom';
-import { privateKey } from '../config.server';
-import { createDeviceIdFromNpm } from './device_is';
+import { MikomOneDevice, MikomSupports } from '../../Amikom'
+import { privateKey } from '../config.server'
+import { createDeviceIdFromNpm } from './device_is'
 
 /**
  * Mendapatkan password raw dari parameter input.
@@ -13,20 +13,20 @@ import { createDeviceIdFromNpm } from './device_is';
  */
 export const getRawPassword = (password: string) => {
 	try {
-		const validPassword = /^[\w\d]{5}$/i.test(password);
+		const validPassword = /^[\w\d]{5}$/i.test(password)
 		if (!validPassword)
 			// maybe encrypted
-			password = MikomSupports.Encryption.decrypt(password, privateKey);
+			password = MikomSupports.Encryption.decrypt(password, privateKey)
 		// eslint-disable-next-line no-empty
-	} catch (ex) {}
-	return password;
-};
+	} catch (ex) { }
+	return password
+}
 
 export const encPassword = (password: string) =>
-	MikomSupports.Encryption.encrypt(password, privateKey);
+	MikomSupports.Encryption.encrypt(password, privateKey)
 
-export const authAttempt = async (nim: string, password: string) => {
-	password = getRawPassword(password);
+export const authAttempt = async (nim: string, password: string, device_id?: string) => {
+	password = getRawPassword(password)
 
-	return MikomOneDevice.Auth(nim, password, createDeviceIdFromNpm(nim));
-};
+	return MikomOneDevice.Auth(nim, password, device_id || createDeviceIdFromNpm(nim))
+}

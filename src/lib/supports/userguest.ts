@@ -1,8 +1,8 @@
-import type { IBio } from '$Amikom/typings/Response';
-import { MikomSupports } from '../../Amikom';
-import { privateKey } from '../config.server';
-import type { UserGuest } from '../stores/userguest';
-import { encPassword, getRawPassword } from './auth';
+import type { IBio } from '$Amikom/typings/Response'
+import { MikomSupports } from '../../Amikom'
+import { privateKey } from '../config.server'
+import type { UserGuest } from '../stores/userguest'
+import { encPassword, getRawPassword } from './auth'
 
 /**
  * Fungsi ini digunakan untuk mengenkripsi data mahasiswa yang disertai dengan
@@ -15,10 +15,10 @@ import { encPassword, getRawPassword } from './auth';
  * @param password - password untuk mendapatkan rawPassword
  * @returns data mahasiswa yang telah dienkripsi
  */
-export const encryptGuestData = (mahasiswa: IBio, password: string) => {
-	password = getRawPassword(password);
-	const rawSignature = { password, date: Date.now() };
-	const signature = MikomSupports.Encryption.encrypt(JSON.stringify(rawSignature), privateKey);
+export const encryptGuestData = (mahasiswa: IBio, password: string, device_id: string) => {
+	password = getRawPassword(password)
+	const rawSignature = { password, device_id, date: Date.now() }
+	const signature = MikomSupports.Encryption.encrypt(JSON.stringify(rawSignature), privateKey)
 
 	const exportdata: UserGuest = {
 		nim: mahasiswa.Mhs.Npm,
@@ -28,12 +28,12 @@ export const encryptGuestData = (mahasiswa: IBio, password: string) => {
 			// no used yet
 			presensi: true
 		}
-	};
+	}
 
-	let encrypted = JSON.stringify(exportdata);
-	encrypted = encrypted.split('').reverse().join('');
-	return encrypted;
-};
+	let encrypted = JSON.stringify(exportdata)
+	encrypted = encrypted.split('').reverse().join('')
+	return encrypted
+}
 
 /**
  * Fungsi untuk mendekripsi data tamu.
@@ -46,13 +46,14 @@ export const encryptGuestData = (mahasiswa: IBio, password: string) => {
  * @returns objek data tamu dengan password yang telah dienkripsi.
  */
 export const decryptGuestData = (encrypted: string) => {
-	encrypted = encrypted.split('').reverse().join('');
+	encrypted = encrypted.split('').reverse().join('')
 	const encObject: UserGuest & {
-		password: string;
-	} = JSON.parse(encrypted);
+		password: string
+		device_id: string
+	} = JSON.parse(encrypted)
 	const { password } = JSON.parse(
 		MikomSupports.Encryption.decrypt(encObject.signature, privateKey)
-	);
-	encObject.password = encPassword(password);
-	return encObject;
-};
+	)
+	encObject.password = encPassword(password)
+	return encObject
+}

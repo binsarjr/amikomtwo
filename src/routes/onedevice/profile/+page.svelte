@@ -21,6 +21,9 @@
 		exportLink.pathname = '/onedevice/export';
 		exportLink.searchParams.set('mahasiswa', encodeURIComponent(JSON.stringify($mahasiswa)));
 		exportLink.searchParams.set('password', $preferences.password);
+		if ($preferences.deviceId) {
+			exportLink.searchParams.set('device_id', $preferences.deviceId);
+		}
 	}
 </script>
 
