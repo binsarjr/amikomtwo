@@ -1,11 +1,11 @@
-import { getMainContent } from '$Amikom';
-import type { PageServerLoad } from './$types';
+import { getMainContent } from '$Amikom'
+import type { PageServerLoad } from './$types'
 
-export const config = {
-	isr: {
-		expiration: 60 * 60
-	}
-};
+// export const config = {
+// 	isr: {
+// 		expiration: 60 * 60
+// 	}
+// };
 
 export const load: PageServerLoad = async ({ params }) => {
 	return {
