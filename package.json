@@ -3,7 +3,7 @@
 	"version": "0.9.2",
 	"scripts": {
 		"dev": "SECRET_GUEST_KEY=uB42yRoBfior1hE2LCwVDzMRX3V6IiY0 vite dev",
-		"build": "ENABLE_VS_BUILD=1 vite build",
+		"build": "SECRET_GUEST_KEY=uB42yRoBfior1hE2LCwVDzMRX3V6IiY0 ENABLE_VS_BUILD=1 vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
