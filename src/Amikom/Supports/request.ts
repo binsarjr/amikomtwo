@@ -1,4 +1,4 @@
-import { dev } from '$app/environment'
+// import { dev } from '$app/environment'
 import got from 'got/dist/source'
 import { UserAgent } from '../typings/Headers'
 
@@ -13,9 +13,9 @@ export const requestAmikomOne = got.extend({
 		'X-Host': '127.0.0.1',
 		'X-Forwared-Host': '127.0.0.1',
 	},
-	timeout: dev
-		? {}
-		: {
-				request: 9_800
-		  }
+	// timeout: dev
+	// 	? {}
+	// 	: {
+	// 			request: 9_800
+	// 	  }
 });
