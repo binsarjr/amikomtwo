@@ -1,5 +1,5 @@
 <script>
-	import { networkStatus } from './../lib/components/PWA/store'
+	import { networkStatus } from './../lib/components/PWA/store';
 	import '../app.css';
 
 	import { App, Block, Button, Page, Notification } from 'konsta/svelte';
@@ -46,7 +46,6 @@
 	});
 
 	let notificationNetwork = false;
-	
 </script>
 
 {#await import('$lib/components/PWA/PWAProvider.svelte') then { default: PWAProvider }}

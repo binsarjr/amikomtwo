@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { IBio, IPresence, IPresenceDetail, InitKHS } from '$Amikom/typings/Response'
-import moment from 'moment'
-import toast from 'svelte-french-toast'
-import { get } from 'svelte/store'
-import { initKhs } from './stores/initKhs'
-import { ktmDigital } from './stores/ktmDigital'
-import { mahasiswa } from './stores/mahasiswa'
-import { listBank } from './stores/pembayaran'
-import { authUser, preferences } from './stores/preferences'
+import type { IBio, IPresence, IPresenceDetail, InitKHS } from '$Amikom/typings/Response';
+import moment from 'moment';
+import toast from 'svelte-french-toast';
+import { get } from 'svelte/store';
+import { initKhs } from './stores/initKhs';
+import { ktmDigital } from './stores/ktmDigital';
+import { mahasiswa } from './stores/mahasiswa';
+import { listBank } from './stores/pembayaran';
+import { authUser, preferences } from './stores/preferences';
 /**
  * Mendapatkan response dari service dengan menggunakan data dari user yang
  * telah login.
@@ -18,15 +18,15 @@ import { authUser, preferences } from './stores/preferences'
  */
 export const reqService = async (endpoint: string, searchParams = new URLSearchParams()) => {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const userdata = get(authUser)!
-	const url = new URL(window.location.href)
-	url.pathname = endpoint
-	searchParams.set('access_token', encodeURIComponent(userdata.accessToken))
-	searchParams.set('api_key', encodeURIComponent(userdata.apiKey))
-	url.search = searchParams.toString()
-	const r = await fetch(url.toString())
-	return r
-}
+	const userdata = get(authUser)!;
+	const url = new URL(window.location.href);
+	url.pathname = endpoint;
+	searchParams.set('access_token', encodeURIComponent(userdata.accessToken));
+	searchParams.set('api_key', encodeURIComponent(userdata.apiKey));
+	url.search = searchParams.toString();
+	const r = await fetch(url.toString());
+	return r;
+};
 
 export const serviceClient = {
 	/**
@@ -40,27 +40,27 @@ export const serviceClient = {
 	 * gagal.
 	 */
 	refresh: async () => {
-		const formdata = new FormData()
-		formdata.set('nim', get(preferences).nim)
-		formdata.set('password', get(preferences).password)
-		const deviceId = get(preferences).deviceId
-		if (deviceId) formdata.set('device_id', get(preferences).deviceId)
+		const formdata = new FormData();
+		formdata.set('nim', get(preferences).nim);
+		formdata.set('password', get(preferences).password);
+		const deviceId = get(preferences).deviceId;
+		if (deviceId) formdata.set('device_id', get(preferences).deviceId);
 		const r = await fetch('/onedevice/services/refresh', {
 			method: 'POST',
 			body: formdata
-		})
-		const response = await r.json()
+		});
+		const response = await r.json();
 		if (r.status.toString().startsWith('5')) {
-			console.error(r)
-			throw new Error('Ada error dari server. kemungkinan server down')
+			console.error(r);
+			throw new Error('Ada error dari server. kemungkinan server down');
 		}
 		if (r.status == 200) {
 			authUser.update(() => ({
 				accessToken: response.access_token,
 				apiKey: response.api_key
-			}))
+			}));
 		} else {
-			toast.error('Gagal Login Sinkronisasi.')
+			toast.error('Gagal Login Sinkronisasi.');
 			// authUser.update(() => null);
 		}
 	},
@@ -73,10 +73,10 @@ export const serviceClient = {
 	 * @returns resp - Objek yang berisi data biodata mahasiswa.
 	 */
 	bio: async () => {
-		const r = await reqService('/onedevice/services/bio')
-		const resp: IBio = await r.json()
-		resp.Mhs.NpmImg = `/services/fotomhs/${resp.Mhs.Angkatan}/${resp.Mhs.Npm}`
-		if (r.status == 200) mahasiswa.update(() => resp)
+		const r = await reqService('/onedevice/services/bio');
+		const resp: IBio = await r.json();
+		resp.Mhs.NpmImg = `/services/fotomhs/${resp.Mhs.Angkatan}/${resp.Mhs.Npm}`;
+		if (r.status == 200) mahasiswa.update(() => resp);
 	},
 	/**
 	 * Mengambil data gambar hash dari request service /onedevice/services/ktm.
@@ -85,13 +85,13 @@ export const serviceClient = {
 	 * tidak.
 	 */
 	ktm: async () => {
-		const r = await reqService('/onedevice/services/ktm')
+		const r = await reqService('/onedevice/services/ktm');
 		// jika mungkin server down
-		if (!(r.status.toString().startsWith('2') || r.status.toString().startsWith('4'))) return
+		if (!(r.status.toString().startsWith('2') || r.status.toString().startsWith('4'))) return;
 
-		const resp = await r.json()
+		const resp = await r.json();
 
-		ktmDigital.set(resp.status?.code == 200 ? `data:image/png;base64,${resp?.result?.hash}` : null)
+		ktmDigital.set(resp.status?.code == 200 ? `data:image/png;base64,${resp?.result?.hash}` : null);
 	},
 	/**
 	 * Memanggil fungsi reqService untuk mengirim permintaan 'onedevice / services /
@@ -102,10 +102,10 @@ export const serviceClient = {
 	 * yang dimasukkan dari resp.
 	 */
 	initkhs: async () => {
-		const r = await reqService('/onedevice/services/initkhs')
+		const r = await reqService('/onedevice/services/initkhs');
 
-		const resp: InitKHS = await r.json()
-		if (r.status == 200) initKhs.update(() => resp)
+		const resp: InitKHS = await r.json();
+		if (r.status == 200) initKhs.update(() => resp);
 	},
 
 	/**
@@ -119,12 +119,12 @@ export const serviceClient = {
 	 * sebaliknya
 	 */
 	historiPresensi: async (semester: number, tahunAkademik: string) => {
-		const searchParams = new URLSearchParams()
-		searchParams.set('semester', semester.toString())
-		searchParams.set('tahun_akademik', tahunAkademik)
-		const r = await reqService('/onedevice/services/histori-presensi', searchParams)
-		const resp: IPresence[] = await r.json()
-		return r.status == 200 ? resp : []
+		const searchParams = new URLSearchParams();
+		searchParams.set('semester', semester.toString());
+		searchParams.set('tahun_akademik', tahunAkademik);
+		const r = await reqService('/onedevice/services/histori-presensi', searchParams);
+		const resp: IPresence[] = await r.json();
+		return r.status == 200 ? resp : [];
 	},
 
 	/**
@@ -138,18 +138,18 @@ export const serviceClient = {
 	 * @returns array of IPresenceDetail, array kosong jika status respon bukan 200.
 	 */
 	detailPresensi: async (krsId: number) => {
-		const r = await reqService(`/onedevice/services/histori-presensi/${krsId}`)
-		const resp: IPresenceDetail[] = await r.json()
-		let results = r.status == 200 ? resp : []
+		const r = await reqService(`/onedevice/services/histori-presensi/${krsId}`);
+		const resp: IPresenceDetail[] = await r.json();
+		let results = r.status == 200 ? resp : [];
 		results = results
 			.map((d) => {
 				// @ts-ignore
-				d.TanggalMoment = moment(d.Tanggal)
-				return d
+				d.TanggalMoment = moment(d.Tanggal);
+				return d;
 			})
 			// @ts-ignore
-			.sort((a, b) => b.TanggalMoment.unix() - a.TanggalMoment.unix())
-		return results
+			.sort((a, b) => b.TanggalMoment.unix() - a.TanggalMoment.unix());
+		return results;
 	},
 
 	pembayaran: {
@@ -164,26 +164,26 @@ export const serviceClient = {
 		 */
 		bank: async () => {
 			const getData = async () => {
-				const r = await reqService('/onedevice/services/pembayaran/bank')
-				const resp: string[] = await r.json()
-				if (resp.length) listBank.update(() => resp)
-				return resp
-			}
-			let bank = get(listBank)
+				const r = await reqService('/onedevice/services/pembayaran/bank');
+				const resp: string[] = await r.json();
+				if (resp.length) listBank.update(() => resp);
+				return resp;
+			};
+			let bank = get(listBank);
 			if (bank.length) {
-				getData()
-				return bank
+				getData();
+				return bank;
 			}
-			bank = await getData()
-			return bank
+			bank = await getData();
+			return bank;
 		},
 		histori: async () => {
 			const getData = async () => {
-				const r = await reqService('/onedevice/services/pembayaran/histori')
-				const resp: string[] = await r.json()
-				return resp
-			}
-			console.log(await getData())
+				const r = await reqService('/onedevice/services/pembayaran/histori');
+				const resp: string[] = await r.json();
+				return resp;
+			};
+			console.log(await getData());
 		}
 	}
-}
+};

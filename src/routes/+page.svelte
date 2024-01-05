@@ -4,7 +4,7 @@
 </script>
 
 <Page>
-	<Navbar title="AmikomTWO" subtitle="{$networkStatus}" />
+	<Navbar title="AmikomTWO" subtitle={$networkStatus} />
 
 	<Block strongIos insetIos>
 		<p>Terima Kasih sudah mempercayakan AmikomTWO</p>

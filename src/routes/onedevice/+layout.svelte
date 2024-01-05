@@ -1,5 +1,4 @@
 <script lang="ts">
-	
 	import { hasilStudiSemester } from '$lib/stores/akademik';
 	import Push from 'push.js';
 	import { browser } from '$app/environment';
@@ -98,7 +97,7 @@
 <JadwalMendatangServiceWorker />
 
 <Page>
-	<Navbar title="Amikom TWO" subtitle="{$networkStatus}" />
+	<Navbar title="Amikom TWO" subtitle={$networkStatus} />
 
 	<Tabbar labels={true} class="left-0 bottom-0 fixed md:w-[465px] mx-auto right-0">
 		<TabbarLink

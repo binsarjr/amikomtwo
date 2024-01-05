@@ -8,6 +8,7 @@
 	const doLogin = () =>
 		myenhance<{
 			password: string;
+			device_id: string;
 			nim: string;
 			response: {
 				access_token: string;
@@ -23,25 +24,16 @@
 				};
 				$preferences.nim = data.nim;
 				$preferences.password = data.password;
+				$preferences.deviceId = data.device_id;
 				$preferences.otp = '';
 				invalidate('/onedevice');
 			}
 		});
-
-	let deviceId = '';
-	$preferences.deviceId = deviceId;
 </script>
 
 <Page>
 	<Navbar title="Login" />
-	<form
-		action=""
-		method="post"
-		on:submit={() => {
-			$preferences.deviceId = deviceId;
-		}}
-		use:enhance={doLogin()}
-	>
+	<form action="" method="post" use:enhance={doLogin()}>
 		<List strongIos insetIos>
 			<ListInput
 				outline
@@ -65,14 +57,10 @@
 				label="Device ID"
 				type="text"
 				name="device_id"
-				value={deviceId}
-				onInput={(e) => {
-					deviceId = e.target.value;
-				}}
 				placeholder="Device ID (Optional)"
 			/>
 		</List>
-		<Block insertIos>
+		<Block insetIos>
 			<Button largeIos>Masuk</Button>
 			<p class="mt-2">Belum verifikasi amikomtwo? <a href="/auth">verifikasi dulu</a></p>
 		</Block>

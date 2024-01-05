@@ -1,6 +1,6 @@
-import { requestAmikomOne } from '$Amikom/Supports/request'
-import { ContentType } from '../typings/Headers'
-import type { ResponseResult } from '../typings/Response'
+import { requestAmikomOne } from '$Amikom/Supports/request';
+import { ContentType } from '../typings/Headers';
+import type { ResponseResult } from '../typings/Response';
 
 /**
  * OneDevice hanya bisa satu deviceId
@@ -17,12 +17,12 @@ export default {
 			.post('https://ds.amikom.ac.id/api/amikomone/device/otp', {
 				headers: {
 					'content-type': ContentType.FormEncoded,
-					'user-agent': 'okhttp/5.0.0-alpha.2',
+					'user-agent': 'okhttp/5.0.0-alpha.2'
 				},
 				form: {
 					npm,
 					tgl_lahir: tglLahir,
-					virtual_host: "request_otp"
+					virtual_host: 'request_otp'
 				}
 			})
 			.json(),
@@ -34,7 +34,7 @@ export default {
 			.post('https://ds.amikom.ac.id/api/amikomone/device/register', {
 				headers: {
 					'content-type': ContentType.FormEncoded,
-					'user-agent': 'okhttp/5.0.0-alpha.2',
+					'user-agent': 'okhttp/5.0.0-alpha.2'
 				},
 				form: {
 					npm,
@@ -55,4 +55,4 @@ export default {
 				}
 			})
 			.json()
-}
+};

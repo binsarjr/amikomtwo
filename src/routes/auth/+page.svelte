@@ -34,7 +34,7 @@
 				placeholder="Silakan Pilih Tanggal Lahir"
 			/>
 		</List>
-		<Block insertIos>
+		<Block insetIos>
 			<Button largeIos>Validasi NIM & Tanggal Lahir</Button>
 			<p class="mt-2">Sudah verifikasi amikomtwo? <a href="/auth/login">login sekarang</a></p>
 		</Block>

@@ -1,6 +1,6 @@
-import { requestAmikomOne } from '$Amikom/Supports/request'
-import { ContentType } from '../typings/Headers'
-import type { ResponseAuth } from '../typings/Response'
+import { requestAmikomOne } from '$Amikom/Supports/request';
+import { ContentType } from '../typings/Headers';
+import type { ResponseAuth } from '../typings/Response';
 
 /**
  * Authenticate OneDevice hanya bisa satu deviceId
@@ -19,4 +19,4 @@ export default (npm: string, password: string, deviceId: string): Promise<Respon
 			},
 			form: { user_id: npm, password, device_id: deviceId }
 		})
-		.json()
+		.json();
